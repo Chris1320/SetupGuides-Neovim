@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+# This script has been tested on the following systems:
+# - GNU bash v5.1.16 on Linux Mint 21 "Vanessa"
+
+# ? Set variables.
+name="Neovim Config"
+version=(0 1 0)
+title="${name} v${version[@]:0:1}.${version[@]:1:1}.${version[@]:2:1}"
+
+installation_files="${PWD}/neovim-init"
+nvim_config_path="${HOME}/.config/nvim"
+min_nvim_version=(0 7 2)  # Minimum Neovim version required.
+
+# ? Check requirements.
+echo "Checking requirements..."
+if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
+    echo "\`git\` is not installed. Please install git and try again."
+    echo
+    echo "- \`sudo apt update && sudo apt install git\`; or visit"
+    echo "- https://git-scm.com/downloads"
+    exit 1
+
+else
+    echo "Git is installed."
+fi
+
+if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
+    echo "\`nvim\` is not installed. Please install nvim and try again."
+    echo
+    echo "- \`sudo apt update && sudo apt install neovim\`; or visit"
+    echo "- https://github.com/neovim/neovim/releases/latest"
+    exit 2
+
+else  # If Neovim is installed, check its version.
+    echo "Neovim is installed. Checking its version..."
+    nvim_version=$(nvim -v)
+    nvim_version=${nvim_version[@]:5:6}  # Get the version of Neovim using `nvim -v` in format `vX.X.X`.
+    echo "Detected Neovim version: ${nvim_version}"
+
+    upgrade_prompt="Neovim ${nvim_version} is not supported.\nPlease upgrade to at least v${min_nvim_version[@]:0:1}.${min_nvim_version[@]:1:1}.${min_nvim_version[@]:2:1} or higher and try again.\n"
+    # The if-else nest below will check if the user's Neovim version is supported.
+    if [[ ${nvim_version:1:1} -lt ${min_nvim_version[@]:0:1} ]]; then  # Check major version.
+        printf "$upgrade_prompt"
+        exit 3
+
+    else
+        if [[ ${nvim_version:3:1} -lt ${min_nvim_version[@]:1:1} ]]; then  # Check minor version.
+            printf "$upgrade_prompt"
+            exit 4
+
+        else
+            if [[ ${nvim_version:5:1} -lt ${min_nvim_version[@]:2:1} ]]; then  # Check patch/hotfix version.
+                printf "$upgrade_prompt"
+                exit 5
+            fi
+        fi
+    fi
+fi
+
+# ? Ask for user confirmation.
+echo
+echo "This will install ${name} on \`${nvim_config_path}\`."
+echo "This will overwrite existing files in the said directory."
+echo
+while true; do
+    printf "Are you sure? (Y/n) > "
+    read installation_confirmation
+
+    if [[ "${installation_confirmation}" =~ ^[y|Y].* ]]; then
+        printf "Installing ${title} customization files...\n"
+        break
+
+    elif [[ "${installation_confirmation}" =~ ^[n|N].* ]]; then
+        echo "Cancelling installation."
+        exit 6
+
+    else
+        echo "Unknown answer."
+        echo
+
+    fi
+done
+
+# ? Install the customization files.
+echo
+
+if [[ -e "${nvim_config_path}" ]]; then
+    printf "Removing existing files in \`${nvim_config_path}\`...\r"
+    rm -r -- "${nvim_config_path}"  # Delete the existing Neovim configuration directory.
+    printf "Removing existing files in \`${nvim_config_path}\`... Done!\n"
+fi
+
+printf "Copying customization files to \`${nvim_config_path}\`...\r"
+cp -r "$installation_files" "$nvim_config_path"  # Copy the customization files to the Neovim configuration directory.
+printf "Copying customization files to \`${nvim_config_path}\`... Done!\n"
+
+echo "Please run \`nvim\` to finish the installation."
+exit 0
