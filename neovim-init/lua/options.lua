@@ -1,4 +1,13 @@
-local vars = require("vars")
+--[[
+options.lua - This is part of a custom config file for Neovim v0.7.2+.
+
+You can get it from:
+https://github.com/SetupGuides/Neovim
+
+This module configures Neovim options.
+]]--
+
+local vars = require("vars")  -- Get variables.
 
 vim.g.mapleader = vars["leaderkey"]                         -- Set leader key.
 vim.cmd("filetype plugin on")                               -- enable loading plugins for specific file types.

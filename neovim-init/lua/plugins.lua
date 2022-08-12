@@ -1,15 +1,41 @@
-local vars = require("vars")
+--[[
+plugins.lua - This is part of a custom config file for Neovim v0.7.2+.
 
-Packer = require("packer")
+You can get it from:
+https://github.com/SetupGuides/Neovim
+
+This module initializes plugins to be used in Neovim.
+]]--
+
+local vars = require("vars")  -- Get variables.
+
+-- The code block is based on `https://github.com/wbthomason/packer.nvim#bootstrapping`.
+local packer_install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if vim.fn.empty(vim.fn.glob(packer_install_path)) > 0 then  -- Check if packer is already installed.
+    local packer_bootstrap = vim.fn.system(  -- If not, clone Packer from GitHub.
+        {
+            "git",
+            "clone",
+            "--depth",
+            "1",
+            "https://github.com/wbthomason/packer.nvim",
+            packer_install_path
+        }
+    )
+    vim.cmd("packadd packer.nvim")
+end
+
+Packer = require("packer")  -- Load Packer.
 
 Packer.startup(
-    function(use)
+    function(use)  -- TODO: Continue rewriting this.
         -- Package Managers
         use("wbthomason/packer.nvim")                        -- The package manager that we are using
 
         -- Linting and syntax checkers
         use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP
-        use("williamboman/nvim-lsp-installer")               -- Easy-install LSP servers
+        use("williamboman/mason.nvim")                       -- LSP, DAP, etc. Manager for Neovim.
+        use("williamboman/mason-lspconfig.nvim")
         use("nvim-treesitter/nvim-treesitter")               -- Treesitter integration for Neovim
         use(                                                 -- diagnostics, quickfixes, etc.
             {
@@ -76,7 +102,6 @@ Packer.startup(
                 requires = {{"kyazdani42/nvim-web-devicons"}},
             }
         )
-
     end
 )
 
