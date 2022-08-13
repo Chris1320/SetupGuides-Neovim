@@ -8,7 +8,6 @@ This guide will help you install Neovim and the following plugins:
     - [copilot.vim](https://github.com/github/copilot.vim): GitHub Copilot for Vim.
     - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
     - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Language Server Protocol (LSP) configuration helper.
-    - [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer): Make installation of LSP servers easier.
     - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Better syntax highlighting.
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
 - Fuzzy Search
@@ -91,16 +90,24 @@ This guide will help you install Neovim and the following plugins:
 **Tested on the following platforms**:
 
 - Kali Linux WSL
-- Linux Mint
+- Linux Mint 21
 - Termux Android Terminal Emulator
 
 *Windows version of this guide will be available soon.*
 
-## Installation Script
+## Automatic Customization Guide
 
-*WIP*
+1. Update APT. `sudo apt update`
+2. Install git. `sudo apt install git`
+3. Install Neovim.
+    - Check if Neovim v0.7.2+ is available in your package manager. `$ apt show neovim`
+    - If version 0.7.2 above is available, install it. `$ apt install --upgrade neovim`
+    - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
+4. Run the installer.
+    - Using *wget*: `wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install | bash`
+    - Using *curl*: `curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install | bash`
 
-## Customization Guide
+## Manual Customization Guide
 
 1. Installing Neovim
     - Check if Neovim v0.7.2+ is available in your package manager. `$ apt show neovim`
