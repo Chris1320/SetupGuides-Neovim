@@ -8,6 +8,7 @@ name="Neovim Config"
 version=(0 1 0)
 title="${name} v${version[@]:0:1}.${version[@]:1:1}.${version[@]:2:1}"
 
+target_branch="rewrite"  # The branch to which the configs will be pulled from.
 installation_files="${PWD}/neovim-init"
 nvim_config_path="${HOME}/.config/nvim"
 min_nvim_version=(0 7 2)  # Minimum Neovim version required.
@@ -91,15 +92,52 @@ if [[ -e "${nvim_config_path}" ]]; then
     printf "Removing existing files in \`${nvim_config_path}\`... Done!\n"
 fi
 
-printf "Copying customization files to \`${nvim_config_path}\`...\r"
-cp -r "$installation_files" "$nvim_config_path"  # Copy the customization files to the Neovim configuration directory.
+# Check if the installation files exist.
+if [[ -d "$installation_files" ]]; then
+    printf "Copying customization files to \`${nvim_config_path}\`...\r"
+    cp -r "$installation_files" "$nvim_config_path"  # Copy the customization files to the Neovim configuration directory.
+    if [[ $? -eq 0 ]]; then
+        printf "Copying customization files to \`${nvim_config_path}\`... Done!\n"
+        echo "Please run \`nvim\` to finish the installation."
+        exit 0
 
-if [[ $? -eq 0 ]]; then
-    printf "Copying customization files to \`${nvim_config_path}\`... Done!\n"
-    echo "Please run \`nvim\` to finish the installation."
-    exit 0
+    else
+        printf "Copying customization files to \`${nvim_config_path}\`... Failed!\n"
+        exit 7
+    fi
 
 else
-    printf "Copying customization files to \`${nvim_config_path}\`... Failed!\n"
-    exit 7
-fi
+    printf "Downloading customization files to \`${nvim_config_path}\`...\r"
+    curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/init.lua" -o "${nvim_config_path}/init.lua"
+    if [[ $? -ne 0 ]]; then
+        printf "Downloading customization files to \`${nvim_config_path}\`... Failed!\n"
+        exit 8
+    fi
+
+    curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/keymaps.lua" -o "${nvim_config_path}/lua/keymaps.lua"
+    if [[ $? -ne 0 ]]; then
+        printf "Downloading customization files to \`${nvim_config_path}\`... Failed!\n"
+        exit 9
+    fi
+
+    curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/options.lua" -o "${nvim_config_path}/lua/options.lua"
+    if [[ $? -ne 0 ]]; then
+        printf "Downloading customization files to \`${nvim_config_path}\`... Failed!\n"
+        exit 10
+    fi
+
+    curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/plugins.lua" -o "${nvim_config_path}/lua/plugins.lua"
+    if [[ $? -ne 0 ]]; then
+        printf "Downloading customization files to \`${nvim_config_path}\`... Failed!\n"
+        exit 11
+    fi
+
+    curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/vars.lua" -o "${nvim_config_path}/lua/vars.lua"
+    if [[ $? -ne 0 ]]; then
+        printf "Downloading customization files to \`${nvim_config_path}\`... Failed!\n"
+        exit 12
+    fi
+
+    printf "Downloading customization files to \`${nvim_config_path}\`... Done!\n"
+    echo "Please run \`nvim\` to finish the installation."
+    exit 0
