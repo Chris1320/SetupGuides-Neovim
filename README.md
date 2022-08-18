@@ -104,8 +104,8 @@ This guide will help you install Neovim and the following plugins:
     - If version 0.7.2 above is available, install it. `$ apt install --upgrade neovim`
     - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
 4. Run the installer.
-    - Using *wget*: `wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install | bash`
-    - Using *curl*: `curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install | bash`
+    - Using *wget*: `bash <(wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
+    - Using *curl*: `bash <(curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
 
 ## Manual Customization Guide
 
