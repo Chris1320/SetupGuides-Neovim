@@ -8,8 +8,6 @@ This module provides easy-access to variables to the end-user.
 ]]--
 
 return {
-    installed = false,             -- set this to true after running `:PluginSync` in neovim.
-
     -- Shortcuts
     leaderkey = ',',      -- Set leader key.
 

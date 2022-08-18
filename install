@@ -93,7 +93,13 @@ fi
 
 printf "Copying customization files to \`${nvim_config_path}\`...\r"
 cp -r "$installation_files" "$nvim_config_path"  # Copy the customization files to the Neovim configuration directory.
-printf "Copying customization files to \`${nvim_config_path}\`... Done!\n"
 
-echo "Please run \`nvim\` to finish the installation."
-exit 0
+if [[ $? -eq 0 ]]; then
+    printf "Copying customization files to \`${nvim_config_path}\`... Done!\n"
+    echo "Please run \`nvim\` to finish the installation."
+    exit 0
+
+else
+    printf "Copying customization files to \`${nvim_config_path}\`... Failed!\n"
+    exit 7
+fi

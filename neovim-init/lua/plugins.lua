@@ -28,12 +28,12 @@ end
 Packer = require("packer")  -- Load Packer.
 
 Packer.startup(
-    function(use)  -- TODO: Continue rewriting this.
+    function(use)
         -- Package Managers
-        use("wbthomason/packer.nvim")                        -- The package manager that we are using
+        use("wbthomason/packer.nvim")                        -- The package manager that we are using.
 
         -- Linting and syntax checkers
-        use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP
+        use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP.
         use("williamboman/mason.nvim")                       -- LSP, DAP, etc. Manager for Neovim.
         use("williamboman/mason-lspconfig.nvim")
         use("nvim-treesitter/nvim-treesitter")               -- Treesitter integration for Neovim
