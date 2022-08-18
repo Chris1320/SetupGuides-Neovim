@@ -108,6 +108,7 @@ if [[ -d "$installation_files" ]]; then
 
 else
     printf "Downloading customization files to \`${nvim_config_path}\`...\r"
+    mkdir -p "${nvim_config_path}/lua"  # Create the Neovim configuration directory.
     curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/init.lua" -o "${nvim_config_path}/init.lua"
     if [[ $? -ne 0 ]]; then
         printf "Downloading customization files to \`${nvim_config_path}\`... Failed!\n"
