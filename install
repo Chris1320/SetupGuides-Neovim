@@ -141,3 +141,4 @@ else
     printf "Downloading customization files to \`${nvim_config_path}\`... Done!\n"
     echo "Please run \`nvim\` to finish the installation."
     exit 0
+fi
