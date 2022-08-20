@@ -302,19 +302,18 @@ end
 local function setupLspConfig()
     local lsp = require("lspconfig")
     local coq = require("coq")
-    local lsp_installer = require("nvim-lsp-installer")
+    local mason = require("mason")
 
     -- Setup nvim-lsp-installer
-    lsp_installer.setup(
+    mason.setup(
         {
-            automatic_installation = true,
             ui = {
-                check_outdated_servers_on_open = true,
+                check_outdated_packages_on_open = true,
                 icons = {
                     -- you can change these icons to whatever you want.
-                    server_installed = "✓",
-                    server_pending = "➜",
-                    server_uninstalled = "✗"
+                    package_installed = "✓",
+                    -- server_pending = "➜",
+                    -- server_uninstalled = "✗"
                 }
             }
         }
