@@ -68,7 +68,7 @@ while true; do
     printf "Are you sure? (Y/n) > "
     read installation_confirmation
 
-    if [[ "${installation_confirmation}" =~ ^[y|Y].* ]]; then
+    if [[ "${installation_confirmation}" == "" || "${installation_confirmation}" =~ ^[y|Y].* ]]; then
         printf "Installing ${title} customization files...\n"
         break
 
