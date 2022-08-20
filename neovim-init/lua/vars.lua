@@ -1,12 +1,13 @@
 --[[
-vars.lua
+vars.lua - This is part of a custom config file for Neovim v0.7.2+.
+
+You can get it from:
+https://github.com/SetupGuides/Neovim
 
 This module provides easy-access to variables to the end-user.
 ]]--
 
 return {
-    installed = false,             -- set this to true after running `:PluginSync` in neovim.
-
     -- Shortcuts
     leaderkey = ',',      -- Set leader key.
 
@@ -54,5 +55,6 @@ return {
         "toml",
         "typescript",
         "yaml"
-    }
+    },
+    plugins_installed_path = vim.fn.stdpath("data") .. ".plugins_installed"  -- The file to look for when checking if nvim has already run.
 }

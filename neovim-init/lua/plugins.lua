@@ -1,15 +1,39 @@
-local vars = require("vars")
+--[[
+plugins.lua - This is part of a custom config file for Neovim v0.7.2+.
 
-Packer = require("packer")
+You can get it from:
+https://github.com/SetupGuides/Neovim
+
+This module initializes plugins to be used in Neovim.
+]]--
+
+local vars = require("vars")  -- Get variables.
+
+local plugins_installed_path = io.open(vars["plugins_installed_path"], 'r')
+if plugins_installed_path == nil then
+    First_run = true
+
+else
+    if plugins_installed_path:read() == "true" then
+        First_run = false
+
+    else
+        First_run = true
+
+    end
+end
+
+Packer = require("packer")  -- Load Packer.
 
 Packer.startup(
     function(use)
         -- Package Managers
-        use("wbthomason/packer.nvim")                        -- The package manager that we are using
+        use("wbthomason/packer.nvim")                        -- The package manager that we are using.
 
         -- Linting and syntax checkers
-        use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP
-        use("williamboman/nvim-lsp-installer")               -- Easy-install LSP servers
+        use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP.
+        use("williamboman/mason.nvim")                       -- LSP, DAP, etc. Manager for Neovim.
+        use("williamboman/mason-lspconfig.nvim")
         use("nvim-treesitter/nvim-treesitter")               -- Treesitter integration for Neovim
         use(                                                 -- diagnostics, quickfixes, etc.
             {
@@ -76,7 +100,9 @@ Packer.startup(
                 requires = {{"kyazdani42/nvim-web-devicons"}},
             }
         )
-
+        if First_run == true then
+            Packer.sync()
+        end
     end
 )
 
@@ -274,19 +300,18 @@ end
 local function setupLspConfig()
     local lsp = require("lspconfig")
     local coq = require("coq")
-    local lsp_installer = require("nvim-lsp-installer")
+    local mason = require("mason")
 
     -- Setup nvim-lsp-installer
-    lsp_installer.setup(
+    mason.setup(
         {
-            automatic_installation = true,
             ui = {
-                check_outdated_servers_on_open = true,
+                check_outdated_packages_on_open = true,
                 icons = {
                     -- you can change these icons to whatever you want.
-                    server_installed = "✓",
-                    server_pending = "➜",
-                    server_uninstalled = "✗"
+                    package_installed = "✓",
+                    -- server_pending = "➜",
+                    -- server_uninstalled = "✗"
                 }
             }
         }
@@ -408,7 +433,7 @@ local function setupTreesitter()
 end
 
 local function setupCoq()
-    local coq = require("coq")
+    Coq = require("coq")
     local coq3p = require("coq_3p")
     coq3p(
         {
@@ -426,7 +451,20 @@ local function setupCoq()
     )
 end
 
-if vars["installed"] then
+if First_run then
+    print("[i] Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
+    local create_flag_file = io.open(vars["plugins_installed_path"], 'w')
+    if create_flag_file == nil then
+        print("[E] Failed to create flag file. please manually create a new empty file in `" .. vars["plugins_installed_path"] .. "`.")
+
+    else
+        create_flag_file:write("true")
+        create_flag_file:flush()
+        create_flag_file:close()
+
+    end
+
+else
     -- run setup functions
     setupCatppuccin()
     setupFeline()
@@ -443,8 +481,5 @@ if vars["installed"] then
     setupLspConfig()
     setupTreesitter()
     setupCoq()
-
-else
-    vim.cmd(":PackerSync")
 
 end
