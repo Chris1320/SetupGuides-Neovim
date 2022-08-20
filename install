@@ -5,13 +5,15 @@
 
 # ? Set variables.
 name="Neovim Config"
-version=(0 1 0)
+version=(0 1 1)
 title="${name} v${version[@]:0:1}.${version[@]:1:1}.${version[@]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
 installation_files="${PWD}/neovim-init"
 nvim_config_path="${HOME}/.config/nvim"
-packer_installation_path="${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+nvim_data_path="${HOME}/.local/share/nvim"
+packer_installation_path="${nvim_data_path}/site/pack/packer/start/packer.nvim"
+plugins_installed_flag_file="${nvim_data_path}/.plugins_installed"
 min_nvim_version=(0 7 2)  # Minimum Neovim version required.
 
 # ? Check requirements.
@@ -108,6 +110,16 @@ if [[ -e "${packer_installation_path}" ]]; then
 
 else
     echo "No existing files found in \`${packer_installation_path}\`."
+
+fi
+
+if [[ -e "$plugins_installed_flag_file" ]]; then
+    printf "Removing flag file in \`${plugins_installed_flag_file}\`...\r"
+    rm -- "${plugins_installed_flag_file}"
+    printf "Removing flag file in \`${plugins_installed_flag_file}\`... Done!\n"
+
+else
+    echo "No flag file found in \`${plugins_installed_flag_file}\`."
 
 fi
 
