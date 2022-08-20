@@ -451,7 +451,7 @@ local function setupCoq()
     )
 end
 
-if First_run then
+if First_run == true then
     print("[i] Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
     local create_flag_file = io.open(vars["plugins_installed_path"], 'w')
     if create_flag_file == nil then
