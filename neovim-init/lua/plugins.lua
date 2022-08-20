@@ -12,17 +12,21 @@ local vars = require("vars")  -- Get variables.
 -- The code block is based on `https://github.com/wbthomason/packer.nvim#bootstrapping`.
 local packer_install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(packer_install_path)) > 0 then  -- Check if packer is already installed.
-    Packer_bootstrap = vim.fn.system(  -- If not, clone Packer from GitHub.
+    vim.fn.system(  -- If not, clone Packer from GitHub.
         {
             "git",
             "clone",
-            "--depth",
-            "1",
-            "https://github.com/wbthomason/packer.nvim",
+            "--depth", "1",
+            "https://github.com/wbthomason/packer.nvim.git",
             packer_install_path
         }
     )
     vim.cmd("packadd packer.nvim")
+    First_run = true
+
+else
+    First_run = false
+
 end
 
 Packer = require("packer")  -- Load Packer.
@@ -102,7 +106,7 @@ Packer.startup(
                 requires = {{"kyazdani42/nvim-web-devicons"}},
             }
         )
-        if Packer_bootstrap then
+        if First_run == true then
             Packer.sync()
         end
     end
