@@ -21,7 +21,6 @@ if vim.fn.empty(vim.fn.glob(packer_install_path)) > 0 then  -- Check if packer i
             packer_install_path
         }
     )
-    vim.cmd("packadd packer.nvim")
     First_run = true
 
 else
@@ -439,7 +438,7 @@ local function setupTreesitter()
 end
 
 local function setupCoq()
-    local coq = require("coq")
+    Coq = require("coq")
     local coq3p = require("coq_3p")
     coq3p(
         {
@@ -457,7 +456,10 @@ local function setupCoq()
     )
 end
 
-if vars["installed"] then
+if First_run then
+    print("[i] Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
+
+else
     -- run setup functions
     setupCatppuccin()
     setupFeline()
@@ -474,8 +476,5 @@ if vars["installed"] then
     setupLspConfig()
     setupTreesitter()
     setupCoq()
-
-else
-    vim.cmd(":PackerSync")
 
 end
