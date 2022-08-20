@@ -9,23 +9,18 @@ This module initializes plugins to be used in Neovim.
 
 local vars = require("vars")  -- Get variables.
 
--- The code block is based on `https://github.com/wbthomason/packer.nvim#bootstrapping`.
-local packer_install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if vim.fn.empty(vim.fn.glob(packer_install_path)) > 0 then  -- Check if packer is already installed.
-    vim.fn.system(  -- If not, clone Packer from GitHub.
-        {
-            "git",
-            "clone",
-            "--depth", "1",
-            "https://github.com/wbthomason/packer.nvim.git",
-            packer_install_path
-        }
-    )
+local plugins_installed_path = io.open(vars["plugins_installed_path"], 'r')
+if plugins_installed_path == nil then
     First_run = true
 
 else
-    First_run = false
+    if plugins_installed_path:read() == "true" then
+        First_run = false
 
+    else
+        First_run = true
+
+    end
 end
 
 Packer = require("packer")  -- Load Packer.
@@ -458,6 +453,16 @@ end
 
 if First_run then
     print("[i] Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
+    local create_flag_file = io.open(vars["plugins_installed_path"], 'w')
+    if create_flag_file == nil then
+        print("[E] Failed to create flag file. please manually create a new empty file in `" .. vars["plugins_installed_path"] .. "`.")
+
+    else
+        create_flag_file:write("true")
+        create_flag_file:flush()
+        create_flag_file:close()
+
+    end
 
 else
     -- run setup functions

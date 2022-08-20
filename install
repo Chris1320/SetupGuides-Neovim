@@ -8,9 +8,10 @@ name="Neovim Config"
 version=(0 1 0)
 title="${name} v${version[@]:0:1}.${version[@]:1:1}.${version[@]:2:1}"
 
-target_branch="rewrite"  # The branch to which the configs will be pulled from.
+target_branch="main"  # The branch to which the configs will be pulled from.
 installation_files="${PWD}/neovim-init"
 nvim_config_path="${HOME}/.config/nvim"
+packer_installation_path="${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
 min_nvim_version=(0 7 2)  # Minimum Neovim version required.
 
 # ? Check requirements.
@@ -61,7 +62,11 @@ fi
 
 # ? Ask for user confirmation.
 echo
-echo "This will install ${name} on \`${nvim_config_path}\`."
+echo "This will install the following:"
+echo
+echo "- ${name} on \`${nvim_config_path}\`."
+echo "- packer.nvim on \`${packer_installation_path}\`."
+echo
 echo "This will overwrite existing files in the said directory."
 echo
 while true; do
@@ -90,7 +95,25 @@ if [[ -e "${nvim_config_path}" ]]; then
     printf "Removing existing files in \`${nvim_config_path}\`...\r"
     rm -r -- "${nvim_config_path}"  # Delete the existing Neovim configuration directory.
     printf "Removing existing files in \`${nvim_config_path}\`... Done!\n"
+
+else
+    echo "No existing files found in \`${nvim_config_path}\`."
+
 fi
+
+if [[ -e "${packer_installation_path}" ]]; then
+    printf "Removing existing files in \`${packer_installation_path}\`...\r"
+    rm -rf -- "${packer_installation_path}"
+    printf "Removing existing files in \`${packer_installation_path}\`... Done!\n"
+
+else
+    echo "No existing files found in \`${packer_installation_path}\`."
+
+fi
+
+echo
+git clone --depth=1 "https://github.com/wbthomason/packer.nvim.git" "${packer_installation_path}"
+echo
 
 # Check if the installation files exist.
 if [[ -d "$installation_files" ]]; then
