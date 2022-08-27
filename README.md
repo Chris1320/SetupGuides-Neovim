@@ -111,12 +111,13 @@ This guide will help you install Neovim and the following plugins:
 
 ## Manual Customization Guide
 
-1. Installing Neovim
+1. Install git. `$ sudo apt update -y && sudo apt install -y git`
+2. Installing Neovim
     - Check if Neovim v0.7.2+ is available in your package manager. `$ apt show neovim`
     - If version 0.7.2 above is available, install it. `$ apt install --upgrade neovim`
     - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
-2. Clone and install packer. `$ git clone --depth=1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
-3. Copy the contents of [neovim-init/](https://github.com/Chris1320/SetupGuides/tree/main/resources/neovim-init) to your `~/.config/nvim/`. The directory must look like this:
+3. Clone and install packer. `$ git clone --depth=1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
+4. Copy the contents of [neovim-init/](https://github.com/Chris1320/SetupGuides/tree/main/resources/neovim-init) to your `~/.config/nvim/`. The directory must look like this:
 
     ```
     $ tree ~/.config/nvim/
@@ -129,15 +130,14 @@ This guide will help you install Neovim and the following plugins:
     1 directory, 3 files
     ```
 
-4. Install dependencies. `$ sudo apt install --upgrade clang curl python3 python3-pip python3-venv`[^2]
-5. Run `nvim`. Packer will now update, install, and compile the plugins.
-6. After installation, quit Neovim by entering `:q`.
-7. Open `~/.config/nvim/vars.lua` and change the value of `installed` from `false` to `true`. (The resulting line must be `installed = true`)
-8. Open `nvim`. nvim-treesitter will now install treesitter parsers. Run `:TSInstallInfo` to check if all languages you want to installed are now installed.[^3]
+5. Install dependencies. `$ sudo apt install --upgrade clang curl python3 python3-pip python3-venv`[^2]
+6. Run `nvim`. Packer will now update, install, and compile the plugins.
+7. After installation, quit Neovim by entering `:q`.
+8. Re-open `nvim`. nvim-treesitter will now install treesitter parsers. Run `:TSInstallInfo` to check if all languages you want to install are now installed.[^3]
 9. Run `:COQdeps` to install dependencies for COQ.
 10. Enter `:PackerStatus` to verify all plugins are installed.
 11. To check if everything is installed correctly, enter `:checkhealth`.
-12. (*Optional*) Install LSP servers by running `:LspInstall <server>` inside Neovim.[^4] (Run `:LspInstallInfo` for more information.)
+12. (*Optional*) Install LSP/DAP servers, linters, and formatters by running `:Mason` inside Neovim.[^4]
 13. (*Optional*) Setup GitHub Copilot. `:Copilot setup`[^5]
 
 [^1]: To download and install using wget and dpkg: `wget -O ./nvim-linux64.deb https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb && sudo dpkg -i ./nvim-linux64.deb`
