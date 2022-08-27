@@ -42,6 +42,7 @@ return {
         "java",
         "javascript",
         "json",
+        "json5",
         "jsonc",
         "kotlin",
         "latex",
