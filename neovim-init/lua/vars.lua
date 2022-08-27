@@ -52,8 +52,10 @@ return {
         "python",
         "rst",
         "rust",
+        "sql",
         "toml",
         "typescript",
+        "vim",
         "yaml"
     },
     plugins_installed_path = vim.fn.stdpath("data") .. ".plugins_installed"  -- The file to look for when checking if nvim has already run.
