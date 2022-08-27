@@ -27,10 +27,10 @@ Packer = require("packer")  -- Load Packer.
 
 Packer.startup(
     function(use)
-        -- Package Managers
+        -- Plugin Manager
         use("wbthomason/packer.nvim")                        -- The package manager that we are using.
 
-        -- Linting and syntax checkers
+        -- Linting and Syntax Checkers
         use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP.
         use("williamboman/mason.nvim")                       -- LSP, DAP, etc. Manager for Neovim.
         use("williamboman/mason-lspconfig.nvim")
@@ -42,7 +42,7 @@ Packer.startup(
             }
         )
         use("github/copilot.vim")                            -- GitHub Copilot integration
-        use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")  -- Show LSP diagnostics to a line.
+        use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")  -- Show LSP diagnostics to a new line.
 
         -- Fuzzy Search
         use(                                                 -- Fuzzy finder

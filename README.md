@@ -7,6 +7,8 @@ This guide will help you install Neovim and the following plugins:
 - Linting and Syntax Checking
     - [copilot.vim](https://github.com/github/copilot.vim): GitHub Copilot for Vim.
     - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
+    - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
+    - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
     - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Language Server Protocol (LSP) configuration helper.
     - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Better syntax highlighting.
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
@@ -21,7 +23,7 @@ This guide will help you install Neovim and the following plugins:
     - [twilight.nvim](https://github.com/folke/twilight.nvim): Dim inactive parts of your code.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 - Code Completion
-    - [auto-pairs](https://github.com/jiangmiao/auto-pairs): Bracket auto-pairing
+    - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
     - [coq_nvim](https://github.com/ms-jpq/coq_nvim/): Code completion.
     - [coq.artifacts](https://github.com/ms-jpq/coq.artifacts): COQ snippets.
     - [coq.thirdparty](https://github.com/ms-jpq/coq.thirdparty): COQ 3rd-party integration.
