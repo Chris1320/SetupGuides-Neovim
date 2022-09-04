@@ -41,7 +41,6 @@ Packer.startup(
                 requires = "kyazdani42/nvim-web-devicons"
             }
         )
-        use("github/copilot.vim")                            -- GitHub Copilot integration
         use("https://git.sr.ht/~whynothugo/lsp_lines.nvim")  -- Show LSP diagnostics to a new line.
 
         -- Fuzzy Search
@@ -442,11 +441,6 @@ local function setupCoq()
                 short_name = "MATH",
                 precision = 4
             },
-            {
-                src = "copilot",
-                short_name = "COP",
-                accept_key = "<C-f>"
-            }
         }
     )
 end
