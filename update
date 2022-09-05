@@ -107,16 +107,6 @@ else
 
 fi
 
-if [[ -e "${packer_installation_path}" ]]; then
-    printf "Removing existing files in \`%s\`...\r" "${packer_installation_path}"
-    rm -rf -- "${packer_installation_path}"
-    printf "Removing existing files in \`%s\`... Done!\n" "${packer_installation_path}"
-
-else
-    echo "No existing files found in \`${packer_installation_path}\`."
-
-fi
-
 if [[ -e "$plugins_installed_flag_file" ]]; then
     printf "Removing flag file in \`%s\`...\r" "${plugins_installed_flag_file}"
     rm -- "${plugins_installed_flag_file}"
