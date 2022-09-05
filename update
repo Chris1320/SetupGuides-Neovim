@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+
+# This script has been tested on the following systems:
+# - GNU bash v5.1.16 on Linux Mint 21
+# - GNU bash v5.1.16 on Kali Linux Rolling
+
+# ? Set variables.
+name="Neovim Config Updater"
+version=(0 1 0)
+title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
+
+target_branch="nvim-ufo"  # The branch to which the configs will be pulled from.
+installation_files="${PWD}/neovim-init"
+nvim_config_path="${HOME}/.config/nvim"
+nvim_data_path="${HOME}/.local/share/nvim"
+packer_installation_path="${nvim_data_path}/site/pack/packer/start/packer.nvim"
+plugins_installed_flag_file="${nvim_data_path}/.plugins_installed"
+min_nvim_version=(0 7 2)  # Minimum Neovim version required.
+
+echo
+echo "$title"
+echo
+
+# ? Check requirements.
+echo "Checking requirements..."
+if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
+    echo "\`git\` is not installed. Please install git and try again."
+    echo
+    echo "- \`sudo apt update && sudo apt install git\`; or visit"
+    echo "- https://git-scm.com/downloads"
+    exit 1
+
+else
+    echo "Git is installed."
+fi
+
+if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
+    echo "\`nvim\` is not installed. Please install nvim and try again."
+    echo
+    echo "- \`sudo apt update && sudo apt install neovim\`; or visit"
+    echo "- https://github.com/neovim/neovim/releases/latest"
+    exit 2
+
+else  # If Neovim is installed, check its version.
+    echo "Neovim is installed. Checking its version..."
+    nvim_version=$(nvim -v)
+    nvim_version=${nvim_version[*]:5:6}  # Get the version of Neovim using `nvim -v` in format `vX.X.X`.
+    echo "Detected Neovim version: ${nvim_version}"
+
+    upgrade_prompt="Neovim ${nvim_version} is not supported.\nPlease upgrade to at least v${min_nvim_version[*]:0:1}.${min_nvim_version[*]:1:1}.${min_nvim_version[*]:2:1} or higher and try again.\n"
+    # The if-else nest below will check if the user's Neovim version is supported.
+    if [[ ${nvim_version:1:1} -lt ${min_nvim_version[*]:0:1} ]]; then  # Check major version.
+        printf "%s" "$upgrade_prompt"
+        exit 3
+
+    else
+        if [[ ${nvim_version:3:1} -lt ${min_nvim_version[*]:1:1} ]]; then  # Check minor version.
+            printf "%s" "$upgrade_prompt"
+            exit 4
+
+        else
+            if [[ ${nvim_version:5:1} -lt ${min_nvim_version[*]:2:1} ]]; then  # Check patch/hotfix version.
+                printf "%s" "$upgrade_prompt"
+                exit 5
+            fi
+        fi
+    fi
+fi
+
+# ? Ask for user confirmation.
+echo
+echo "This will update the following:"
+echo
+echo "- ${name} on \`${nvim_config_path}\`."
+echo
+echo "This will overwrite existing files in the said directory."
+echo
+while true; do
+    printf "Are you sure? (Y/n) > "
+    read -r installation_confirmation
+
+    if [[ "${installation_confirmation}" == "" || "${installation_confirmation}" =~ ^[y|Y].* ]]; then
+        printf "Installing %s customization files...\n" "$title"
+        break
+
+    elif [[ "${installation_confirmation}" =~ ^[n|N].* ]]; then
+        echo "Cancelling installation."
+        exit 6
+
+    else
+        echo "Unknown answer."
+        echo
+
+    fi
+done
+
+# ? Install the customization files.
+echo
+
+if [[ -e "${nvim_config_path}" ]]; then
+    printf "Removing existing files in \`%s\`...\r" "${nvim_config_path}"
+    rm -r -- "${nvim_config_path}"  # Delete the existing Neovim configuration directory.
+    printf "Removing existing files in \`%s\`... Done!\n" "${nvim_config_path}"
+
+else
+    echo "No existing files found in \`${nvim_config_path}\`."
+
+fi
+
+if [[ -e "${packer_installation_path}" ]]; then
+    printf "Removing existing files in \`%s\`...\r" "${packer_installation_path}"
+    rm -rf -- "${packer_installation_path}"
+    printf "Removing existing files in \`%s\`... Done!\n" "${packer_installation_path}"
+
+else
+    echo "No existing files found in \`${packer_installation_path}\`."
+
+fi
+
+if [[ -e "$plugins_installed_flag_file" ]]; then
+    printf "Removing flag file in \`%s\`...\r" "${plugins_installed_flag_file}"
+    rm -- "${plugins_installed_flag_file}"
+    printf "Removing flag file in \`%s\`... Done!\n" "${plugins_installed_flag_file}"
+
+else
+    echo "No flag file found in \`${plugins_installed_flag_file}\`."
+
+fi
+
+# Check if the installation files exist.
+if [[ -d "$installation_files" ]]; then
+    printf "Copying customization files to \`%s\`...\r" "${nvim_config_path}"
+    if cp -r "$installation_files" "$nvim_config_path"; then  # Copy the customization files to the Neovim configuration directory.
+        printf "Copying customization files to \`%s\`... Done!\n" "${nvim_config_path}"
+        echo "Please run \`nvim\` to finish the installation."
+        exit 0
+
+    else
+        printf "Copying customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+        exit 7
+    fi
+
+else
+    printf "Downloading customization files to \`%s\`...\r" "${nvim_config_path}"
+    mkdir -p "${nvim_config_path}/lua"  # Create the Neovim configuration directory.
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/init.lua" -o "${nvim_config_path}/init.lua"; then
+        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+        exit 8
+    fi
+
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/keymaps.lua" -o "${nvim_config_path}/lua/keymaps.lua"; then
+        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+        exit 9
+    fi
+
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/options.lua" -o "${nvim_config_path}/lua/options.lua"; then
+        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+        exit 10
+    fi
+
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/plugins.lua" -o "${nvim_config_path}/lua/plugins.lua"; then
+        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+        exit 11
+    fi
+
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/vars.lua" -o "${nvim_config_path}/lua/vars.lua"; then
+        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+        exit 12
+    fi
+
+    printf "Downloading customization files to \`%s\`... Done!\n" "${nvim_config_path}"
+    echo "You may have to run \`:PackerSync\` and \`:COQdeps\` to successfully update."
+    exit 0
+fi
