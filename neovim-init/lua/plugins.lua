@@ -67,6 +67,12 @@ Packer.startup(
             }
         )
         use("lukas-reineke/indent-blankline.nvim")           -- Indentation guides
+        use(
+            {
+                "kevinhwang91/nvim-ufo",
+                requires = {{"kevinhwang91/promise-async"}}
+            }
+        )
         use("folke/which-key.nvim")                          -- Displays possible key bindings
         use("folke/twilight.nvim")                           -- Dim inactive portions of the code
 
