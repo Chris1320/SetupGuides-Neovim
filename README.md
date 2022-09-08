@@ -99,6 +99,8 @@ This guide will help you install Neovim and the following plugins:
 
 ## Automatic Customization Guide
 
+**NOTE**: This assumes that you are using APT as your package manager.
+
 1. Update APT. `sudo apt update`
 2. Install git. `sudo apt install git`
 3. Install Neovim.
