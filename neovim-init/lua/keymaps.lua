@@ -63,6 +63,11 @@ end
 
 vim.keymap.set('n', "<leader>l", toggleLspLines, {desc="Toggle LSP Lines"})
 
+-- nvim-ufo shortcuts
+-- FIXME: Raises an unhandled exception when nvim-ufo is not yet installed.
+vim.keymap.set('n', "zR", require("ufo").openAllFolds)
+vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
+
 -- nvim-tree shortcuts
 vim.keymap.set('n', "<leader>fo", ":NvimTreeOpen<cr>", {desc="Open nvim-tree"})
 vim.keymap.set('n', "<leader>fc", ":NvimTreeClose<cr>", {desc="Close nvim-tree"})

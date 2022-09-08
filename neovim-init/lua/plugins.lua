@@ -115,22 +115,6 @@ local function setupCatppuccin()
     local catppuccin = require("catppuccin")
     catppuccin.setup(
         {
-            --[[
-            styles = {
-                comments = "italic",
-                conditionals = "italic",
-                loops = "NONE",
-                functions = "NONE",
-                keywords = "NONE",
-                strings = "NONE",
-                variables = "NONE",
-                numbers = "NONE",
-                booleans = "NONE",
-                properties = "NONE",
-                types = "NONE",
-                operators = "NONE",
-            },
-            --]]
             integrations = {
                 barbar = true,
                 bufferline = true,
@@ -202,21 +186,7 @@ end
 
 local function setupIndentBlankline()
     local indent_blankline = require("indent_blankline")
-    indent_blankline.setup(
-        --[[
-        {
-            space_char_blankline = " ",
-            char_highlight_list = {
-                "IndentBlanklineIndent1",
-                "IndentBlanklineIndent2",
-                "IndentBlanklineIndent3",
-                "IndentBlanklineIndent4",
-                "IndentBlanklineIndent5",
-                "IndentBlanklineIndent6",
-            }
-        }
-        --]]
-    )
+    indent_blankline.setup()
 end
 
 local function setupAutoPairs()
@@ -238,6 +208,21 @@ local function setupAutoPairs()
             }
         }
     )
+end
+
+local function setupNvimUfo()
+    local ufo = require("ufo")
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true
+    }
+    for _, language_server in ipairs(require("lspconfig")) do
+        require("lspconfig")[language_server].setup({capabilities = capabilities})
+
+    end
+
+    ufo.setup()
 end
 
 local function setupWhichKey()
@@ -470,16 +455,20 @@ else
     setupFeline()
     setupBarbar()
     setupGitsigns()
-    setupIndentBlankline()
-    setupAutoPairs()
-    setupWhichKey()
-    setupTwilight()
-    setupTrouble()
-    setupLspLines()
-    setupTelescope()
-    setupNvimTree()
+
     setupLspConfig()
     setupTreesitter()
+    setupNvimUfo()
     setupCoq()
+
+    setupLspLines()
+    setupIndentBlankline()
+    setupAutoPairs()
+    setupTrouble()
+    setupTelescope()
+
+    setupWhichKey()
+    setupTwilight()
+    setupNvimTree()
 
 end
