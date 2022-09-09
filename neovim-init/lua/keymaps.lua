@@ -9,6 +9,7 @@ This modules defines keymaps for the end-user.
 
 -- Set Neovim shortcuts
 vim.keymap.set('n', "<leader>/", ":nohlsearch<cr>", {noremap=true, silent=true, desc="Remove last search highlights"})
+vim.keymap.set('n', "<leader>w", ":set wrap!<cr>", {noremap=true, silent=true, desc="Toggle word wrap"})
 
 -- Barbar shortcuts
 vim.keymap.set('n', "<A-,>", ":BufferPrevious<cr>", {noremap=true, silent=true})                               -- Navigate buffers
@@ -62,6 +63,12 @@ local function toggleLspLines()
 end
 
 vim.keymap.set('n', "<leader>l", toggleLspLines, {desc="Toggle LSP Lines"})
+
+-- nvim-ufo shortcuts
+if package.loaded['ufo'] then  -- Only set the keymap if nvim-ufo is installed.
+    vim.keymap.set('n', "zR", require("ufo").openAllFolds)
+    vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
+end
 
 -- nvim-tree shortcuts
 vim.keymap.set('n', "<leader>fo", ":NvimTreeOpen<cr>", {desc="Open nvim-tree"})

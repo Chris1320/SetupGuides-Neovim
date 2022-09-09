@@ -42,17 +42,32 @@ vim.opt.shiftwidth = 4                                      -- width for autoind
 vim.opt.tabstop = 4                                         -- number of columns occupied by a tab.
 vim.opt.softtabstop = 4                                     -- see multiple spaces as tabstops so <BS> does the right thing.
 
-vim.opt.foldmethod = "expr"                                 -- use treesitter to determine where to fold.
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"             -- the expression to use for folding.
+vim.opt.foldmethod = "manual"                               -- use treesitter to determine where to fold.
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"          -- the expression to use for folding.
 
+vim.opt.foldcolumn = "1"
 vim.opt.foldlevel = 99                                      -- fold level.
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
+
 vim.opt.list = true                                         -- enable display of unprintable characters.
 if vars["show_eols"] then                                   -- Enable if you want to display spaces, trailing spaces, and EOLs.
     vim.opt.listchars:append("eol:" .. vars["eol_char"])
+
 end
 if vars["show_spaces"] then
     vim.opt.listchars:append("space:" .. vars["space_char"])
+
 end
 if vars["show_trails"] then
     vim.opt.listchars:append("trail:" .. vars["trail_char"])
+
 end
+
+vim.opt.fillchars:append({
+    fold = vars["fold_chars"]["fold"],
+    foldopen = vars["fold_chars"]["open"],
+    foldclose = vars["fold_chars"]["close"],
+    foldsep = vars["fold_chars"]["sep"],
+    eob = vars["fold_chars"]["eob"]
+})

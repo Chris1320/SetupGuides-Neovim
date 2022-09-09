@@ -14,12 +14,21 @@ return {
     -- Editor
     ctermfg = "grey",     -- The color of the line numbers.
     use_spaces = true,    -- Convert tabs to spaces.
+
     show_eols = false,    -- Show EOL characters.
     show_spaces = false,  -- Show space characters.
     show_trails = true,   -- Show trailing spaces.
+
     eol_char = '↴',       -- The character for EOLs when `list` is enabled.
     space_char = '⋅',     -- The character for a space when `list` is enabled.
     trail_char = '·',     -- The character for trailing spaces when `list` is enabled.
+    fold_chars = {        -- Characters for fold indicators
+        fold = " ",        -- Fold text
+        open = "",       -- Opened fold
+        close = "",      -- Closed fold
+        sep = " ",         -- Fold separator
+        eob = " "          -- Empty lines at the end of a buffer
+    },
 
     -- Plugin Configurations
 
