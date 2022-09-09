@@ -5,7 +5,6 @@ This guide will help you install Neovim and the following plugins:
 - Plugin Manager
     - [packer](https://github.com/wbthomason/packer.nvim): Plugin Manager for Neovim.
 - Linting and Syntax Checking
-    - [copilot.vim](https://github.com/github/copilot.vim): GitHub Copilot for Vim.
     - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
     - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
     - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
@@ -24,6 +23,7 @@ This guide will help you install Neovim and the following plugins:
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 - Code Completion
     - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
+    - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
     - [coq_nvim](https://github.com/ms-jpq/coq_nvim/): Code completion.
     - [coq.artifacts](https://github.com/ms-jpq/coq.artifacts): COQ snippets.
     - [coq.thirdparty](https://github.com/ms-jpq/coq.thirdparty): COQ 3rd-party integration.
@@ -33,6 +33,7 @@ This guide will help you install Neovim and the following plugins:
 - Dependencies
     - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons): Provides filetype icons.
     - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim): A Lua library.
+    - [promise-async](https://github.com/kevinhwang91/promise-async): A port of *Promise & Async* from JavaScript to Lua.
 
 **Custom Key Bindings**:
 
@@ -41,6 +42,7 @@ This guide will help you install Neovim and the following plugins:
 | `,`           |                                        | Leader key                                   |           |
 |               |                                        |                                              |           |
 | `<leader>/`   | `:nohlsearch`                          | Clear last search highlight                  |           |
+| `<leader>w`   | `:set wrap` or `:set nowrap`           | Toggle word wrap.                            |           |
 |               |                                        |                                              |           |
 | `<A-,>`       | `:BufferPrevious`                      | Go to previous buffer                        | Barbar    |
 | `<A-.>`       | `:BufferNext`                          | Go to next buffer                            | Barbar    |

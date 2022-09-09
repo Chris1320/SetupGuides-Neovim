@@ -9,6 +9,7 @@ This modules defines keymaps for the end-user.
 
 -- Set Neovim shortcuts
 vim.keymap.set('n', "<leader>/", ":nohlsearch<cr>", {noremap=true, silent=true, desc="Remove last search highlights"})
+vim.keymap.set('n', "<leader>w", ":set wrap!<cr>", {noremap=true, silent=true, desc="Toggle word wrap"})
 
 -- Barbar shortcuts
 vim.keymap.set('n', "<A-,>", ":BufferPrevious<cr>", {noremap=true, silent=true})                               -- Navigate buffers
