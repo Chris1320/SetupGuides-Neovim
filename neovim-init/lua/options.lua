@@ -63,3 +63,11 @@ if vars["show_trails"] then
     vim.opt.listchars:append("trail:" .. vars["trail_char"])
 
 end
+
+vim.opt.fillchars:append({
+    fold = vars["fold_chars"]["fold"],
+    foldopen = vars["fold_chars"]["open"],
+    foldclose = vars["fold_chars"]["close"],
+    foldsep = vars["fold_chars"]["sep"],
+    eob = vars["fold_chars"]["eob"]
+})
