@@ -6,7 +6,7 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 3 3)
+version=(0 3 4)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="nvim-ufo"  # The branch to which the configs will be pulled from.
@@ -54,20 +54,21 @@ else  # If Neovim is installed, check its version.
     nvim_version=${nvim_version[*]:5:6}  # Get the version of Neovim using `nvim -v` in format `vX.X.X`.
     echo "Detected Neovim version: ${nvim_version}"
 
-    upgrade_prompt="Neovim ${nvim_version} is not supported.\nPlease upgrade to at least v${min_nvim_version[*]:0:1}.${min_nvim_version[*]:1:1}.${min_nvim_version[*]:2:1} or higher and try again.\n"
+    upgrade_prompt1="Neovim ${nvim_version} is not supported."
+    upgrade_prompt2="Please upgrade to at least v${min_nvim_version[*]:0:1}.${min_nvim_version[*]:1:1}.${min_nvim_version[*]:2:1} or higher and try again."
     # The if-else nest below will check if the user's Neovim version is supported.
     if [[ ${nvim_version:1:1} -lt ${min_nvim_version[*]:0:1} ]]; then  # Check major version.
-        printf "%s" "$upgrade_prompt"
+        printf "%s\n%s" "$upgrade_prompt1" "$upgrade_prompt2"
         exit 3
 
     else
         if [[ ${nvim_version:3:1} -lt ${min_nvim_version[*]:1:1} ]]; then  # Check minor version.
-            printf "%s" "$upgrade_prompt"
+            printf "%s\n%s" "$upgrade_prompt1" "$upgrade_prompt2"
             exit 4
 
         else
             if [[ ${nvim_version:5:1} -lt ${min_nvim_version[*]:2:1} ]]; then  # Check patch/hotfix version.
-                printf "%s" "$upgrade_prompt"
+                printf "%s\n%s" "$upgrade_prompt1" "$upgrade_prompt2"
                 exit 5
             fi
         fi
