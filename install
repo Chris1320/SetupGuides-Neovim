@@ -64,6 +64,9 @@ if ! [[ -x "$(command -v python3)" ]]; then
     echo "- \`sudo apt update && sudo apt install python3\`; or visit"
     echo "- https://python.org/downloads"
     exit 4
+
+else
+    echo "Python 3 is installed."
 fi
 
 if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
