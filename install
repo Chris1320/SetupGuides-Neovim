@@ -6,7 +6,7 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 3 5)
+version=(0 3 6)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
@@ -40,6 +40,23 @@ if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
 
 else
     echo "Git is installed."
+fi
+
+if ! [[ -x "$(command -v gcc)" ]]; then
+    if ! [[ -x "$(command -v clang)" ]]; then
+        echo "\`gcc\` or \`clang\` is not installed."
+        echo "Please install either of the two and try again."
+        echo "- \`sudo apt update && sudo apt install gcc\`"
+        exit 5
+
+    else
+        echo "C compiler: clang"
+
+    fi
+
+else
+    echo "C compiler: gcc"
+
 fi
 
 if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
