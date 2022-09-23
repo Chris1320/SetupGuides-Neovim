@@ -112,7 +112,8 @@ This guide will help you install Neovim and the following plugins:
 4. Run the installer.
     - Using *wget*: `bash <(wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
     - Using *curl*: `bash <(curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
-5. Configure LSPs. `:Mason`
+5. Run `nvim` and allow installation of tree-sitter and plugins.[^5]
+6. Configure LSPs. `:Mason`
 
 ## Manual Customization Guide
 
@@ -148,6 +149,7 @@ This guide will help you install Neovim and the following plugins:
 [^2]: You can also install optional additional packages used by Telescope and COQ: `$ sudo apt install --upgrade fd-find ripgrep bc` (`fd-find` is `fd` on Termux systems.)
 [^3]: You can install a language by running `:TSInstall <language>` or editing the `languages` variable in `~/.config/nvim/lua/plugins.lua`. Read [the documentation](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages) for more information.
 [^4]: Manual configuration is necessary for each LSP server.
+[^5]: If a Packer installation fails, just retry with `:PackerSync`.
 
 -----
 
