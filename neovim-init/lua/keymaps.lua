@@ -7,6 +7,24 @@ https://github.com/SetupGuides/Neovim
 This modules defines keymaps for the end-user.
 ]]--
 
+local vars = require("vars")  -- Get variables.
+local info = require("info")  -- Get version
+
+-- Check if the config has been installed already.
+local plugins_installed_path = io.open(vars["plugins_installed_path"], 'r')
+if plugins_installed_path == nil then
+    First_run = true
+
+else
+    if plugins_installed_path:read() == "v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3] then
+        First_run = false
+
+    else
+        First_run = true
+
+    end
+end
+
 -- Set Neovim shortcuts
 vim.keymap.set('n', "<leader>/", ":nohlsearch<cr>", {noremap=true, silent=true, desc="Remove last search highlights"})
 vim.keymap.set('n', "<leader>w", ":set wrap!<cr>", {noremap=true, silent=true, desc="Toggle word wrap"})
@@ -65,15 +83,19 @@ end
 vim.keymap.set('n', "<leader>l", toggleLspLines, {desc="Toggle LSP Lines"})
 
 -- dap shortcuts
-vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
-vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
-vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
-vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
-vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
+if not First_run then
+    vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
+    vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
+    vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
+    vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
+    vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
+end
 
 -- nvim-ufo shortcuts
-vim.keymap.set('n', "zR", require("ufo").openAllFolds)
-vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
+if not First_run then
+    vim.keymap.set('n', "zR", require("ufo").openAllFolds)
+    vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
+end
 
 -- nvim-tree shortcuts
 vim.keymap.set('n', "<leader>fo", ":NvimTreeOpen<cr>", {desc="Open nvim-tree"})

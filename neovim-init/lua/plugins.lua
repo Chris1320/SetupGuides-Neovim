@@ -8,13 +8,14 @@ This module initializes plugins to be used in Neovim.
 ]]--
 
 local vars = require("vars")  -- Get variables.
+local info = require("info")  -- Get version information.
 
 local plugins_installed_path = io.open(vars["plugins_installed_path"], 'r')
 if plugins_installed_path == nil then
     First_run = true
 
 else
-    if plugins_installed_path:read() == "true" then
+    if plugins_installed_path:read() == "v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3] then
         First_run = false
 
     else
@@ -542,7 +543,7 @@ if First_run then
         print("[E] Failed to create flag file. please manually create a new empty file in `" .. vars["plugins_installed_path"] .. "`.")
 
     else
-        create_flag_file:write("true")
+        create_flag_file:write("v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3])
         create_flag_file:flush()
         create_flag_file:close()
 

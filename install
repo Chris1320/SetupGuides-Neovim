@@ -6,10 +6,10 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 4 0)
+version=(0 4 1)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_branch="main"  # The branch to which the configs will be pulled from.
+target_branch="dap-update"  # The branch to which the configs will be pulled from.
 installation_files="${PWD}/neovim-init"
 nvim_config_path="${HOME}/.config/nvim"
 nvim_data_path="${HOME}/.local/share/nvim"
@@ -247,6 +247,11 @@ else
     if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/vars.lua" -o "${nvim_config_path}/lua/vars.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
         exit 15
+    fi
+
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/info.lua" -o "${nvim_config_path}/lua/info.lua"; then
+        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+        exit 16
     fi
 
     printf "Downloading customization files to \`%s\`... Done!\n" "${nvim_config_path}"
