@@ -105,6 +105,9 @@ Packer.startup(
                 requires = {{"kyazdani42/nvim-web-devicons"}},
             }
         )
+
+        -- Debugging
+        use("mfussenegger/nvim-dap")                         -- Debug Adapter Protocol
         if First_run == true then
             Packer.sync()
         end
@@ -287,10 +290,11 @@ local function setupNvimTree()
     )
 end
 
-local function setupLspConfig()
+local function setupLspAndDapConfig()
     local mason = require("mason")
     local mlsp = require("mason-lspconfig")
     local lsp = require("lspconfig")
+    local dap = require("dap")
     local coq = require("coq")
 
     -- Setup mason
@@ -494,6 +498,9 @@ local function setupLspConfig()
             }
         )
     )
+
+    -- Setup dap
+    -- WIP
 end
 
 local function setupTreesitter()
@@ -548,7 +555,7 @@ else
     setupBarbar()
     setupGitsigns()
 
-    setupLspConfig()
+    setupLspAndDapConfig()
     setupTreesitter()
     setupNvimUfo()
     setupCoq()

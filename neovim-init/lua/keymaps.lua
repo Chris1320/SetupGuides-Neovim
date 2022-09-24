@@ -64,11 +64,16 @@ end
 
 vim.keymap.set('n', "<leader>l", toggleLspLines, {desc="Toggle LSP Lines"})
 
+-- dap shortcuts
+vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
+vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
+vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
+vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
+vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
+
 -- nvim-ufo shortcuts
-if package.loaded['ufo'] then  -- Only set the keymap if nvim-ufo is installed.
-    vim.keymap.set('n', "zR", require("ufo").openAllFolds)
-    vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
-end
+vim.keymap.set('n', "zR", require("ufo").openAllFolds)
+vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
 
 -- nvim-tree shortcuts
 vim.keymap.set('n', "<leader>fo", ":NvimTreeOpen<cr>", {desc="Open nvim-tree"})
