@@ -288,9 +288,10 @@ local function setupNvimTree()
 end
 
 local function setupLspConfig()
+    local mason = require("mason")
+    local mlsp = require("mason-lspconfig")
     local lsp = require("lspconfig")
     local coq = require("coq")
-    local mason = require("mason")
 
     -- Setup mason
     mason.setup(
@@ -306,6 +307,9 @@ local function setupLspConfig()
             }
         }
     )
+
+    -- Setup mason-lspconfig
+    mlsp.setup()
 
     -- Setup lspconfig
     lsp.clangd.setup(  -- enable clangd because we're going to install clang anyway.
