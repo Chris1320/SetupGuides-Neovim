@@ -312,10 +312,6 @@ local function setupLspConfig()
     mlsp.setup()
 
     -- Setup lspconfig
-    lsp.clangd.setup(  -- enable clangd because we're going to install clang anyway.
-        coq.lsp_ensure_capabilities()
-    )
-
     lsp.bashls.setup(
         coq.lsp_ensure_capabilities(
             {
@@ -326,11 +322,23 @@ local function setupLspConfig()
         )
     )
 
+    lsp.clangd.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
     lsp.cmake.setup(
         coq.lsp_ensure_capabilities()
     )
 
     lsp.cssls.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.cssmodules_ls.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.diagnosticls.setup(
         coq.lsp_ensure_capabilities()
     )
 
@@ -355,6 +363,10 @@ local function setupLspConfig()
         coq.lsp_ensure_capabilities()
     )
 
+    lsp.kotlin_language_server.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
     lsp.lemminx.setup(
         coq.lsp_ensure_capabilities()
     )
@@ -374,18 +386,6 @@ local function setupLspConfig()
         )
     )
 
-    lsp.omnisharp.setup(
-        coq.lsp_ensure_capabilities()
-    )
-
-    lsp.pyright.setup(
-        coq.lsp_ensure_capabilities()
-    )
-
-    lsp.rust_analyzer.setup(
-        coq.lsp_ensure_capabilities()
-    )
-
     lsp.sumneko_lua.setup(
         coq.lsp_ensure_capabilities(
             {
@@ -403,8 +403,70 @@ local function setupLspConfig()
         )
     )
 
+    lsp.marksman.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.omnisharp.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.omnisharp_mono.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.perlnavigator.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.pyright.setup(
+        coq.lsp_ensure_capabilities(
+            {
+                python = {
+                    analysis = {
+                        typeCheckingMode = "basic",
+                        diagnosticMode = "workspace",
+                        useLibraryCodeForTypes = true
+                    }
+                }
+            }
+        )
+    )
+
+    lsp.rust_analyzer.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.sqlls.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.tailwindcss.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.texlab.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
     lsp.tsserver.setup(
         coq.lsp_ensure_capabilities()
+    )
+
+    lsp.vimls.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.yamlls.setup(
+        coq.lsp_ensure_capabilities(
+            {
+                redhat = {
+                    telemetry = {
+                        enabled = false
+                    }
+                }
+            }
+        )
     )
 end
 
