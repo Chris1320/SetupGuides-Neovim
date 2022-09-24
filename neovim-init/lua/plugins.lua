@@ -292,7 +292,7 @@ local function setupLspConfig()
     local coq = require("coq")
     local mason = require("mason")
 
-    -- Setup nvim-lsp-installer
+    -- Setup mason
     mason.setup(
         {
             ui = {

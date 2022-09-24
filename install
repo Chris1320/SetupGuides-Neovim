@@ -6,7 +6,7 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 3 8)
+version=(0 3 9)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
@@ -32,23 +32,29 @@ echo
 # ? Check requirements.
 echo "Checking requirements..."
 if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
+    echo "Git       : not found"
+    echo
     echo "\`git\` is not installed. Please install git and try again."
     echo
+    echo "  [REASON]: Used by gitsigns plugin."
     echo "- \`sudo apt update && sudo apt install git\`; or visit"
     echo "- https://git-scm.com/downloads"
     exit 1
 
 else
-    echo "Git is installed."
+    echo "Git       : installed"
 fi
 
 if ! [[ -x "$(command -v gcc)" ]]; then
     if ! [[ -x "$(command -v clang)" ]]; then
+        echo "C compiler: not found"
+        echo
         echo "\`gcc\` or \`clang\` is not installed."
         echo "Please install either of the two and try again."
         echo
+        echo "  [REASON]: Used by tree-sitter plugin."
         echo "- \`sudo apt update && sudo apt install gcc\`"
-        exit 5
+        exit 2
 
     else
         echo "C compiler: clang"
@@ -59,22 +65,40 @@ else
 fi
 
 if ! [[ -x "$(command -v python3)" ]]; then
+    echo "Python 3  : not found"
+    echo
     echo "\`python3\` is not installed. Please install Python and try again."
     echo
+    echo "  [REASON]: Used by coq_nvim plugin."
     echo "- \`sudo apt update && sudo apt install python3\`; or visit"
     echo "- https://python.org/downloads"
+    exit 3
+
+else
+    echo "Python 3  : installed"
+fi
+
+if ! [[ -x "$(command -v npm)" ]]; then
+    echo "npm       : not found"
+    echo
+    echo "\`npm\` is not installed. Please install it and try again."
+    echo
+    echo "  [REASON]: Used by Mason plugin."
+    echo "- \`sudo apt update && sudo apt install nodejs npm\`; or visit"
+    echo "- https://nodejs.org/en/download/"
     exit 4
 
 else
-    echo "Python 3 is installed."
+    echo "npm       : installed"
 fi
 
+echo
 if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
     echo "\`nvim\` is not installed. Please install nvim and try again."
     echo
     echo "- \`sudo apt update && sudo apt install neovim\`; or visit"
     echo "- https://github.com/neovim/neovim/releases/latest"
-    exit 2
+    exit 5
 
 else  # If Neovim is installed, check its version.
     echo "Neovim is installed. Checking its version..."
@@ -88,7 +112,7 @@ else  # If Neovim is installed, check its version.
     if [[ "$user_nvim_version_value" -lt "$min_nvim_version_value" ]]; then
         echo "Neovim ${nvim_version} is not supported."
         echo "Please upgrade to at least v${min_nvim_version[*]:0:1}.${min_nvim_version[*]:1:1}.${min_nvim_version[*]:2:1} or higher and try again."
-        exit 3
+        exit 6
 
     else
         echo "User's Neovim version is supported."
@@ -130,7 +154,7 @@ while true; do
 
     elif [[ "${installation_confirmation}" =~ ^[n|N].* ]]; then
         echo "Cancelling installation."
-        exit 6
+        exit 7
 
     else
         echo "Unknown answer."
@@ -170,14 +194,14 @@ echo
 if [[ "${packer_perform}" = "install" ]]; then
     if ! git clone --depth=1 "https://github.com/wbthomason/packer.nvim.git" "${packer_installation_path}"; then
         echo "Failed to clone packer.nvim"
-        exit 13
+        exit 8
 
     fi
 
 else
     if ! cd "${packer_installation_path}" && git pull && cd -; then
         echo "Git pull failed."
-        exit 14
+        exit 9
 
     fi
 
@@ -194,7 +218,7 @@ if [[ -d "$installation_files" ]]; then
 
     else
         printf "Copying customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 7
+        exit 10
     fi
 
 else
@@ -202,27 +226,27 @@ else
     mkdir -p "${nvim_config_path}/lua"  # Create the Neovim configuration directory.
     if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/init.lua" -o "${nvim_config_path}/init.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 8
+        exit 11
     fi
 
     if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/keymaps.lua" -o "${nvim_config_path}/lua/keymaps.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 9
+        exit 12
     fi
 
     if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/options.lua" -o "${nvim_config_path}/lua/options.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 10
+        exit 13
     fi
 
     if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/plugins.lua" -o "${nvim_config_path}/lua/plugins.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 11
+        exit 14
     fi
 
     if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/vars.lua" -o "${nvim_config_path}/lua/vars.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 12
+        exit 15
     fi
 
     printf "Downloading customization files to \`%s\`... Done!\n" "${nvim_config_path}"
