@@ -408,11 +408,37 @@ local function setupLspConfig()
     )
 
     lsp.omnisharp.setup(
-        coq.lsp_ensure_capabilities()
+        coq.lsp_ensure_capabilities(
+            {
+                root_dir = function(filename, _)
+                    local root
+
+                    root = lsp.util.find_git_ancestor(filename)
+                    root = root or lsp.util.root_pattern(".sln")
+                    root = root or lsp.util.root_pattern(".csproj")
+                    root = root or '.'
+
+                    return root
+                end
+            }
+        )
     )
 
     lsp.omnisharp_mono.setup(
-        coq.lsp_ensure_capabilities()
+        coq.lsp_ensure_capabilities(
+            {
+                root_dir = function(filename, _)
+                    local root
+
+                    root = lsp.util.find_git_ancestor(filename)
+                    root = root or lsp.util.root_pattern(".sln")
+                    root = root or lsp.util.root_pattern(".csproj")
+                    root = root or '.'
+
+                    return root
+                end
+            }
+        )
     )
 
     lsp.perlnavigator.setup(
