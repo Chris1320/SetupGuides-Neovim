@@ -138,9 +138,9 @@ if not First_run then
 
     vim.keymap.set('n', "<leader>gP", require("gitsigns").diffthis, {noremap=true, silent=true, desc="Show buffer changes"})
 
-    vim.keymap.set('n', "<leader>gpv", require("gitsigns").preview_hunk, {noremap=true, silent=true, desc="Preview hunk"})
-    vim.keymap.set('n', "<leader>gpp", require("gitsigns").prev_hunk, {noremap=true, silent=true, desc="Preview previous hunk"})
-    vim.keymap.set('n', "<leader>gpn", require("gitsigns").next_hunk, {noremap=true, silent=true, desc="Preview next hunk"})
+    vim.keymap.set('n', "<leader>gps", require("gitsigns").preview_hunk, {noremap=true, silent=true, desc="Preview hunk"})
+    vim.keymap.set('n', "<leader>gpa", require("gitsigns").prev_hunk, {noremap=true, silent=true, desc="Preview previous hunk"})
+    vim.keymap.set('n', "<leader>gpd", require("gitsigns").next_hunk, {noremap=true, silent=true, desc="Preview next hunk"})
 
     vim.keymap.set({'n', 'v'}, "<leader>ghs", require("gitsigns").stage_hunk, {noremap=true, silent=true, desc="Stage hunk"})
     vim.keymap.set({'n', 'v'}, "<leader>ghr", require("gitsigns").reset_hunk, {noremap=true, silent=true, desc="Reset hunk"})
