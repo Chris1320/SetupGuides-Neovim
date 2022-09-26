@@ -6,14 +6,18 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 4 3)
+version=(0 4 4)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_branch="dap-update"  # The branch to which the configs will be pulled from.
+target_branch="main"  # The branch to which the configs will be pulled from.
+
+current_wd=$(pwd)
 installation_files="${PWD}/neovim-init"
 nvim_config_path="${HOME}/.config/nvim"
 nvim_data_path="${HOME}/.local/share/nvim"
 packer_installation_path="${nvim_data_path}/site/pack/packer/start/packer.nvim"
+flag_file="${nvim_data_path}/.plugins_installed"  # The file that is created after installing the config.
+
 min_nvim_version=(0 7 2)  # Minimum Neovim version required.
 
 # Enabled force re-install if `--reinstall` is passed as argument.
@@ -166,6 +170,18 @@ done
 # ? Install the customization files.
 echo
 
+if [[ "${config_perform}" = "install" ]]; then
+    if [[ -e "${flag_file}" ]]; then
+        printf "Removing flag file in \`%s\`...\r" "${flag_file}"
+        rm -- "${flag_file}"
+        printf "Removing flag file in \`%s\`... Done!\n" "${flag_file}"
+
+    else
+        echo "No existing flag file found in \`${flag_file}\`."
+
+    fi
+fi
+
 # Install or update, remove the configuration files.
 if [[ -e "${nvim_config_path}" ]]; then
     printf "Removing existing files in \`%s\`...\r" "${nvim_config_path}"
@@ -178,7 +194,7 @@ else
 fi
 
 # Only remove the packer installation files if performing a new install.
-if [[ "${packer_installation_path}" = "install" ]]; then
+if [[ "${packer_perform}" = "install" ]]; then
     if [[ -e "${packer_installation_path}" ]]; then
         printf "Removing existing files in \`%s\`...\r" "${packer_installation_path}"
         rm -rf -- "${packer_installation_path}"
@@ -190,23 +206,34 @@ if [[ "${packer_installation_path}" = "install" ]]; then
     fi
 fi
 
-echo
 if [[ "${packer_perform}" = "install" ]]; then
+    echo
     if ! git clone --depth=1 "https://github.com/wbthomason/packer.nvim.git" "${packer_installation_path}"; then
         echo "Failed to clone packer.nvim"
         exit 8
 
     fi
+    echo
 
 else
-    if ! cd "${packer_installation_path}" && git pull && cd -; then
-        echo "Git pull failed."
+    echo
+    if ! cd "${packer_installation_path}"; then
+        echo "Git pull failed. Changing directory to Packer installation path failed."
+        cd "${current_wd}" || exit 9
         exit 9
-
     fi
+    if ! git pull; then
+        echo "Git pull failed."
+        cd "${current_wd}" || exit 9
+        exit 9
+    fi
+    if ! cd "${current_wd}"; then
+        echo "Git pull failed. Unable to get back to directory."
+        exit 9
+    fi
+    echo
 
 fi
-echo
 
 # Check if the installation files exist.
 if [[ -d "$installation_files" ]]; then
