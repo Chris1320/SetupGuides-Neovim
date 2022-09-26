@@ -16,9 +16,11 @@ This guide will help you install Neovim and the following plugins:
 - Theming and Visual Plugins
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
+    - [dressing.nvim](https://github.com/stevearc/dressing.nvim): A UI customization plugin.
     - [feline.nvim](https://github.com/feline-nvim/feline.nvim): A customizable statusline.
     - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git Integration for buffers.
-    - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides
+    - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
+    - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [twilight.nvim](https://github.com/folke/twilight.nvim): Dim inactive parts of your code.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 - Code Completion

@@ -29,6 +29,9 @@ end
 vim.keymap.set('n', "<leader>/", ":nohlsearch<cr>", {noremap=true, silent=true, desc="Remove last search highlights"})
 vim.keymap.set('n', "<leader>w", ":set wrap!<cr>", {noremap=true, silent=true, desc="Toggle word wrap"})
 
+-- Neovim LSP shortcuts
+vim.keymap.set('n', "<leader>r", vim.lsp.buf.rename, {noremap=true, silent=true, desc="Rename symbol"})
+
 -- Barbar shortcuts
 if not First_run then
     vim.keymap.set('n', "<A-,>", ":BufferPrevious<cr>", {noremap=true, silent=true})                               -- Navigate buffers
@@ -65,6 +68,7 @@ if not First_run then
     vim.keymap.set('n', "<leader>tF", ":Telescope find_files<cr>", {desc="Search files"})
     vim.keymap.set('n', "<leader>ts", ":Telescope treesitter<cr>", {desc="See treesitter symbols"})
     vim.keymap.set('n', "<leader>tf", ":Telescope current_buffer_fuzzy_find<cr>", {desc="Search current buffer"})
+    vim.keymap.set('n', "<leader>th", ":Telescope notify<cr>", {desc="Show notification history"})
 end
 
 -- Trouble shortcuts
@@ -117,7 +121,7 @@ end
 if not First_run then
     local run_coq = function()
         vim.cmd("COQnow --shut-up")
-        print("[i] Auto-completion is now active.")
+        vim.notify("Auto-completion is now active.", "Information", {title="coq"})
     end
 
     vim.keymap.set('n', "<leader>c", run_coq, {noremap=true, silent=true, desc="Enable auto-completion"})

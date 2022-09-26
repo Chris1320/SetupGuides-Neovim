@@ -59,8 +59,10 @@ Packer.startup(
                 as = "catppuccin"
             }
         )
+        use("stevearc/dressing.nvim")                        -- UI Customization
         use("lewis6991/gitsigns.nvim")                       -- Git Integration
         use("feline-nvim/feline.nvim")                       -- Customizable statusline
+        use("rcarriga/nvim-notify")                          -- Notification Manager
         use(                                                 -- Tabline plugin
             {
                 "romgrk/barbar.nvim",
@@ -172,6 +174,16 @@ local function setupBarbar()
     )
 end
 
+local function setupDressing()
+    local dressing = require("dressing")
+    dressing.setup()
+end
+
+local function setupNotify()
+    local notify = require("notify")
+    vim.notify = notify
+end
+
 local function setupGitsigns()
     local gitsigns = require("gitsigns")
     gitsigns.setup(
@@ -278,6 +290,7 @@ local function setupTelescope()
             }
         }
     )
+    telescope.load_extension("notify")
 end
 
 local function setupNvimTree()
@@ -537,10 +550,10 @@ local function setupCoq()
 end
 
 if First_run then
-    print("[i] Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
+    vim.notify("Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
     local create_flag_file = io.open(vars["plugins_installed_path"], 'w')
     if create_flag_file == nil then
-        print("[E] Failed to create flag file. please manually create a new empty file in `" .. vars["plugins_installed_path"] .. "`.")
+        vim.notify("Failed to create flag file. please manually create a new empty file in `" .. vars["plugins_installed_path"] .. "`.", "error")
 
     else
         create_flag_file:write("v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3])
@@ -554,6 +567,8 @@ else
     setupCatppuccin()
     setupFeline()
     setupBarbar()
+    setupDressing()
+    setupNotify()
     setupGitsigns()
 
     setupLspAndDapConfig()
