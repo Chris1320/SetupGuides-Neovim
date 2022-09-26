@@ -116,8 +116,8 @@ end
 -- coq shortcuts
 if not First_run then
     local run_coq = function()
-        vim.cmd(":COQnow --shut-up<cr>")
-        print("Auto-completion is now active.")
+        vim.cmd("COQnow --shut-up")
+        print("[i] Auto-completion is now active.")
     end
 
     vim.keymap.set('n', "<leader>c", run_coq, {noremap=true, silent=true, desc="Enable auto-completion"})
