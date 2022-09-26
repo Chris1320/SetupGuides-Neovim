@@ -514,7 +514,17 @@ local function setupLspAndDapConfig()
     )
 
     -- Setup dap
-    -- WIP
+    dap.configurations.python = {
+        {
+            type = "python",
+            request = "launch",
+            name = "Launch File",
+            program = "${file}",
+            pythonPath = function()
+                return "./env/bin/python3"
+            end
+        }
+    }
 end
 
 local function setupTreesitter()
