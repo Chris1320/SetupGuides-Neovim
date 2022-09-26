@@ -30,6 +30,8 @@ This guide will help you install Neovim and the following plugins:
     - [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag): Auto-close/rename HTML tags.
 - File Explorer
     - [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua): File explorer tree
+- Debugging
+    - [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol Plugin
 - Dependencies
     - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons): Provides filetype icons.
     - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim): A Lua library.
