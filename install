@@ -9,7 +9,7 @@ name="Neovim Config Installer"
 version=(0 4 4)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_branch="dap-update"  # The branch to which the configs will be pulled from.
+target_branch="main"  # The branch to which the configs will be pulled from.
 
 current_wd=$(pwd)
 installation_files="${PWD}/neovim-init"
@@ -219,12 +219,12 @@ else
     echo
     if ! cd "${packer_installation_path}"; then
         echo "Git pull failed. Changing directory to Packer installation path failed."
-        cd "${current_wd}"
+        cd "${current_wd}" || exit 9
         exit 9
     fi
     if ! git pull; then
         echo "Git pull failed."
-        cd "${current_wd}"
+        cd "${current_wd}" || exit 9
         exit 9
     fi
     if ! cd "${current_wd}"; then
