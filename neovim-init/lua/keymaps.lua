@@ -29,6 +29,9 @@ end
 vim.keymap.set('n', "<leader>/", ":nohlsearch<cr>", {noremap=true, silent=true, desc="Remove last search highlights"})
 vim.keymap.set('n', "<leader>w", ":set wrap!<cr>", {noremap=true, silent=true, desc="Toggle word wrap"})
 
+-- Neovim LSP shortcuts
+vim.keymap.set('n', "<leader>r", vim.lsp.buf.rename, {noremap=true, silent=true, desc="Rename symbol"})
+
 -- Barbar shortcuts
 if not First_run then
     vim.keymap.set('n', "<A-,>", ":BufferPrevious<cr>", {noremap=true, silent=true})                               -- Navigate buffers

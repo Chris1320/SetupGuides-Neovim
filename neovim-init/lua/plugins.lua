@@ -59,6 +59,7 @@ Packer.startup(
                 as = "catppuccin"
             }
         )
+        use("stevearc/dressing.nvim")                        -- Borders
         use("lewis6991/gitsigns.nvim")                       -- Git Integration
         use("feline-nvim/feline.nvim")                       -- Customizable statusline
         use(                                                 -- Tabline plugin
@@ -170,6 +171,11 @@ local function setupBarbar()
             icon_custom_colors = true
         }
     )
+end
+
+local function setupDressing()
+    local dressing = require("dressing")
+    dressing.setup()
 end
 
 local function setupGitsigns()
@@ -554,6 +560,7 @@ else
     setupCatppuccin()
     setupFeline()
     setupBarbar()
+    setupDressing()
     setupGitsigns()
 
     setupLspAndDapConfig()
