@@ -73,8 +73,8 @@ if not First_run then
 
     -- Git integration (Parent keymap `g` is supposed to be owned by Gitsigns plugin.)
     vim.keymap.set('n', "<leader>gs", ":Telescope git_status<cr>", {desc="Show Git status"})
-    vim.keymap.set('n', "<leader>gc", ":Telescope git_commit<cr>", {desc="Show Git commits"})
-    vim.keymap.set('n', "<leader>gb", ":Telescope git_branch<cr>", {desc="Show Git branches"})
+    vim.keymap.set('n', "<leader>gc", ":Telescope git_commits<cr>", {desc="Show Git commits"})
+    vim.keymap.set('n', "<leader>gb", ":Telescope git_branches<cr>", {desc="Show Git branches"})
 
     -- Notify integration
     vim.keymap.set('n', "<leader>th", ":Telescope notify<cr>", {desc="Show notification history"})
