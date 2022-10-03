@@ -272,6 +272,12 @@ local function setupIlluminate()
                 "treesitter",
                 "regex"
             },
+            filetypes_denylist = {
+                "mason",
+                "NvimTree",
+                "TelescopePrompt",
+                "Trouble"
+            },
             under_cursor = true
         }
     )
