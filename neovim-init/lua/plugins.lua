@@ -360,6 +360,10 @@ local function setupLspAndDapConfig()
         coq.lsp_ensure_capabilities()
     )
 
+    lsp.dockerls.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
     lsp.html.setup(
         coq.lsp_ensure_capabilities(
             {

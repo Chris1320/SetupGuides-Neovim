@@ -8,5 +8,5 @@ This module provides information about the script.
 ]]--
 
 return {
-    version = {0, 5, 0}
+    version = {0, 5, 1}
 }
