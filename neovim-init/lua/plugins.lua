@@ -82,6 +82,11 @@ Packer.startup(
                 requires = {{"kevinhwang91/promise-async"}}
             }
         )
+        use(
+            {
+                "RRethy/vim-illuminate"
+            }
+        )
         use("folke/which-key.nvim")                          -- Displays possible key bindings
         use("folke/twilight.nvim")                           -- Dim inactive portions of the code
 
@@ -245,6 +250,20 @@ local function setupNvimUfo()
     end
 
     ufo.setup()
+end
+
+local function setupIlluminate()
+    local illuminate = require("illuminate")
+    illuminate.configure(
+        {
+            providers = {
+                "lsp",
+                "treesitter",
+                "regex"
+            },
+            under_cursor = true
+        }
+    )
 end
 
 local function setupWhichKey()
@@ -603,6 +622,7 @@ else
     setupTrouble()
     setupTelescope()
 
+    setupIlluminate()
     setupWhichKey()
     setupTwilight()
     setupNvimTree()
