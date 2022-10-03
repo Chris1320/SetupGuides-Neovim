@@ -68,6 +68,15 @@ if not First_run then
     vim.keymap.set('n', "<leader>tF", ":Telescope find_files<cr>", {desc="Search files"})
     vim.keymap.set('n', "<leader>ts", ":Telescope treesitter<cr>", {desc="See treesitter symbols"})
     vim.keymap.set('n', "<leader>tf", ":Telescope current_buffer_fuzzy_find<cr>", {desc="Search current buffer"})
+    vim.keymap.set('n', "<leader>tr", ":Telescope lsp_references<cr>", {desc="Show References"})
+    vim.keymap.set('n', "<leader>td", ":Telescope lsp_definitions<cr>", {desc="Show Definitions"})
+
+    -- Git integration (Parent keymap `g` is supposed to be owned by Gitsigns plugin.)
+    vim.keymap.set('n', "<leader>gs", ":Telescope git_status<cr>", {desc="Show Git status"})
+    vim.keymap.set('n', "<leader>gc", ":Telescope git_commit<cr>", {desc="Show Git commits"})
+    vim.keymap.set('n', "<leader>gb", ":Telescope git_branch<cr>", {desc="Show Git branches"})
+
+    -- Notify integration
     vim.keymap.set('n', "<leader>th", ":Telescope notify<cr>", {desc="Show notification history"})
 end
 
