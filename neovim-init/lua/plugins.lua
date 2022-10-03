@@ -192,7 +192,18 @@ end
 
 local function setupNotify()
     local notify = require("notify")
-    vim.notify = notify
+    vim.notify = function(msg, ...)
+        for _, silenced_msg in ipairs(vars.blocklisted_notifications) do
+            if msg:match(silenced_msg) then
+                -- Do not show notification if part of its message is in <vars.silenced_notifications>.
+                return
+
+            end
+        end
+
+        notify(msg, ...)  -- Pass the parameters to nvim-notify.
+
+    end
 end
 
 local function setupGitsigns()

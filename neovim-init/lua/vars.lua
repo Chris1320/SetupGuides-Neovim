@@ -68,5 +68,11 @@ return {
         "vim",
         "yaml"
     },
+
+    -- Silenced notifications for nvim-notify
+    blocklisted_notifications = {
+        "warning: multiple different client offset_encodings"  -- See `https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428`
+    },                                                         -- for more information.
+
     plugins_installed_path = vim.fn.stdpath("data") .. "/.plugins_installed"  -- The file to look for when checking if nvim has already run.
 }
