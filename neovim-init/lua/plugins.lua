@@ -51,6 +51,12 @@ Packer.startup(
                 requires = {{"nvim-lua/plenary.nvim"}}
             }
         )
+        use(                                                 -- Native Telescope Sorter
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                run = "make"
+            }
+        )
 
         -- Visual plugins
         use(                                                 -- Catppuccin theme
@@ -291,6 +297,7 @@ local function setupTelescope()
         }
     )
     telescope.load_extension("notify")
+    telescope.load_extension("fzf")
 end
 
 local function setupNvimTree()

@@ -13,6 +13,7 @@ This guide will help you install Neovim and the following plugins:
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
 - Fuzzy Search
     - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
+    - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
 - Theming and Visual Plugins
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
