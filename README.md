@@ -23,6 +23,7 @@ This guide will help you install Neovim and the following plugins:
     - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [twilight.nvim](https://github.com/folke/twilight.nvim): Dim inactive parts of your code.
+    - [vim-illuminate](https://github.com/RRethy/vim-illuminate): Highlight all occurrences of words under cursor.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 - Code Completion
     - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
