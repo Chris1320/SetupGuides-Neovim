@@ -115,6 +115,7 @@ if not First_run then
     vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
     vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
     vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
+    vim.keymap.set('n', "<leader>dp", require("dapui").toggle, {desc="Toggle DAP UI"})
 end
 
 -- nvim-ufo shortcuts

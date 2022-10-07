@@ -123,6 +123,12 @@ Packer.startup(
 
         -- Debugging
         use("mfussenegger/nvim-dap")                         -- Debug Adapter Protocol
+        use(
+            {
+                "rcarriga/nvim-dap-ui",
+                requires = {{"mfussenegger/nvim-dap"}}
+            }
+        )
         if First_run == true then
             Packer.sync()
         end
@@ -528,6 +534,7 @@ local function setupLspAndDapConfig()
         coq.lsp_ensure_capabilities()
     )
 
+    -- Python configurations
     lsp.pyright.setup(
         coq.lsp_ensure_capabilities(
             {
@@ -541,6 +548,26 @@ local function setupLspAndDapConfig()
             }
         )
     )
+
+    --[[
+    dap.configurations.python = {
+        {
+            type = "python",
+            request = "launch",
+            name = "Launch File",
+            program = "${file}",
+            pythonPath = function()
+                return "/usr/bin/python3"
+            end
+        }
+    }
+
+    dap.adapters.python = {
+        type = "executable",
+        command = "python3",
+        args = {vars["mason_bin_path"] .. "pyright"}
+    }
+    ]]--
 
     lsp.rust_analyzer.setup(
         coq.lsp_ensure_capabilities()
@@ -577,19 +604,6 @@ local function setupLspAndDapConfig()
             }
         )
     )
-
-    -- Setup dap
-    dap.configurations.python = {
-        {
-            type = "python",
-            request = "launch",
-            name = "Launch File",
-            program = "${file}",
-            pythonPath = function()
-                return "./env/bin/python3"
-            end
-        }
-    }
 end
 
 local function setupTreesitter()
@@ -611,7 +625,7 @@ local function setupTreesitter()
 end
 
 local function setupCoq()
-    Coq = require("coq")
+    local coq = require("coq")
     local coq3p = require("coq_3p")
     coq3p(
         {
@@ -622,6 +636,18 @@ local function setupCoq()
             },
         }
     )
+end
+
+local function setupDapUI()
+    local dap_ui = require("dapui")
+    local dap = require("dap")
+
+    dap_ui.setup()
+
+    -- Automatically open and close DAP UI panel.
+    dap.listeners.after.event_initialized["dapui_config"] = dap_ui.open
+    dap.listeners.before.event_terminated["dapui_config"] = dap_ui.close
+    dap.listeners.before.event_exited["dapui_config"] = dap_ui.close
 end
 
 if First_run then
@@ -650,6 +676,7 @@ else
     setupTreesitter()
     setupNvimUfo()
     setupCoq()
+    setupDapUI()
 
     setupLspLines()
     setupIndentBlankline()

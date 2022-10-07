@@ -74,6 +74,7 @@ return {
         "warning: multiple different client offset_encodings"  -- See `https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428`
     },                                                         -- for more information.
 
+    mason_bin_path = vim.fn.stdpath("data") .. "/mason/bin/",
     catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
     plugins_installed_path = vim.fn.stdpath("data") .. "/.plugins_installed"  -- The file to look for when checking if nvim has already run.
 }

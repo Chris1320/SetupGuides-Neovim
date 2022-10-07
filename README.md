@@ -36,6 +36,7 @@ This guide will help you install Neovim and the following plugins:
     - [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua): File explorer tree
 - Debugging
     - [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol Plugin
+    - [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): User Interface for nvim-dap.
 - Dependencies
     - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons): Provides filetype icons.
     - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim): A Lua library.
