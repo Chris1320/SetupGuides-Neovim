@@ -29,6 +29,9 @@ end
 vim.keymap.set('n', "<leader>/", ":nohlsearch<cr>", {noremap=true, silent=true, desc="Remove last search highlights"})
 vim.keymap.set('n', "<leader>w", ":set wrap!<cr>", {noremap=true, silent=true, desc="Toggle word wrap"})
 
+-- Neovim LSP shortcuts
+vim.keymap.set('n', "<leader>r", vim.lsp.buf.rename, {noremap=true, silent=true, desc="Rename symbol"})
+
 -- Barbar shortcuts
 if not First_run then
     vim.keymap.set('n', "<A-,>", ":BufferPrevious<cr>", {noremap=true, silent=true})                               -- Navigate buffers
@@ -54,8 +57,8 @@ if not First_run then
     vim.keymap.set('n', "<leader>bol", ":BufferOrderByLanguage<cr>", {desc="Order buffers by language"})
     vim.keymap.set('n', "<leader>bow", ":BufferOrderByWindowNumber<cr>", {desc="Order buffers by window number"})
 
-    vim.keymap.set('n', "<leader>be", ":BarbarEnable", {desc="Enable Barbar"})                                     -- Enable/disable barbar
-    vim.keymap.set('n', "<leader>bd", ":BarbarDisable", {desc="Disable Barbar"})
+    vim.keymap.set('n', "<leader>be", ":BarbarEnable<cr>", {desc="Enable Barbar"})                                     -- Enable/disable barbar
+    vim.keymap.set('n', "<leader>bd", ":BarbarDisable<cr>", {desc="Disable Barbar"})
 end
 
 -- Telescope shortcuts
@@ -65,6 +68,16 @@ if not First_run then
     vim.keymap.set('n', "<leader>tF", ":Telescope find_files<cr>", {desc="Search files"})
     vim.keymap.set('n', "<leader>ts", ":Telescope treesitter<cr>", {desc="See treesitter symbols"})
     vim.keymap.set('n', "<leader>tf", ":Telescope current_buffer_fuzzy_find<cr>", {desc="Search current buffer"})
+    vim.keymap.set('n', "<leader>tr", ":Telescope lsp_references<cr>", {desc="Show References"})
+    vim.keymap.set('n', "<leader>td", ":Telescope lsp_definitions<cr>", {desc="Show Definitions"})
+
+    -- Git integration (Parent keymap `g` is supposed to be owned by Gitsigns plugin.)
+    vim.keymap.set('n', "<leader>gs", ":Telescope git_status<cr>", {desc="Show Git status"})
+    vim.keymap.set('n', "<leader>gc", ":Telescope git_commits<cr>", {desc="Show Git commits"})
+    vim.keymap.set('n', "<leader>gb", ":Telescope git_branches<cr>", {desc="Show Git branches"})
+
+    -- Notify integration
+    vim.keymap.set('n', "<leader>th", ":Telescope notify<cr>", {desc="Show notification history"})
 end
 
 -- Trouble shortcuts
@@ -78,16 +91,21 @@ end
 
 -- LSP Lines shortcuts
 if not First_run then
-    local function toggleLspLines()
-        -- Enable virtual text if LSP Lines is disabled.
-        local new_value = {
-            virtual_text = not vim.diagnostic.config().virtual_text,
-            virtual_lines = not vim.diagnostic.config().virtual_lines
-        }
-        vim.diagnostic.config(new_value)
-    end
+    vim.keymap.set(
+        'n',
+        "<leader>l",
+        function()
+            -- Toggle values of `virtual_text` and `virtual_lines`.
+            vim.diagnostic.config(
+                {
+                    virtual_text = not vim.diagnostic.config().virtual_text,
+                    virtual_lines = not vim.diagnostic.config().virtual_lines
+                }
+            )
+        end,
+        {desc="Toggle LSP Lines"}
+    )
 
-    vim.keymap.set('n', "<leader>l", toggleLspLines, {desc="Toggle LSP Lines"})
 end
 
 -- dap shortcuts
@@ -117,7 +135,7 @@ end
 if not First_run then
     local run_coq = function()
         vim.cmd("COQnow --shut-up")
-        print("[i] Auto-completion is now active.")
+        vim.notify("Auto-completion is now active.", "Information", {title="coq"})
     end
 
     vim.keymap.set('n', "<leader>c", run_coq, {noremap=true, silent=true, desc="Enable auto-completion"})

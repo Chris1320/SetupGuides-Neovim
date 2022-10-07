@@ -51,16 +51,25 @@ Packer.startup(
                 requires = {{"nvim-lua/plenary.nvim"}}
             }
         )
+        use(                                                 -- Native Telescope Sorter
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                run = "make"
+            }
+        )
 
         -- Visual plugins
         use(                                                 -- Catppuccin theme
             {
                 "catppuccin/nvim",
-                as = "catppuccin"
+                as = "catppuccin",
+                run = ":CatppuccinCompile"  -- compile catppuccin for faster startup.
             }
         )
+        use("stevearc/dressing.nvim")                        -- UI Customization
         use("lewis6991/gitsigns.nvim")                       -- Git Integration
         use("feline-nvim/feline.nvim")                       -- Customizable statusline
+        use("rcarriga/nvim-notify")                          -- Notification Manager
         use(                                                 -- Tabline plugin
             {
                 "romgrk/barbar.nvim",
@@ -72,6 +81,11 @@ Packer.startup(
             {
                 "kevinhwang91/nvim-ufo",
                 requires = {{"kevinhwang91/promise-async"}}
+            }
+        )
+        use(
+            {
+                "RRethy/vim-illuminate"
             }
         )
         use("folke/which-key.nvim")                          -- Displays possible key bindings
@@ -119,9 +133,20 @@ local function setupCatppuccin()
     local catppuccin = require("catppuccin")
     catppuccin.setup(
         {
+            compile_path = vars["catppuccin_cache_dir"],
+            term_colors = true,
+            dim_inactive = {
+                enabled = true,
+                shade = "dark",
+                percentage = 0.15
+            },
             integrations = {
                 barbar = true,
                 bufferline = true,
+                dap = {
+                    enabled = true,
+                    enable_ui = true
+                },
                 gitsigns = true,
                 indent_blankline = {
                     enabled = true,
@@ -148,8 +173,13 @@ local function setupCatppuccin()
 end
 
 local function setupFeline()
-    local feline = require("feline")
+    -- Setup Catppuccin integration first according to the documentation.
+    -- https://github.com/catppuccin/nvim#special-integrations
+
     local catppuccin_integration = require("catppuccin.groups.integrations.feline")
+    catppuccin_integration.setup()
+
+    local feline = require("feline")
     feline.setup(
         {
             components = catppuccin_integration.get()
@@ -166,10 +196,32 @@ local function setupBarbar()
             tabpage = true,
             closable = true,
             clickable = true,
+            highlights = require("catppuccin.groups.integrations.bufferline").get(),  -- Catppuccin integration
             icons = true,
             icon_custom_colors = true
         }
     )
+end
+
+local function setupDressing()
+    local dressing = require("dressing")
+    dressing.setup()
+end
+
+local function setupNotify()
+    local notify = require("notify")
+    vim.notify = function(msg, ...)
+        for _, silenced_msg in ipairs(vars.blocklisted_notifications) do
+            if msg:match(silenced_msg) then
+                -- Do not show notification if part of its message is in <vars.silenced_notifications>.
+                return
+
+            end
+        end
+
+        notify(msg, ...)  -- Pass the parameters to nvim-notify.
+
+    end
 end
 
 local function setupGitsigns()
@@ -229,6 +281,26 @@ local function setupNvimUfo()
     ufo.setup()
 end
 
+local function setupIlluminate()
+    local illuminate = require("illuminate")
+    illuminate.configure(
+        {
+            providers = {
+                "lsp",
+                "treesitter",
+                "regex"
+            },
+            filetypes_denylist = {
+                "mason",
+                "NvimTree",
+                "TelescopePrompt",
+                "Trouble"
+            },
+            under_cursor = true
+        }
+    )
+end
+
 local function setupWhichKey()
     local which_key = require("which-key")
     which_key.setup()
@@ -278,6 +350,8 @@ local function setupTelescope()
             }
         }
     )
+    telescope.load_extension("notify")
+    telescope.load_extension("fzf")
 end
 
 local function setupNvimTree()
@@ -344,6 +418,10 @@ local function setupLspAndDapConfig()
     )
 
     lsp.diagnosticls.setup(
+        coq.lsp_ensure_capabilities()
+    )
+
+    lsp.dockerls.setup(
         coq.lsp_ensure_capabilities()
     )
 
@@ -501,7 +579,17 @@ local function setupLspAndDapConfig()
     )
 
     -- Setup dap
-    -- WIP
+    dap.configurations.python = {
+        {
+            type = "python",
+            request = "launch",
+            name = "Launch File",
+            program = "${file}",
+            pythonPath = function()
+                return "./env/bin/python3"
+            end
+        }
+    }
 end
 
 local function setupTreesitter()
@@ -537,10 +625,10 @@ local function setupCoq()
 end
 
 if First_run then
-    print("[i] Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
+    vim.notify("Please restart Neovim after Packer finishes the synchronization process to finish the installation...")
     local create_flag_file = io.open(vars["plugins_installed_path"], 'w')
     if create_flag_file == nil then
-        print("[E] Failed to create flag file. please manually create a new empty file in `" .. vars["plugins_installed_path"] .. "`.")
+        vim.notify("Failed to create flag file. please manually create a new empty file in `" .. vars["plugins_installed_path"] .. "`.", "error")
 
     else
         create_flag_file:write("v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3])
@@ -554,6 +642,8 @@ else
     setupCatppuccin()
     setupFeline()
     setupBarbar()
+    setupDressing()
+    setupNotify()
     setupGitsigns()
 
     setupLspAndDapConfig()
@@ -567,6 +657,7 @@ else
     setupTrouble()
     setupTelescope()
 
+    setupIlluminate()
     setupWhichKey()
     setupTwilight()
     setupNvimTree()

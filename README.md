@@ -13,13 +13,17 @@ This guide will help you install Neovim and the following plugins:
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
 - Fuzzy Search
     - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
+    - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
 - Theming and Visual Plugins
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
+    - [dressing.nvim](https://github.com/stevearc/dressing.nvim): A UI customization plugin.
     - [feline.nvim](https://github.com/feline-nvim/feline.nvim): A customizable statusline.
     - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git Integration for buffers.
-    - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides
+    - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
+    - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [twilight.nvim](https://github.com/folke/twilight.nvim): Dim inactive parts of your code.
+    - [vim-illuminate](https://github.com/RRethy/vim-illuminate): Highlight all occurrences of words under cursor.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 - Code Completion
     - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
