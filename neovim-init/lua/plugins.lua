@@ -177,7 +177,7 @@ local function setupFeline()
     -- https://github.com/catppuccin/nvim#special-integrations
 
     local catppuccin_integration = require("catppuccin.groups.integrations.feline")
-    catppuccin_integration.setup()
+    catppuccin_integration.setup({})
 
     local feline = require("feline")
     feline.setup(
