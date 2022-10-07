@@ -62,7 +62,8 @@ Packer.startup(
         use(                                                 -- Catppuccin theme
             {
                 "catppuccin/nvim",
-                as = "catppuccin"
+                as = "catppuccin",
+                run = ":CatppuccinCompile"  -- compile catppuccin for faster startup.
             }
         )
         use("stevearc/dressing.nvim")                        -- UI Customization
@@ -132,9 +133,20 @@ local function setupCatppuccin()
     local catppuccin = require("catppuccin")
     catppuccin.setup(
         {
+            compile_path = vars["catppuccin_cache_dir"],
+            term_colors = true,
+            dim_inactive = {
+                enabled = true,
+                shade = "dark",
+                percentage = 0.15
+            },
             integrations = {
                 barbar = true,
                 bufferline = true,
+                dap = {
+                    enabled = true,
+                    enable_ui = true
+                },
                 gitsigns = true,
                 indent_blankline = {
                     enabled = true,
@@ -161,8 +173,13 @@ local function setupCatppuccin()
 end
 
 local function setupFeline()
-    local feline = require("feline")
+    -- Setup Catppuccin integration first according to the documentation.
+    -- https://github.com/catppuccin/nvim#special-integrations
+
     local catppuccin_integration = require("catppuccin.groups.integrations.feline")
+    catppuccin_integration.setup()
+
+    local feline = require("feline")
     feline.setup(
         {
             components = catppuccin_integration.get()
@@ -179,6 +196,7 @@ local function setupBarbar()
             tabpage = true,
             closable = true,
             clickable = true,
+            highlights = require("catppuccin.groups.integrations.bufferline").get(),  -- Catppuccin integration
             icons = true,
             icon_custom_colors = true
         }

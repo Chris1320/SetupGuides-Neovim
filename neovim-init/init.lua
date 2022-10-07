@@ -16,7 +16,6 @@ vim.cmd  -- commands
 vim.opt  -- options (`set` command in vim)
 ]]--
 
-require("vars")     -- Load variables
 require("options")  -- Set options.
-require("keymaps")  -- Set keymaps.
 require("plugins")  -- Load plugins.
+require("keymaps")  -- Set keymaps.
