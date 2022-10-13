@@ -39,7 +39,7 @@ return {
     git_blame_format = "<author>, on <author_time:%Y-%m-%d> • <summary>",
 
     -- Treesitter
-    languages = {                          -- [add|remove] languages you [don't] want to use.
+    treesitter_languages = {                          -- [add|remove] languages you [don't] want to use.
         "bash",                            -- Reference: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
         "c",
         "cpp",
@@ -71,8 +71,11 @@ return {
 
     -- Silenced notifications for nvim-notify
     blocklisted_notifications = {
-        "warning: multiple different client offset_encodings"  -- See `https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428`
-    },                                                         -- for more information.
+        "warning: multiple different client offset_encodings",  -- See `https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428`
+                                                                -- for more information.
+        "received `end` message with no corresponding `begin`",  -- Java lsp server error (WIP)
+        "Could not find `Cargo.toml`"  -- Rust lspconfig warning (WIP)
+    },
 
     mason_bin_path = vim.fn.stdpath("data") .. "/mason/bin/",
     catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
