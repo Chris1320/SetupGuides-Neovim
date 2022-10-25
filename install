@@ -3,6 +3,7 @@
 # This script has been tested on the following systems:
 # - GNU bash v5.1.16 on Linux Mint 21
 # - GNU bash v5.1.16 on Kali Linux Rolling
+# - GNU bash v5.2.2 on Termux Terminal Emulator 0.118.0
 
 # ? Set variables.
 name="Neovim Config Installer"
@@ -11,7 +12,7 @@ title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
 
-current_wd=$(pwd)
+current_wd="${PWD}"
 installation_files="${PWD}/neovim-init"
 nvim_config_path="${HOME}/.config/nvim"
 nvim_data_path="${HOME}/.local/share/nvim"
