@@ -252,32 +252,32 @@ if [[ -d "$installation_files" ]]; then
 else
     printf "Downloading customization files to \`%s\`...\r" "${nvim_config_path}"
     mkdir -p "${nvim_config_path}/lua"  # Create the Neovim configuration directory.
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/init.lua" -o "${nvim_config_path}/init.lua"; then
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/src/init.lua" -o "${nvim_config_path}/init.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
         exit 11
     fi
 
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/keymaps.lua" -o "${nvim_config_path}/lua/keymaps.lua"; then
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/src/lua/keymaps.lua" -o "${nvim_config_path}/lua/keymaps.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
         exit 12
     fi
 
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/options.lua" -o "${nvim_config_path}/lua/options.lua"; then
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/src/lua/options.lua" -o "${nvim_config_path}/lua/options.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
         exit 13
     fi
 
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/plugins.lua" -o "${nvim_config_path}/lua/plugins.lua"; then
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/src/lua/plugins.lua" -o "${nvim_config_path}/lua/plugins.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
         exit 14
     fi
 
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/vars.lua" -o "${nvim_config_path}/lua/vars.lua"; then
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/src/lua/vars.lua" -o "${nvim_config_path}/lua/vars.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
         exit 15
     fi
 
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/info.lua" -o "${nvim_config_path}/lua/info.lua"; then
+    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/src/lua/info.lua" -o "${nvim_config_path}/lua/info.lua"; then
         printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
         exit 16
     fi
