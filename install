@@ -7,13 +7,13 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 7 0)
+version=(0 8 0)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_branch="main"  # The branch to which the configs will be pulled from.
+target_branch="rewrite"  # The branch to which the configs will be pulled from.
 
 current_wd="${PWD}"
-installation_files="${PWD}/neovim-init"
+installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 nvim_data_path="${HOME}/.local/share/nvim"
 packer_installation_path="${nvim_data_path}/site/pack/packer/start/packer.nvim"
