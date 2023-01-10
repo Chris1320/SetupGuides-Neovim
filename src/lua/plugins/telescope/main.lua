@@ -10,6 +10,12 @@ return {
                         i = {["<C-t>"] = trouble.open_with_trouble},
                         n = {["<C-t>"] = trouble.open_with_trouble}
                     }
+                },
+                extensions = {
+                    fuzzy = true,
+                    override_generic_sorter = true,
+                    override_file_sorter = true,
+                    case_mode = "smart_case"
                 }
             }
         )

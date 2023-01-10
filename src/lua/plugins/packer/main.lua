@@ -11,7 +11,12 @@ return {
                 use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP.
                 use("williamboman/mason.nvim")                       -- LSP, DAP, etc. Manager for Neovim.
                 use("williamboman/mason-lspconfig.nvim")
-                use("nvim-treesitter/nvim-treesitter")               -- Treesitter integration for Neovim
+                use(                                                 -- Treesitter integration for Neovim
+                    {
+                        "nvim-treesitter/nvim-treesitter",
+                        run = ":TSUpdate"
+                    }
+                )
                 use(                                                 -- diagnostics, quickfixes, etc.
                     {
                         "folke/trouble.nvim",
@@ -44,7 +49,12 @@ return {
                 )
                 use("stevearc/dressing.nvim")                        -- UI Customization
                 use("lewis6991/gitsigns.nvim")                       -- Git Integration
-                use("feline-nvim/feline.nvim")                       -- Customizable statusline
+                use(
+                    {
+                        "feline-nvim/feline.nvim",
+                        requires = {{"kyazdani42/nvim-web-devicons"}}
+                    }
+                )                       -- Customizable statusline
                 use("rcarriga/nvim-notify")                          -- Notification Manager
                 use(                                                 -- Tabline plugin
                     {
@@ -65,27 +75,8 @@ return {
                     }
                 )
                 use("folke/which-key.nvim")                          -- Displays possible key bindings
-                use("folke/twilight.nvim")                           -- Dim inactive portions of the code
 
                 -- Autocompletion
-                use(                                                 -- The main autocompletion tool
-                    {
-                        "ms-jpq/coq_nvim",
-                        branch = "coq"
-                    }
-                )
-                use(                                                 -- coq autocompletion snippets
-                    {
-                        "ms-jpq/coq.artifacts",
-                        branch = "artifacts"
-                    }
-                )
-                use(                                                 -- coq 3rd-party sources
-                    {
-                        "ms-jpq/coq.thirdparty",
-                        branch = "3p"
-                    }
-                )
                 use("windwp/nvim-autopairs")                         -- Bracket auto-pairing
                 use("windwp/nvim-ts-autotag")                        -- Auto-close/rename HTML tags
 
@@ -97,14 +88,6 @@ return {
                     }
                 )
 
-                -- Debugging
-                use("mfussenegger/nvim-dap")                         -- Debug Adapter Protocol
-                use(
-                    {
-                        "rcarriga/nvim-dap-ui",
-                        requires = {{"mfussenegger/nvim-dap"}}
-                    }
-                )
                 if First_run == true then
                     packer.sync()
                 end

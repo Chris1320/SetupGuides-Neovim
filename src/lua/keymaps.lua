@@ -1,5 +1,5 @@
 --[[
-keymaps.lua - This is part of a custom config file for Neovim v0.7.2+.
+keymaps.lua - This is part of a custom config file for Neovim v0.8.0+.
 
 You can get it from:
 https://github.com/SetupGuides/Neovim
@@ -98,14 +98,14 @@ return {
         end
 
         -- dap shortcuts
-        if not First_run then
-            vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
-            vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
-            vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
-            vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
-            vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
-            vim.keymap.set('n', "<leader>dp", require("dapui").toggle, {desc="Toggle DAP UI"})
-        end
+        -- if not First_run then
+        --     vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
+        --     vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
+        --     vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
+        --     vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
+        --     vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
+        --     vim.keymap.set('n', "<leader>dp", require("dapui").toggle, {desc="Toggle DAP UI"})
+        -- end
 
         -- nvim-ufo shortcuts
         if not First_run then
@@ -122,14 +122,14 @@ return {
         end
 
         -- coq shortcuts
-        if not First_run then
-            local run_coq = function()
-                vim.cmd("COQnow --shut-up")
-                vim.notify("Auto-completion is now active.", "Information", {title="coq"})
-            end
+        -- if not First_run then
+        --     local run_coq = function()
+        --         vim.cmd("COQnow --shut-up")
+        --         vim.notify("Auto-completion is now active.", "Information", {title="coq"})
+        --     end
 
-            vim.keymap.set('n', "<leader>c", run_coq, {noremap=true, silent=true, desc="Enable auto-completion"})
-        end
+        --     vim.keymap.set('n', "<leader>c", run_coq, {noremap=true, silent=true, desc="Enable auto-completion"})
+        -- end
 
         -- Gitsigns shortcuts
         if not First_run then
@@ -158,11 +158,6 @@ return {
 
             vim.keymap.set('n', "<leader>gtb", require("gitsigns").toggle_current_line_blame, {noremap=true, silent=true, desc="Toggle line blame"})
             vim.keymap.set('n', "<leader>gtd", require("gitsigns").toggle_deleted, {noremap=true, silent=true, desc="Toggle deleted lines"})
-        end
-
-        -- twilight shortcuts
-        if not First_run then
-            vim.keymap.set('n', "<leader>z", ":Twilight<cr>", {noremap=true, silent=true, desc="Toggle Twilight"})
         end
     end
 }

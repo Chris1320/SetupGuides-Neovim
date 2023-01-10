@@ -1,5 +1,5 @@
 --[[
-plugins.lua - This is part of a custom config file for Neovim v0.7.2+.
+plugins.lua - This is part of a custom config file for Neovim v0.8.0+.
 
 You can get it from:
 https://github.com/SetupGuides/Neovim
@@ -11,35 +11,32 @@ local flagFile = require("core.utils.flagFile")
 
 local function setupPlugins()
     local plugin_list = {
-        "plugins.packer.main",
+        "packer",
 
-        "plugins.catppuccin.main",
-        "plugins.feline.main",
-        "plugins.barbar.main",
-        "plugins.dressing.main",
-        "plugins.notify.main",
-        "plugins.gitsigns.main",
+        "catppuccin",
+        "feline",
+        "barbar",
+        "dressing",
+        "notify",
+        "gitsigns",
 
-        "plugins.lspconfig.main",
-        "plugins.dapconfig.main",
-        "plugins.treesitter.main",
-        "plugins.nvim-ufo.main",
-        "plugins.coq.main",
+        "lspconfig",
+        "treesitter",
+        "nvim-ufo",
 
-        "plugins.lsplines.main",
-        "plugins.indent-blankline.main",
-        "plugins.autopairs.main",
-        "plugins.trouble.main",
-        "plugins.telescope.main",
+        "lsplines",
+        "indent-blankline",
+        "autopairs",
+        "trouble",
+        "telescope",
 
-        "plugins.illuminate.main",
-        "plugins.which-key.main",
-        "plugins.twilight.main",
-        "plugins.nvim-tree.main"
+        "illuminate",
+        "which-key",
+        "nvim-tree"
     }
 
     for _, pluginMain in ipairs(plugin_list) do
-        require(pluginMain).setup()
+        require("plugins." .. pluginMain .. ".main").setup()
 
     end
 end

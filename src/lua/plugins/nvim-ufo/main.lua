@@ -8,7 +8,7 @@ return {
             dynamicRegistration = false,
             lineFoldingOnly = true
         }
-        for _, language_server in ipairs(lspconfig) do
+        for _, language_server in ipairs(lspconfig.util.available_servers()) do
             lspconfig[language_server].setup({capabilities = capabilities})
 
         end

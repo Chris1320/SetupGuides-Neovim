@@ -15,7 +15,9 @@ return {
                     "TelescopePrompt",
                     "Trouble"
                 },
-                under_cursor = true
+                under_cursor = true,
+                min_count_to_highlight = 2,
+                large_file_cutoff = 7500,
             }
         )
     end

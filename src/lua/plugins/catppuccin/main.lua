@@ -5,6 +5,7 @@ return {
         local catppuccin = require("catppuccin")
         catppuccin.setup(
             {
+                flavour = vars["catppuccin_flavour"],
                 compile_path = vars["catppuccin_cache_dir"],
                 term_colors = true,
                 dim_inactive = {
@@ -40,7 +41,6 @@ return {
                 }
             }
         )
-        vim.g.catppuccin_flavour = vars["catppuccin_flavour"]  -- Set catppuccin variation
-        vim.cmd("colorscheme catppuccin")                      -- Set theme
+        vim.cmd.colorscheme("catppuccin")  -- Set theme
     end
 }

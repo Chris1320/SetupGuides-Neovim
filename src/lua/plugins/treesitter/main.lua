@@ -6,6 +6,7 @@ return {
         treesitter.setup(
             {
                 ensure_installed = vars["treesitter_languages"],  -- Install parsers for languages defined in <languages>.
+                sync_install = true,
                 autotag = {
                     enable = true
                 },

@@ -2,18 +2,26 @@
 
 This guide will help you install Neovim and the following plugins:
 
-- Plugin Manager
-    - [packer](https://github.com/wbthomason/packer.nvim): Plugin Manager for Neovim.
+- Code Completion
+    - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
+    - [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag): Auto-close/rename HTML tags.
+- Dependencies
+    - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons): Provides filetype icons.
+    - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim): A Lua library.
+    - [promise-async](https://github.com/kevinhwang91/promise-async): A port of *Promise & Async* from JavaScript to Lua.
+- File Explorer
+    - [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua): File explorer tree
+- Fuzzy Search
+    - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
+    - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
 - Linting and Syntax Checking
-    - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
     - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
     - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
     - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Language Server Protocol (LSP) configuration helper.
     - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Better syntax highlighting.
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
-- Fuzzy Search
-    - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
-    - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
+- Plugin Manager
+    - [packer](https://github.com/wbthomason/packer.nvim): Plugin Manager for Neovim.
 - Theming and Visual Plugins
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
@@ -21,26 +29,11 @@ This guide will help you install Neovim and the following plugins:
     - [feline.nvim](https://github.com/feline-nvim/feline.nvim): A customizable statusline.
     - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git Integration for buffers.
     - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
+    - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
-    - [twilight.nvim](https://github.com/folke/twilight.nvim): Dim inactive parts of your code.
+    - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
     - [vim-illuminate](https://github.com/RRethy/vim-illuminate): Highlight all occurrences of words under cursor.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
-- Code Completion
-    - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
-    - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
-    - [coq_nvim](https://github.com/ms-jpq/coq_nvim/): Code completion.
-    - [coq.artifacts](https://github.com/ms-jpq/coq.artifacts): COQ snippets.
-    - [coq.thirdparty](https://github.com/ms-jpq/coq.thirdparty): COQ 3rd-party integration.
-    - [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag): Auto-close/rename HTML tags.
-- File Explorer
-    - [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua): File explorer tree
-- Debugging
-    - [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol Plugin
-    - [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): User Interface for nvim-dap.
-- Dependencies
-    - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons): Provides filetype icons.
-    - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim): A Lua library.
-    - [promise-async](https://github.com/kevinhwang91/promise-async): A port of *Promise & Async* from JavaScript to Lua.
 
 **Custom Key Bindings**:
 
@@ -120,7 +113,7 @@ This guide will help you install Neovim and the following plugins:
     - Using *wget*: `bash <(wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
     - Using *curl*: `bash <(curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
 5. Run `nvim` and allow installation of tree-sitter and plugins.[^5]
-6. Configure LSPs. `:Mason`
+6. Configure LSPs using Mason. `:Mason`
 
 ## Manual Customization Guide
 
