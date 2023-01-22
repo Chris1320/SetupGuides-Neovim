@@ -204,12 +204,17 @@ local function setupLspconfig()
             end,
             ["bashls"] = function()  -- Custom handler for bashls LSP
                 lspconfig["bashls"].setup(
-                {
-                    bashIde = {
-                        highlightParsingErrors = true
+                    {
+                        bashIde = {
+                            highlightParsingErrors = true
+                        }
                     }
-                }
                 )
+            end,
+            ["clangd"] = function()  -- Custom handler for clangd LSP
+                local clangd_capabilities = lsp_default_conf.capabilities
+                clangd_capabilities.offsetEncoding = {"utf-16"}  -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
+                lspconfig["clangd"].setup({capabilities=clangd_capabilities})
             end,
             ["html"] = function()  -- Custom handler for html LSP
                 lspconfig["html"].setup(
