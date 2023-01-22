@@ -49,11 +49,10 @@ local function setup()
         local flag_file_update_result = flagFile.update()
         if flag_file_update_result["exit_code"] ~= 0 then
             vim.notify(flag_file_update_result["message"])
-
         end
+
     else
         setupPlugins()
-
     end
 end
 

@@ -10,7 +10,7 @@ This modules defines keymaps for the end-user.
 local flagFile = require("core.utils.flagFile")
 
 -- Check if the config has been installed already.
-First_run = not flagFile.exists()
+local setup_done = flagFile.exists()
 
 return {
     setup = function()
@@ -22,7 +22,7 @@ return {
         vim.keymap.set('n', "<leader>r", vim.lsp.buf.rename, {noremap=true, silent=true, desc="Rename symbol"})
 
         -- Barbar shortcuts
-        if not First_run then
+        if setup_done then
             vim.keymap.set('n', "<A-,>", ":BufferPrevious<cr>", {noremap=true, silent=true})                               -- Navigate buffers
             vim.keymap.set('n', "<A-.>", ":BufferNext<cr>", {noremap=true, silent=true})
 
@@ -48,10 +48,8 @@ return {
 
             vim.keymap.set('n', "<leader>be", ":BarbarEnable<cr>", {desc="Enable Barbar"})                                     -- Enable/disable barbar
             vim.keymap.set('n', "<leader>bd", ":BarbarDisable<cr>", {desc="Disable Barbar"})
-        end
 
         -- Telescope shortcuts
-        if not First_run then
             vim.keymap.set('n', "<leader>tt", ":Telescope<cr>", {desc="Open Telescope"})
             vim.keymap.set('n', "<leader>tb", ":Telescope buffers<cr>", {desc="See open buffers"})
             vim.keymap.set('n', "<leader>tF", ":Telescope find_files<cr>", {desc="Search files"})
@@ -67,19 +65,15 @@ return {
 
             -- Notify integration
             vim.keymap.set('n', "<leader>th", ":Telescope notify<cr>", {desc="Show notification history"})
-        end
 
         -- Trouble shortcuts
-        if not First_run then
             vim.keymap.set('n', "<leader>ewd", ":TroubleToggle workspace_diagnostics<cr>", {desc="See workspace diagnostics"})
             vim.keymap.set('n', "<leader>edd", ":TroubleToggle document_diagnostics<cr>", {desc="See document diagnostics"})
             vim.keymap.set('n', "<leader>eqf", ":TroubleToggle quickfix<cr>", {desc="See quick fixes"})
             vim.keymap.set('n', "<leader>elr", ":TroubleToggle lsp_references<cr>", {desc="See LSP references"})
             vim.keymap.set('n', "<leader>elc", ":TroubleToggle loclist<cr>", {desc="See loclists"})
-        end
 
         -- LSP Lines shortcuts
-        if not First_run then
             vim.keymap.set(
                 'n',
                 "<leader>l",
@@ -95,44 +89,33 @@ return {
                 {desc="Toggle LSP Lines"}
             )
 
-        end
-
         -- dap shortcuts
-        -- if not First_run then
         --     vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
         --     vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
         --     vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
         --     vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
         --     vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
         --     vim.keymap.set('n', "<leader>dp", require("dapui").toggle, {desc="Toggle DAP UI"})
-        -- end
 
         -- nvim-ufo shortcuts
-        if not First_run then
             vim.keymap.set('n', "zR", require("ufo").openAllFolds)
             vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
-        end
 
         -- nvim-tree shortcuts
-        if not First_run then
             vim.keymap.set('n', "<leader>fo", ":NvimTreeOpen<cr>", {noremap=true, silent=true, desc="Open nvim-tree"})
             vim.keymap.set('n', "<leader>fc", ":NvimTreeClose<cr>", {noremap=true, silent=true, desc="Close nvim-tree"})
             vim.keymap.set('n', "<leader>ff", ":NvimTreeFocus<cr>", {noremap=true, silent=true, desc="Focus to nvim-tree"})
             vim.keymap.set('n', "<leader>ft", ":NvimTreeToggle<cr>", {noremap=true, silent=true, desc="Toggle nvim-tree"})
-        end
 
         -- coq shortcuts
-        -- if not First_run then
         --     local run_coq = function()
         --         vim.cmd("COQnow --shut-up")
         --         vim.notify("Auto-completion is now active.", "Information", {title="coq"})
         --     end
 
         --     vim.keymap.set('n', "<leader>c", run_coq, {noremap=true, silent=true, desc="Enable auto-completion"})
-        -- end
 
         -- Gitsigns shortcuts
-        if not First_run then
             -- Logic:
             -- * = lowercase characters
             -- ^ = uppercase characters

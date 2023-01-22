@@ -55,15 +55,14 @@ return {
         vim.opt.list = true                                         -- enable display of unprintable characters.
         if vars["show_eols"] then                                   -- Enable if you want to display spaces, trailing spaces, and EOLs.
             vim.opt.listchars:append("eol:" .. vars["eol_char"])
-
         end
+
         if vars["show_spaces"] then
             vim.opt.listchars:append("space:" .. vars["space_char"])
-
         end
+
         if vars["show_trails"] then
             vim.opt.listchars:append("trail:" .. vars["trail_char"])
-
         end
 
         vim.opt.fillchars:append(

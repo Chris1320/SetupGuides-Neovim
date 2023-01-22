@@ -62,7 +62,6 @@ return {
         "python",
         "rst",
         "rust",
-        "sql",
         "toml",
         "typescript",
         "vim",
@@ -71,10 +70,10 @@ return {
 
     -- Silenced notifications for nvim-notify
     blocklisted_notifications = {
-        "warning: multiple different client offset_encodings",  -- See `https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428`
-                                                                -- for more information.
-        "received `end` message with no corresponding `begin`",  -- Java lsp server error (WIP)
-        "Could not find `Cargo.toml`"  -- Rust lspconfig warning (WIP)
+        -- "warning: multiple different client offset_encodings",  -- See `https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428`
+        --                                                         -- for more information.
+        -- "received `end` message with no corresponding `begin`",  -- Java lsp server error (WIP)
+        -- "Could not find `Cargo.toml`"  -- Rust lspconfig warning (WIP)
     },
 
     mason_bin_path = vim.fn.stdpath("data") .. "/mason/bin/",

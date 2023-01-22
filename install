@@ -21,7 +21,7 @@ flag_file="${nvim_data_path}/.plugins_installed"  # The file that is created aft
 
 min_nvim_version=(0 8 0)  # Minimum Neovim version required.
 
-# Enabled force re-install if `--reinstall` is passed as argument.
+# Enable force re-install if `--reinstall` is passed as argument.
 if [[ "$1" = "--reinstall" ]]; then
     force_reinstall=true
 

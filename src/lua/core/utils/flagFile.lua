@@ -7,6 +7,7 @@ https://github.com/SetupGuides/Neovim
 
 local info = require("core.info")
 local vars = require("vars")
+local pack_version = "v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3]
 
 local function exists()
     --[[
@@ -18,10 +19,9 @@ local function exists()
     local plugins_installed_path = io.open(vars["plugins_installed_path"], 'r')
     if plugins_installed_path == nil then
         return false  -- If it is `nil` then it does not exist in the filesystem.
-
     end
 
-    return plugins_installed_path:read() == "v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3]
+    return plugins_installed_path:read() == pack_version
 end
 
 local function update()
@@ -39,7 +39,7 @@ local function update()
         }
 
     else
-        flag_file:write("v" .. info["version"][1] .. '.' .. info["version"][2] .. '.' .. info["version"][3])
+        flag_file:write(pack_version)
         flag_file:flush()
         flag_file:close()
 
@@ -47,9 +47,7 @@ local function update()
             exit_code = 0,
             message = "Done."
         }
-
     end
-
 end
 
 return {

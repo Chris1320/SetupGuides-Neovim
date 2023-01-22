@@ -8,12 +8,10 @@ return {
                 if msg:match(silenced_msg) then
                     -- Do not show notification if part of its message is in <vars.blocklisted_notifications>.
                     return
-
                 end
             end
 
             notify(msg, ...)  -- Pass the parameters to nvim-notify.
-
         end
     end
 }
