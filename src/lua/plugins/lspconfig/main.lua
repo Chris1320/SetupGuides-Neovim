@@ -74,7 +74,10 @@ local function setupLspconfig()
                     name = "luasnip",  -- Use LuaSnip as source.
                     option = {
                         keyword_length = 1,
-                        show_autosnippets = true
+                        show_autosnippets = true,
+                        get_bufnrs = function()
+                            return vim.api.nvim_list_bufs()
+                        end
                     }
                 },
                 {
@@ -88,7 +91,9 @@ local function setupLspconfig()
                     option = {
                         keyword_length = 1
                     }
-                }
+                },
+                {name="nvim_lsp_signature_help"},
+                {name="calc"}
             },
             mapping = cmp.mapping.preset.insert(
                 {
@@ -189,7 +194,8 @@ local function setupLspconfig()
                                     enable = false
                                 },
                                 workspace = {
-                                    library = vim.api.nvim_get_runtime_file("", true)
+                                    library = vim.api.nvim_get_runtime_file("", true),
+                                    checkThirdParty = false  -- Context: https://github.com/sumneko/lua-language-server/discussions/1688
                                 }
                             }
                         },

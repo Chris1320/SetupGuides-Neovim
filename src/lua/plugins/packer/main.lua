@@ -73,6 +73,7 @@ return {
                 -- Autocompletion
                 use("hrsh7th/nvim-cmp")                              -- LSP Autocompletion
                 use("hrsh7th/cmp-nvim-lsp")                          -- nvim-cmp plugin for LSP integration
+                use("hrsh7th/cmp-nvim-lsp-signature-help")           -- nvim-cmp plugin for showing LSP function signatures
                 use("hrsh7th/cmp-buffer")                            -- nvim-cmp plugin for buffer suggestions
                 use("hrsh7th/cmp-path")                              -- nvim-cmp plugin for filesystem suggestions
                 use("hrsh7th/cmp-cmdline")                           -- nvim-cmp plugin for cmdline suggestions
@@ -82,6 +83,7 @@ return {
                         requires = {"nvim-lua/plenary.nvim"}
                     }
                 )
+                use("hrsh7th/cmp-calc")                              -- nvim-cmp plugin for math calculations
                 use("L3MON4D3/LuaSnip")                              -- Snippets
                 use("saadparwaiz1/cmp_luasnip")                      -- LuaSnip integration for nvim-cmp
                 use("rafamadriz/friendly-snippets")                  -- Collection of snippets for LuaSnip
