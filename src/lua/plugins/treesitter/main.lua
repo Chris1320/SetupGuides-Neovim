@@ -13,7 +13,7 @@ return {
                     enable = true
                 },
                 indent = {                     -- Use treesitter for indentation.
-                    enable = false             -- Disable indentation because it's currently broken.
+                    enable = true
                 }
             }
         )

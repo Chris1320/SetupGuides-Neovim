@@ -94,10 +94,6 @@ return {
                         requires = {{"kyazdani42/nvim-web-devicons"}},
                     }
                 )
-
-                if First_run == true then
-                    packer.sync()
-                end
             end
         )
     end

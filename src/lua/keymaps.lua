@@ -107,14 +107,6 @@ return {
             vim.keymap.set('n', "<leader>ff", ":NvimTreeFocus<cr>", {noremap=true, silent=true, desc="Focus to nvim-tree"})
             vim.keymap.set('n', "<leader>ft", ":NvimTreeToggle<cr>", {noremap=true, silent=true, desc="Toggle nvim-tree"})
 
-        -- coq shortcuts
-        --     local run_coq = function()
-        --         vim.cmd("COQnow --shut-up")
-        --         vim.notify("Auto-completion is now active.", "Information", {title="coq"})
-        --     end
-
-        --     vim.keymap.set('n', "<leader>c", run_coq, {noremap=true, silent=true, desc="Enable auto-completion"})
-
         -- Gitsigns shortcuts
             -- Logic:
             -- * = lowercase characters

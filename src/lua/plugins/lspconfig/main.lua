@@ -50,6 +50,10 @@ local function setupLspconfig()
         lsp_default_conf.capabilities,
         cmp_nvim_lsp.default_capabilities()
     )
+    lsp_default_conf.capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true
+    }
 
     -- Setup nvim-cmp
     cmp.setup(
@@ -192,108 +196,86 @@ local function setupLspconfig()
                         capabilities = lsp_default_conf
                     }
                 )
+            end,
+            ["bashls"] = function()  -- Custom handler for bashls LSP
+                lspconfig["bashls"].setup(
+                {
+                    bashIde = {
+                        highlightParsingErrors = true
+                    }
+                }
+                )
+            end,
+            ["html"] = function()  -- Custom handler for html LSP
+                lspconfig["html"].setup(
+                    {
+                        html = {
+                            format = {
+                                templating = true
+                            },
+                            mirrorCursorOnMatchingTag = true
+                        }
+                    }
+                )
+            end,
+            ["omnisharp"] = function()  -- Custom handler for omnisharp LSP
+                lspconfig["omnisharp"].setup(
+                    {
+                        root_dir = function(filename, _)
+                            local root
+
+                            root = lspconfig.util.find_git_ancestor(filename)
+                            root = root or lspconfig.util.root_pattern(".sln")
+                            root = root or lspconfig.util.root_pattern(".csproj")
+                            root = root or '.'
+
+                            return root
+                        end
+                    }
+                )
+            end,
+            ["omnisharp_mono"] = function()  -- Custom handler for omnisharp LSP (mono version)
+                lspconfig["omnisharp_mono"].setup(
+                    {
+                        root_dir = function(filename, _)
+                            local root
+
+                            root = lspconfig.util.find_git_ancestor(filename)
+                            root = root or lspconfig.util.root_pattern(".sln")
+                            root = root or lspconfig.util.root_pattern(".csproj")
+                            root = root or '.'
+
+                            return root
+                        end
+                    }
+                )
+            end,
+            ["pyright"] = function()  -- Custom handler for pyright LSP
+                lspconfig["pyright"].setup(
+                    {
+                        python = {
+                            analysis = {
+                                typeCheckingMode = "basic",
+                                diagnosticMode = "workspace",
+                                useLibraryCodeForTypes = true
+                            }
+                        }
+                    }
+                )
+            end,
+            ["yamlls"] = function()  -- Custom handler for yamlls LSP
+                lspconfig["yamlls"].setup(
+                    {
+                        redhat = {
+                            telemetry = {
+                                enabled = false
+                            }
+                        }
+                    }
+                )
             end
         }
     )
-
-    -- lsp.bashls.setup(
-    --     coq.lsp_ensure_capabilities(
-    --         {
-    --             bashIde = {
-    --                 highlightParsingErrors = true
-    --             }
-    --         }
-    --     )
-    -- )
-
-    -- lsp.html.setup(
-    --     coq.lsp_ensure_capabilities(
-    --         {
-    --             html = {
-    --                 format = {
-    --                     templating = true
-    --                 },
-    --                 mirrorCursorOnMatchingTag = true
-    --             }
-    --         }
-    --     )
-    -- )
-
-    -- lsp.ltex.setup(
-    --     coq.lsp_ensure_capabilities(
-    --         {
-    --             ltex = {
-    --                 completionEnabled = true,
-    --                 languageToolHttpServerUri = "",
-    --                 languageToolOrg = {
-    --                     apiKey = "",
-    --                     username = ""
-    --                 }
-    --             }
-    --         }
-    --     )
-    -- )
-
-    -- lsp.omnisharp.setup(
-    --     coq.lsp_ensure_capabilities(
-    --         {
-    --             root_dir = function(filename, _)
-    --                 local root
-
-    --                 root = lsp.util.find_git_ancestor(filename)
-    --                 root = root or lsp.util.root_pattern(".sln")
-    --                 root = root or lsp.util.root_pattern(".csproj")
-    --                 root = root or '.'
-
-    --                 return root
-    --             end
-    --         }
-    --     )
-    -- )
-
-    -- lsp.omnisharp_mono.setup(
-    --     coq.lsp_ensure_capabilities(
-    --         {
-    --             root_dir = function(filename, _)
-    --                 local root
-
-    --                 root = lsp.util.find_git_ancestor(filename)
-    --                 root = root or lsp.util.root_pattern(".sln")
-    --                 root = root or lsp.util.root_pattern(".csproj")
-    --                 root = root or '.'
-
-    --                 return root
-    --             end
-    --         }
-    --     )
-    -- )
-
-    -- -- Python configurations
-    -- lsp.pyright.setup(
-    --     coq.lsp_ensure_capabilities(
-    --         {
-    --             python = {
-    --                 analysis = {
-    --                     typeCheckingMode = "basic",
-    --                     diagnosticMode = "workspace",
-    --                     useLibraryCodeForTypes = true
-    --                 }
-    --             }
-    --         }
-    --     )
-    -- )
-
-    -- lsp.yamlls.setup(
-    --     coq.lsp_ensure_capabilities(
-    --         {
-    --             redhat = {
-    --                 telemetry = {
-    --                     enabled = false
-    --                 }
-    --             }
-    --         }
-    --     )
-    -- )
 end
 
 return {
