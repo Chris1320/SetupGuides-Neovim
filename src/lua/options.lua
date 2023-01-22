@@ -21,6 +21,7 @@ return {
         vim.opt.wrap = false                                        -- Disable line wrapping.
         vim.opt.wildmode = {"longest", "list"}                      -- get bash-like tab completions.
         vim.opt.mouse = 'a'                                         -- enable usage of mouse in all modes.
+        vim.opt.completeopt = {'menu', 'menuone', 'noselect'}       -- for completion
         vim.opt.clipboard = "unnamedplus"                           -- enable usage of system clipboard.
         vim.opt.ttyfast = true                                      -- indicate fast terminal connection to speed up scrolling.
         vim.opt.termguicolors = true                                -- enable for consistent color scheme across terminals.

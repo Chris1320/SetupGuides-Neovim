@@ -1,9 +1,9 @@
 local mason = require("mason")
 local mlsp = require("mason-lspconfig")
-local lsp = require("lspconfig")
+local lspconfig = require("lspconfig")
 
-cmp = require("cmp")
-cmp_nvim_lsp = require("cmp_nvim_lsp")
+local cmp = require("cmp")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 local function setupLspconfig()
     -- Setup mason
@@ -24,16 +24,33 @@ local function setupLspconfig()
     -- Setup mason-lspconfig
     mlsp.setup()
 
-    local capabilities = cmp_nvim_lsp.default_capabilities()
+    -- Announce client capabilities
+    local lsp_default_conf = lspconfig.util.default_config
+    lsp_default_conf.capabilities = vim.tbl_deep_extend(
+        "force",
+        lsp_default_conf.capabilities,
+        cmp_nvim_lsp.default_capabilities()
+    )
+
+    -- Setup nvim-cmp
+    cmp.setup(
+        {
+            sources = {
+                {
+                    name = "buffer",
+                    option = {
+                        keyword_length = 1
+                    }
+                },
+                {name = "path"}
+            }
+        }
+    )
 
     mlsp.setup_handlers(  -- setup automatic server handling
         {
             function(server_name)  -- the default handler
-                lsp[server_name].setup(
-                    {
-                        capabilities = capabilities
-                    }
-                )
+                lspconfig[server_name].setup({})
             end
         }
     )
