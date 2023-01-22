@@ -24,7 +24,7 @@ return {
                 use(                                                 -- Fuzzy finder
                     {
                         "nvim-telescope/telescope.nvim",
-                        requires = {{"nvim-lua/plenary.nvim"}}
+                        requires = {"nvim-lua/plenary.nvim"}
                     }
                 )
                 use(                                                 -- Native Telescope Sorter
@@ -46,21 +46,21 @@ return {
                 use(
                     {
                         "feline-nvim/feline.nvim",
-                        requires = {{"kyazdani42/nvim-web-devicons"}}
+                        requires = {"kyazdani42/nvim-web-devicons"}
                     }
                 )                       -- Customizable statusline
                 use("rcarriga/nvim-notify")                          -- Notification Manager
                 use(                                                 -- Tabline plugin
                     {
                         "romgrk/barbar.nvim",
-                        requires = {{"kyazdani42/nvim-web-devicons"}}
+                        requires = {"kyazdani42/nvim-web-devicons"}
                     }
                 )
                 use("lukas-reineke/indent-blankline.nvim")           -- Indentation guides
                 use(
                     {
                         "kevinhwang91/nvim-ufo",
-                        requires = {{"kevinhwang91/promise-async"}}
+                        requires = {"kevinhwang91/promise-async"}
                     }
                 )
                 use(
@@ -72,9 +72,19 @@ return {
 
                 -- Autocompletion
                 use("hrsh7th/nvim-cmp")                              -- LSP Autocompletion
-                use("hrsh7th/cmp-buffer")
-                use("hrsh7th/cmp-path")
-                use("hrsh7th/cmp-nvim-lsp")
+                use("hrsh7th/cmp-nvim-lsp")                          -- nvim-cmp plugin for LSP integration
+                use("hrsh7th/cmp-buffer")                            -- nvim-cmp plugin for buffer suggestions
+                use("hrsh7th/cmp-path")                              -- nvim-cmp plugin for filesystem suggestions
+                use("hrsh7th/cmp-cmdline")                           -- nvim-cmp plugin for cmdline suggestions
+                use(
+                    {
+                        "petertriho/cmp-git",                        -- nvim-cmp plugin for git integration
+                        requires = {"nvim-lua/plenary.nvim"}
+                    }
+                )
+                use("L3MON4D3/LuaSnip")                              -- Snippets
+                use("saadparwaiz1/cmp_luasnip")                      -- LuaSnip integration for nvim-cmp
+                use("rafamadriz/friendly-snippets")                  -- Collection of snippets for LuaSnip
                 use("windwp/nvim-autopairs")                         -- Bracket auto-pairing
 
                 -- File explorer

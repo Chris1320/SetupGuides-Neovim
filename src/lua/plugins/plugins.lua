@@ -21,6 +21,7 @@ local function setupPlugins()
         "gitsigns",
 
         "lspconfig",
+        "luasnip",
         "treesitter",
         "nvim-ufo",
 
