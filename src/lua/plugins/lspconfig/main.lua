@@ -2,6 +2,9 @@ local mason = require("mason")
 local mlsp = require("mason-lspconfig")
 local lsp = require("lspconfig")
 
+cmp = require("cmp")
+cmp_nvim_lsp = require("cmp_nvim_lsp")
+
 local function setupLspconfig()
     -- Setup mason
     mason.setup(
@@ -21,11 +24,16 @@ local function setupLspconfig()
     -- Setup mason-lspconfig
     mlsp.setup()
 
+    local capabilities = cmp_nvim_lsp.default_capabilities()
+
     mlsp.setup_handlers(  -- setup automatic server handling
         {
             function(server_name)  -- the default handler
-                lsp[server_name].setup()
-
+                lsp[server_name].setup(
+                    {
+                        capabilities = capabilities
+                    }
+                )
             end
         }
     )

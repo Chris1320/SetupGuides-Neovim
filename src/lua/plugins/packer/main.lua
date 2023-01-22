@@ -11,12 +11,7 @@ return {
                 use("neovim/nvim-lspconfig")                         -- Quickstart configs for Neovim LSP.
                 use("williamboman/mason.nvim")                       -- LSP, DAP, etc. Manager for Neovim.
                 use("williamboman/mason-lspconfig.nvim")
-                use(                                                 -- Treesitter integration for Neovim
-                    {
-                        "nvim-treesitter/nvim-treesitter",
-                        run = ":TSUpdate"
-                    }
-                )
+                use("nvim-treesitter/nvim-treesitter")               -- Treesitter integration for Neovim
                 use(                                                 -- diagnostics, quickfixes, etc.
                     {
                         "folke/trouble.nvim",
@@ -43,8 +38,7 @@ return {
                 use(                                                 -- Catppuccin theme
                     {
                         "catppuccin/nvim",
-                        as = "catppuccin",
-                        run = ":CatppuccinCompile"  -- compile catppuccin for faster startup.
+                        as = "catppuccin"
                     }
                 )
                 use("stevearc/dressing.nvim")                        -- UI Customization
@@ -77,8 +71,9 @@ return {
                 use("folke/which-key.nvim")                          -- Displays possible key bindings
 
                 -- Autocompletion
+                use("hrsh7th/nvim-cmp")                              -- LSP Autocompletion
+                use("hrsh7th/cmp-nvim-lsp")
                 use("windwp/nvim-autopairs")                         -- Bracket auto-pairing
-                use("windwp/nvim-ts-autotag")                        -- Auto-close/rename HTML tags
 
                 -- File explorer
                 use(
