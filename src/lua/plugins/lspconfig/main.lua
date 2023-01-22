@@ -93,7 +93,6 @@ local function setupLspconfig()
                     }
                 },
                 {name="nvim_lsp_signature_help"},
-                {name="calc"}
             },
             mapping = cmp.mapping.preset.insert(
                 {

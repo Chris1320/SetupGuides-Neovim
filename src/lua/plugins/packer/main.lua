@@ -83,7 +83,6 @@ return {
                         requires = {"nvim-lua/plenary.nvim"}
                     }
                 )
-                use("hrsh7th/cmp-calc")                              -- nvim-cmp plugin for math calculations
                 use("L3MON4D3/LuaSnip")                              -- Snippets
                 use("saadparwaiz1/cmp_luasnip")                      -- LuaSnip integration for nvim-cmp
                 use("rafamadriz/friendly-snippets")                  -- Collection of snippets for LuaSnip
