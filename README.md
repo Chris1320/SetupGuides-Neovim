@@ -3,8 +3,17 @@
 This guide will help you install Neovim and the following plugins:
 
 - Code Completion
+    - [LuaSnip](https://github.com/L3MON4D3/LuaSnip): Snippet engine for Neovim written in Lua.
+        - [friendly-snippets](https://github.com/rafamadriz/friendly-snippets): Snippet collection for different programming languages.
     - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
-    - [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag): Auto-close/rename HTML tags.
+    - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp): A completion plugin for neovim coded in Lua.
+        - [cmp-buffer](https://github.com/hrsh7th/cmp-buffer): nvim-cmp source for buffer words.
+        - [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline): nvim-cmp source for cmdline.
+        - [cmp-git](https://github.com/petertriho/cmp-git): nvim-cmp source for git.
+        - [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp): nvim-cmp source for neovim builtin LSP client
+        - [cmp-nvim-lsp-signature-help](https://github.com/hrsh7th/cmp-nvim-lsp-signature-help): nvim-cmp source for displaying function signatures.
+        - [cmp-path](https://github.com/hrsh7th/cmp-path): nvim-cmp source for filesystem paths.
+        - [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip): nvim-cmp source for LuaSnip.
 - Dependencies
     - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons): Provides filetype icons.
     - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim): A Lua library.
@@ -13,13 +22,14 @@ This guide will help you install Neovim and the following plugins:
     - [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua): File explorer tree
 - Fuzzy Search
     - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
-    - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
-- Linting and Syntax Checking
+        - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
+- Linting and Syntax Checking/Highlighting
     - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
-    - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
+        - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
     - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Language Server Protocol (LSP) configuration helper.
     - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Better syntax highlighting.
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
+    - [vim-illuminate](https://github.com/RRethy/vim-illuminate): Highlight all occurrences of words under cursor.
 - Plugin Manager
     - [packer](https://github.com/wbthomason/packer.nvim): Plugin Manager for Neovim.
 - Theming and Visual Plugins
@@ -32,7 +42,6 @@ This guide will help you install Neovim and the following plugins:
     - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
-    - [vim-illuminate](https://github.com/RRethy/vim-illuminate): Highlight all occurrences of words under cursor.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 
 **Custom Key Bindings**:
@@ -113,7 +122,7 @@ This guide will help you install Neovim and the following plugins:
     - Using *wget*: `bash <(wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
     - Using *curl*: `bash <(curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
 5. Run `nvim` and allow installation of tree-sitter and plugins.[^5]
-6. Configure LSPs using Mason. `:Mason`
+6. Configure LSPs using Mhttps://github.com/rafamadriz/friendly-snippetsason. `:Mason`
 
 ## Manual Customization Guide
 
