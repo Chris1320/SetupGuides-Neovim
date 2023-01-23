@@ -3,24 +3,28 @@
 # This script has been tested on the following systems:
 # - GNU bash v5.1.16 on Linux Mint 21
 # - GNU bash v5.1.16 on Kali Linux Rolling
+# - GNU bash v5.2.2 on Termux Terminal Emulator 0.118.0
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 6 7)
+version=(0 9 0)  # Installer version; different from config version and Neovim version.
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
 
-current_wd=$(pwd)
-installation_files="${PWD}/neovim-init"
+current_wd="${PWD}"
+installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 nvim_data_path="${HOME}/.local/share/nvim"
 packer_installation_path="${nvim_data_path}/site/pack/packer/start/packer.nvim"
 flag_file="${nvim_data_path}/.plugins_installed"  # The file that is created after installing the config.
 
-min_nvim_version=(0 7 2)  # Minimum Neovim version required.
+filelist="files.txt"
+filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/${filelist}"
 
-# Enabled force re-install if `--reinstall` is passed as argument.
+min_nvim_version=(0 8 0)  # Minimum Neovim version required.
+
+# Enable force re-install if `--reinstall` is passed as argument.
 if [[ "$1" = "--reinstall" ]]; then
     force_reinstall=true
 
@@ -40,7 +44,7 @@ if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
     echo
     echo "\`git\` is not installed. Please install git and try again."
     echo
-    echo "  [REASON]: Used by gitsigns plugin."
+    echo "  [REASON]: Used by the package manager and most plugins."
     echo "- \`sudo apt update && sudo apt install git\`; or visit"
     echo "- https://git-scm.com/downloads"
     exit 1
@@ -56,7 +60,7 @@ if ! [[ -x "$(command -v gcc)" ]]; then
         echo "\`gcc\` or \`clang\` is not installed."
         echo "Please install either of the two and try again."
         echo
-        echo "  [REASON]: Used by tree-sitter plugin."
+        echo "  [REASON]: Used by tree-sitter and telescope-fzf-native plugins."
         echo "- \`sudo apt update && sudo apt install gcc\`"
         exit 2
 
@@ -68,26 +72,12 @@ else
     echo "C compiler: gcc"
 fi
 
-if ! [[ -x "$(command -v python3)" ]]; then
-    echo "Python 3  : not found"
-    echo
-    echo "\`python3\` is not installed. Please install Python and try again."
-    echo
-    echo "  [REASON]: Used by coq_nvim plugin."
-    echo "- \`sudo apt update && sudo apt install python3\`; or visit"
-    echo "- https://python.org/downloads"
-    exit 3
-
-else
-    echo "Python 3  : installed"
-fi
-
 if ! [[ -x "$(command -v npm)" ]]; then
     echo "npm       : not found"
     echo
     echo "\`npm\` is not installed. Please install it and try again."
     echo
-    echo "  [REASON]: Used by Mason plugin."
+    echo "  [REASON]: Used by Mason plugin and most LSP servers."
     echo "- \`sudo apt update && sudo apt install nodejs npm\`; or visit"
     echo "- https://nodejs.org/en/download/"
     exit 4
@@ -249,37 +239,17 @@ if [[ -d "$installation_files" ]]; then
     fi
 
 else
+    echo "Downloading file list..."
+    files_to_download=$(curl -sSfL "${filelist_url}")
     printf "Downloading customization files to \`%s\`...\r" "${nvim_config_path}"
-    mkdir -p "${nvim_config_path}/lua"  # Create the Neovim configuration directory.
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/init.lua" -o "${nvim_config_path}/init.lua"; then
-        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 11
-    fi
-
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/keymaps.lua" -o "${nvim_config_path}/lua/keymaps.lua"; then
-        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 12
-    fi
-
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/options.lua" -o "${nvim_config_path}/lua/options.lua"; then
-        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 13
-    fi
-
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/plugins.lua" -o "${nvim_config_path}/lua/plugins.lua"; then
-        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 14
-    fi
-
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/vars.lua" -o "${nvim_config_path}/lua/vars.lua"; then
-        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 15
-    fi
-
-    if ! curl -sSfL "https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/neovim-init/lua/info.lua" -o "${nvim_config_path}/lua/info.lua"; then
-        printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 16
-    fi
+    for file in ${files_to_download}; do
+        pull_url="${file//<branch>/${target_branch}}"
+        output_filepath=${file##*/src/}
+        if ! curl -sSfL "${pull_url}" --create-dirs --output "${nvim_config_path}${output_filepath}"; then
+            printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
+            exit 3
+        fi
+    done
 
     printf "Downloading customization files to \`%s\`... Done!\n" "${nvim_config_path}"
     echo "Please run \`nvim\` to finish the installation."
