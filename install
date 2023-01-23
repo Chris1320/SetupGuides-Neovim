@@ -245,7 +245,7 @@ else
     for file in ${files_to_download}; do
         pull_url="${file//<branch>/${target_branch}}"
         output_filepath=${file##*/src/}
-        if ! curl -sSfL "${pull_url}" --create-dirs --output "${nvim_config_path}{$output_filepath}"; then
+        if ! curl -sSfL "${pull_url}" --create-dirs --output "${nvim_config_path}${output_filepath}"; then
             printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
             exit 3
         fi
