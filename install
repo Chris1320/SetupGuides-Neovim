@@ -10,7 +10,7 @@ name="Neovim Config Installer"
 version=(0 9 0)  # Installer version; different from config version and Neovim version.
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_branch="rewrite"  # The branch to which the configs will be pulled from.
+target_branch="main"  # The branch to which the configs will be pulled from.
 
 current_wd="${PWD}"
 installation_files="${PWD}/src"
