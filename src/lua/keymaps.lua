@@ -97,7 +97,7 @@ return {
         --     vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
         --     vim.keymap.set('n', "<leader>dp", require("dapui").toggle, {desc="Toggle DAP UI"})
 
-        -- nvim-ufo shortcuts
+        -- nvim-ufo shortcuts; override folding keymaps.
             vim.keymap.set('n', "zR", require("ufo").openAllFolds)
             vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
 
