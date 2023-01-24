@@ -167,7 +167,7 @@ This setup has been tested on the following platforms:
     - If version 0.8.0 above is available, install it. `$ apt install --upgrade neovim`
     - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
 3. Clone and install packer. `$ git clone --depth=1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
-4. Copy the contents of [src/](https://github.com/Chris1320/SetupGuides/tree/main/resources/src) to your `~/.config/nvim/`. The directory must look like this:
+4. Copy the contents of [src/](https://github.com/SetupGuides/Neovim/tree/main/src) to your `~/.config/nvim/`. The directory must look like this:
 
     ```
     $ tree ~/.config/nvim/
