@@ -131,6 +131,14 @@ This setup has been tested on the following platforms:
 
 *Windows version of this guide will be available soon.*
 
+## Requirements
+
+- [Neovim](https://neovim.io/) v0.8.0+
+- [Git](https://git-scm.com/)
+- [gcc](https://gcc.gnu.org/) or [clang](https://clang.llvm.org/)
+- [make](https://www.gnu.org/software/make/)
+- [NodeJS](https://nodejs.org/)
+
 ## Installation
 
 ### Automatic Customization Guide
@@ -143,12 +151,13 @@ This setup has been tested on the following platforms:
     - Check if Neovim v0.8.0+ is available in your package manager. `$ apt show neovim`
     - If version 0.8.0 above is available, install it. `$ apt install --upgrade neovim`
     - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
-4. Run the installer.
+4. Install requirements.
+5. Run the installer.
     - Using *wget*: `bash <(wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
     - Using *curl*: `bash <(curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
-5. Run `nvim` and allow installation of plugins.[^5]
-6. Exit Neovim by running `:q` and re-run `nvim` to install tree-sitter grammars.[^3]
-7. Configure LSPs using Mason. `:Mason`
+6. Run `nvim` and allow installation of plugins.[^5]
+7. Exit Neovim by running `:q` and re-run `nvim` to install tree-sitter grammars.[^3]
+8. Configure LSPs using Mason. `:Mason`
 
 ### Manual Customization Guide
 
@@ -182,7 +191,7 @@ This setup has been tested on the following platforms:
     23 directories, 28 files
     ```
 
-5. Install dependencies. `$ sudo apt install --upgrade clang curl`[^2]
+5. Install dependencies. `$ sudo apt install --upgrade clang curl make nodejs`[^2]
 6. Run `nvim`. Packer will now update, install, and compile the plugins.
 7. After installation, quit Neovim by entering `:q`.
 8. Re-open `nvim`. nvim-treesitter will now install treesitter parsers. Run `:TSInstallInfo` to check if all languages you want to install are now installed.[^3]
