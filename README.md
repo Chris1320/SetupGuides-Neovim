@@ -129,8 +129,6 @@ This setup has been tested on the following platforms:
 - Linux Mint 21
 - Termux Android Terminal Emulator
 
-*Windows version of this guide will be available soon.*
-
 ## Requirements
 
 - [Neovim](https://neovim.io/) v0.8.0+
