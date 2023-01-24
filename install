@@ -7,7 +7,7 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 9 0)  # Installer version; different from config version and Neovim version.
+version=(0 9 1)  # Installer version; different from config version and Neovim version.
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
@@ -70,6 +70,19 @@ if ! [[ -x "$(command -v gcc)" ]]; then
 
 else
     echo "C compiler: gcc"
+fi
+
+if ! [[ -x "$(command -v make)" ]]; then
+    echo "make      : not found"
+    echo
+    echo "\`make\` is not installed."
+    echo "Please install it and try again."
+    echo
+    echo "  [REASON]: Used by telescope-fzf-native plugin."
+    echo "- \`sudo apt update && sudo apt install make\`"
+
+else
+    echo "make      : installed"
 fi
 
 if ! [[ -x "$(command -v npm)" ]]; then
@@ -245,7 +258,7 @@ else
     for file in ${files_to_download}; do
         pull_url="${file//<branch>/${target_branch}}"
         output_filepath=${file##*/src/}
-        if ! curl -sSfL "${pull_url}" --create-dirs --output "${nvim_config_path}${output_filepath}"; then
+        if ! curl -sSfL "${pull_url}" --create-dirs --output "${nvim_config_path}/${output_filepath}"; then
             printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
             exit 3
         fi
