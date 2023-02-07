@@ -16,6 +16,7 @@ def main() -> int:
             filepath = f"{dirpath}{SEP}{filename}"
             files.append(f"{URL}{SEP}{filepath}")  # Result: URL + "src/" + file's filepath
 
+    files.sort()
     with open(FILELIST_PATH, 'w') as f:
         f.write('\n'.join(files))
 
