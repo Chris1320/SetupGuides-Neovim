@@ -155,7 +155,8 @@ This setup has been tested on the following platforms:
     - Using *curl*: `bash <(curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
 6. Run `nvim` and allow installation of plugins.[^5]
 7. Exit Neovim by running `:q` and re-run `nvim` to install tree-sitter grammars.[^3]
-8. Configure LSPs using Mason. `:Mason`
+8. Check for errors by running `:checkhealth`.
+9. Configure LSPs using Mason. `:Mason`
 
 ### Manual Customization Guide
 
