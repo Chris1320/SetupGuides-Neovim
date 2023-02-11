@@ -7,7 +7,7 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 9 1)  # Installer version; different from config version and Neovim version.
+version=(0 9 2)  # Installer version; different from config version and Neovim version.
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
@@ -80,6 +80,7 @@ if ! [[ -x "$(command -v make)" ]]; then
     echo
     echo "  [REASON]: Used by telescope-fzf-native plugin."
     echo "- \`sudo apt update && sudo apt install make\`"
+    exit 11
 
 else
     echo "make      : installed"
