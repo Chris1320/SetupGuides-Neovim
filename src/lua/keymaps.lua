@@ -7,6 +7,7 @@ https://github.com/SetupGuides/Neovim
 This modules defines keymaps for the end-user.
 ]]--
 
+local cmds = require("core.utils.cmds")
 local flagFile = require("core.utils.flagFile")
 
 -- Check if the config has been installed already.
@@ -133,6 +134,8 @@ return {
 
             vim.keymap.set('n', "<leader>gtb", require("gitsigns").toggle_current_line_blame, {noremap=true, silent=true, desc="Toggle line blame"})
             vim.keymap.set('n', "<leader>gtd", require("gitsigns").toggle_deleted, {noremap=true, silent=true, desc="Toggle deleted lines"})
+
+            vim.keymap.set('n', "<leader>iv", cmds.showConfigVersion, {noremap=true, silent=true, desc="Show Neovim config version"})
         end
     end
 }

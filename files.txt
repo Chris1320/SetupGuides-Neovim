@@ -1,5 +1,6 @@
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/init.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/core/info.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/core/utils/cmds.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/core/utils/flagFile.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/core/utils/misc.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/keymaps.lua
