@@ -50,12 +50,12 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
 
 The `which-key` plugin will also show you available keymaps as you type.
 
-| Key           | Resulting Command                      | Action                                         | Plugin                |
+| Key           | Resulting Command                      | Action                                         | Source/Plugin         |
 |---------------|----------------------------------------|------------------------------------------------|-----------------------|
-| `,`           |                                        | Leader key                                     |                       |
+| `,`           |                                        | Leader key                                     | Neovim                |
 |               |                                        |                                                |                       |
-| `<leader>/`   | `:nohlsearch`                          | Clear last search highlight                    |                       |
-| `<leader>w`   | `:set wrap` or `:set nowrap`           | Toggle word wrap.                              |                       |
+| `<leader>/`   | `:nohlsearch`                          | Clear last search highlight                    | Neovim                |
+| `<leader>w`   | `:set wrap` or `:set nowrap`           | Toggle word wrap.                              | Neovim                |
 |               |                                        |                                                |                       |
 | `<leader>r`   | `vim.lsp.buf.rename()`                 | Rename highlighted symbol.                     | LSP                   |
 |               |                                        |                                                |                       |
@@ -117,6 +117,8 @@ The `which-key` plugin will also show you available keymaps as you type.
 | `<leader>ghu` | `gitsigns.undo_stage_hunk()`           | Undo stage hunk.                               | Gitsigns              |
 | `<leader>gtb` | `gitsigns.toggle_current_line_blame()` | Toggle line blame.                             | Gitsigns              |
 | `<leader>gtd` | `gitsigns.toggle_deleted()`            | Toggle deleted lines.                          | Gitsigns              |
+|               |                                        |                                                |                       |
+| `<leader>iv`  | `cmds.showConfigVersion()`             | Show Neovim configuration version.             | Custom                |
 |               |                                        |                                                |                       |
 | `<esc>`       |                                        | Close the `nvim-cmp` panel if open.            | Cmp                   |
 | `<cr>`        |                                        | Accept suggestion if `nvim-cmp` panel is open. | Cmp                   |
