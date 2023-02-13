@@ -181,8 +181,8 @@ local function setupLspconfig()
             function(server_name)  -- the default handler
                 lspconfig[server_name].setup({capabilities=lsp_default_conf})
             end,
-            ["sumneko_lua"] = function()  -- Custom handler for sumneko_lua LSP
-                lspconfig["sumneko_lua"].setup(
+            ["lua_ls"] = function()  -- Custom handler for sumneko_lua LSP
+                lspconfig["lua_ls"].setup(
                     {
                         settings = {
                             Lua = {
