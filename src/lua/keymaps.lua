@@ -136,6 +136,7 @@ return {
             vim.keymap.set('n', "<leader>gtd", require("gitsigns").toggle_deleted, {noremap=true, silent=true, desc="Toggle deleted lines"})
 
             vim.keymap.set('n', "<leader>iv", cmds.showConfigVersion, {noremap=true, silent=true, desc="Show Neovim config version"})
+            vim.keymap.set('n', "<leader>il", ":LspInfo<cr>", {noremap=true, silent=true, desc="Show active LSP information"})
         end
     end
 }
