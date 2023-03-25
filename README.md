@@ -38,10 +38,10 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
     - [dressing.nvim](https://github.com/stevearc/dressing.nvim): A UI customization plugin.
-    - [feline.nvim](https://github.com/feline-nvim/feline.nvim): A customizable statusline.
     - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git Integration for buffers.
     - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
     - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
+    - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim): A Neovim statusline plugin.
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
