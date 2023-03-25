@@ -9,12 +9,12 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/au
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/barbar/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/catppuccin/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/dressing/main.lua
-https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/feline/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/gitsigns/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/illuminate/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/indent-blankline/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lspconfig/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lsplines/main.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lualine/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/luasnip/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/notify/main.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-tree/main.lua
