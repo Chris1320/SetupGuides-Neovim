@@ -45,7 +45,7 @@ return {
                 use("lewis6991/gitsigns.nvim")                       -- Git Integration
                 use(
                     {
-                        "feline-nvim/feline.nvim",
+                        "nvim-lualine/lualine.nvim",
                         requires = {"kyazdani42/nvim-web-devicons"}
                     }
                 )                       -- Customizable statusline

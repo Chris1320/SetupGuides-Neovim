@@ -14,7 +14,7 @@ local function setupPlugins()
         "packer",
 
         "catppuccin",
-        "feline",
+        "lualine",
         "barbar",
         "dressing",
         "notify",
