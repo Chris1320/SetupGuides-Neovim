@@ -8,10 +8,9 @@ return {
                 tabpage = true,
                 closable = true,
                 clickable = true,
-                highlights = require("catppuccin.groups.integrations.bufferline").get(),  -- Catppuccin integration
                 icons = {
-                    buffer_index = true,
-                    buffer_number = true,
+                    buffer_index = false,
+                    buffer_number = false,
                     diagnostics = {
                         -- By default, only show errors and warnings.
                         [vim.diagnostic.severity.ERROR] = {

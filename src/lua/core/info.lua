@@ -6,5 +6,5 @@ https://github.com/SetupGuides/Neovim
 ]]--
 
 return {
-    version = {0, 9, 3}
+    version = {0, 9, 4}
 }

@@ -15,7 +15,6 @@ return {
                 },
                 integrations = {
                     barbar = true,
-                    bufferline = true,
                     cmp = true,
                     dap = {
                         enabled = true,
