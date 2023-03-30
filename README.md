@@ -78,8 +78,6 @@ The `which-key` plugin will also show you available keymaps as you type.
 | `<leader>bod` | `:BufferOrderByDirectory`              | Order buffers by directory                     | Barbar                |
 | `<leader>bol` | `:BufferOrderByLanguage`               | Order buffers by language                      | Barbar                |
 | `<leader>bow` | `:BufferOrderByWindowNumber`           | Order buffers by windows number                | Barbar                |
-| `<leader>be`  | `:BarbarEnable`                        | Enable Barbar                                  | Barbar                |
-| `<leader>bd`  | `:BarbarDisable`                       | Disable Barbar                                 | Barbar                |
 |               |                                        |                                                |                       |
 | `<leader>tt`  | `:Telescope`                           | Open Telescope                                 | Telescope             |
 | `<leader>tb`  | `:Telescope buffers`                   | Open Telescope Buffer Searcher                 | Telescope             |
@@ -120,9 +118,10 @@ The `which-key` plugin will also show you available keymaps as you type.
 | `<leader>gtd` | `gitsigns.toggle_deleted()`            | Toggle deleted lines.                          | Gitsigns              |
 |               |                                        |                                                |                       |
 | `<leader>iv`  | `cmds.showConfigVersion()`             | Show Neovim configuration version.             | Custom                |
+| `<leader>il`  | `:LspInfo`                             | Show LSP Server information.                   | LSP                   |
 |               |                                        |                                                |                       |
-| `<esc>`       |                                        | Close the `nvim-cmp` panel if open.            | Cmp                   |
-| `<cr>`        |                                        | Accept suggestion if `nvim-cmp` panel is open. | Cmp                   |
+| `<esc>`       |                                        | Close the `nvim-cmp` panel if open.            | nvim-cmp              |
+| `<cr>`        |                                        | Accept suggestion if `nvim-cmp` panel is open. | nvim-cmp              |
 
 ## Platform Compatibility
 

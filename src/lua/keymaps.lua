@@ -47,9 +47,6 @@ return {
             vim.keymap.set('n', "<leader>bol", ":BufferOrderByLanguage<cr>", {desc="Order buffers by language"})
             vim.keymap.set('n', "<leader>bow", ":BufferOrderByWindowNumber<cr>", {desc="Order buffers by window number"})
 
-            vim.keymap.set('n', "<leader>be", ":BarbarEnable<cr>", {desc="Enable Barbar"})                                     -- Enable/disable barbar
-            vim.keymap.set('n', "<leader>bd", ":BarbarDisable<cr>", {desc="Disable Barbar"})
-
         -- Telescope shortcuts
             vim.keymap.set('n', "<leader>tt", ":Telescope<cr>", {desc="Open Telescope"})
             vim.keymap.set('n', "<leader>tb", ":Telescope buffers<cr>", {desc="See open buffers"})
