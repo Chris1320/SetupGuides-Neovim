@@ -81,11 +81,12 @@ The `which-key` plugin will also show you available keymaps as you type.
 | `<leader>be`  | `:BarbarEnable`                        | Enable Barbar                                  | Barbar                |
 | `<leader>bd`  | `:BarbarDisable`                       | Disable Barbar                                 | Barbar                |
 |               |                                        |                                                |                       |
-| `<leader>tt`  | `:Telescope`                           | Toggle Telescope                               | Telescope             |
-| `<leader>tb`  | `:Telescope buffers`                   | Toggle Telescope Buffer Searcher               | Telescope             |
-| `<leader>tF`  | `:Telescope find_files`                | Toggle Telescope File Searcher                 | Telescope             |
-| `<leader>ts`  | `:Telescope treesitter`                | Toggle Telescope treesitter explorer           | Telescope, Treesitter |
-| `<leader>tf`  | `:Telescope current_buffer_fuzzy_find` | Toggle fuzzy finder for current buffer         | Telescope             |
+| `<leader>tt`  | `:Telescope`                           | Open Telescope                                 | Telescope             |
+| `<leader>tb`  | `:Telescope buffers`                   | Open Telescope Buffer Searcher                 | Telescope             |
+| `<leader>tS`  | `:Telescope live_grep`                 | Search text in project using Telescope.        | Telescope             |
+| `<leader>tF`  | `:Telescope find_files`                | Search file in project using Telescope         | Telescope             |
+| `<leader>ts`  | `:Telescope treesitter`                | Open Telescope treesitter explorer             | Telescope, Treesitter |
+| `<leader>tf`  | `:Telescope current_buffer_fuzzy_find` | Open fuzzy finder for current buffer           | Telescope             |
 | `<leader>tr`  | `:Telescope lsp_references`            | Show references of highlighted symbol.         | Telescope, LSP        |
 | `<leader>td`  | `:Telescope lsp_definitions`           | Show definitions of highlighted symbol.        | Telescope, LSP        |
 | `<leader>th`  | `:Telescope notify`                    | Show notification history.                     | Telescope, Notify     |
