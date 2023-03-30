@@ -53,6 +53,7 @@ return {
         -- Telescope shortcuts
             vim.keymap.set('n', "<leader>tt", ":Telescope<cr>", {desc="Open Telescope"})
             vim.keymap.set('n', "<leader>tb", ":Telescope buffers<cr>", {desc="See open buffers"})
+            vim.keymap.set('n', "<leader>tS", ":Telescope live_grep<cr>", {desc="Search text"})
             vim.keymap.set('n', "<leader>tF", ":Telescope find_files<cr>", {desc="Search files"})
             vim.keymap.set('n', "<leader>ts", ":Telescope treesitter<cr>", {desc="See treesitter symbols"})
             vim.keymap.set('n', "<leader>tf", ":Telescope current_buffer_fuzzy_find<cr>", {desc="Search current buffer"})
