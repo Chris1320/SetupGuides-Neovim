@@ -64,6 +64,7 @@ local function setupLspconfig()
                 end
             },
             sources = {  -- Set autocomplete sources.
+                {name="nvim_lsp_signature_help"},
                 {
                     name = "nvim_lsp",  -- Use LSPs as source.
                     option = {
@@ -92,7 +93,7 @@ local function setupLspconfig()
                         keyword_length = 1
                     }
                 },
-                {name="nvim_lsp_signature_help"},
+                {name="copilot.vim"}
             },
             mapping = cmp.mapping.preset.insert(
                 {
@@ -128,9 +129,9 @@ local function setupLspconfig()
                         end,
                         {"i", "s"}
                     ),
-                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<CR>'] = cmp.mapping.confirm({select=true}), -- Accept currently selected item.
+                    ['<C-k>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-j>'] = cmp.mapping.scroll_docs(4),
+                    ['<CR>'] = cmp.mapping.confirm({select=false}), -- Accept currently selected item.
                 }
             ),
             window = {
