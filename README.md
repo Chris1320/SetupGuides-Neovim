@@ -45,6 +45,8 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
+- QoL Plugins
+    - [gitignore.nvim](https://github.com/wintermute-cell/gitignore.nvim): A neovim plugin for generating .gitignore files.
 
 ## Custom Key Bindings
 
@@ -106,6 +108,7 @@ The `which-key` plugin will also show you available keymaps as you type.
 | `<leader>ft`  | `:NvimTreeToggle`                      | Toggle Nvim-tree file explorer                 | Nvim-tree             |
 |               |                                        |                                                |                       |
 | `<leader>gP`  | `gitsigns.diffthis()`                  | Show buffer changes.                           | Gitsigns              |
+| `<leader>gi`  | `gitignore.generate()`                 | Generate `.gitignore` file.                    | gitignore.nvim        |
 | `<leader>gps` | `gitsigns.preview_hunk()`              | Preview hunk.                                  | Gitsigns              |
 | `<leader>gpa` | `gitsigns.prev_hunk()`                 | Preview previous hunk.                         | Gitsigns              |
 | `<leader>gpd` | `gitsigns.next_hunk()`                 | Preview next hunk.                             | Gitsigns              |
