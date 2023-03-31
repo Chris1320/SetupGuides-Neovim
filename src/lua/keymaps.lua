@@ -47,7 +47,7 @@ return {
             vim.keymap.set('n', "<leader>bol", ":BufferOrderByLanguage<cr>", {desc="Order buffers by language"})
             vim.keymap.set('n', "<leader>bow", ":BufferOrderByWindowNumber<cr>", {desc="Order buffers by window number"})
 
-        -- Telescope shortcuts
+            -- Telescope shortcuts
             vim.keymap.set('n', "<leader>tt", ":Telescope<cr>", {desc="Open Telescope"})
             vim.keymap.set('n', "<leader>tb", ":Telescope buffers<cr>", {desc="See open buffers"})
             vim.keymap.set('n', "<leader>tS", ":Telescope live_grep<cr>", {desc="Search text"})
@@ -65,14 +65,14 @@ return {
             -- Notify integration
             vim.keymap.set('n', "<leader>th", ":Telescope notify<cr>", {desc="Show notification history"})
 
-        -- Trouble shortcuts
+            -- Trouble shortcuts
             vim.keymap.set('n', "<leader>ewd", ":TroubleToggle workspace_diagnostics<cr>", {desc="See workspace diagnostics"})
             vim.keymap.set('n', "<leader>edd", ":TroubleToggle document_diagnostics<cr>", {desc="See document diagnostics"})
             vim.keymap.set('n', "<leader>eqf", ":TroubleToggle quickfix<cr>", {desc="See quick fixes"})
             vim.keymap.set('n', "<leader>elr", ":TroubleToggle lsp_references<cr>", {desc="See LSP references"})
             vim.keymap.set('n', "<leader>elc", ":TroubleToggle loclist<cr>", {desc="See loclists"})
 
-        -- LSP Lines shortcuts
+            -- LSP Lines shortcuts
             vim.keymap.set(
                 'n',
                 "<leader>l",
@@ -88,25 +88,25 @@ return {
                 {desc="Toggle LSP Lines"}
             )
 
-        -- dap shortcuts
-        --     vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
-        --     vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
-        --     vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
-        --     vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
-        --     vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
-        --     vim.keymap.set('n', "<leader>dp", require("dapui").toggle, {desc="Toggle DAP UI"})
+            -- dap shortcuts
+            --     vim.keymap.set('n', "<leader>dt", require("dap").toggle_breakpoint, {desc="Toggle Breakpoint"})
+            --     vim.keymap.set('n', "<leader>ds", require("dap").continue, {desc="Start/Resume Debugging"})
+            --     vim.keymap.set('n', "<leader>dz", require("dap").step_over, {desc="Step Over"})
+            --     vim.keymap.set('n', "<leader>dx", require("dap").step_over, {desc="Step Into"})
+            --     vim.keymap.set('n', "<leader>dr", require("dap").repl.open, {desc="Open REPL"})
+            --     vim.keymap.set('n', "<leader>dp", require("dapui").toggle, {desc="Toggle DAP UI"})
 
-        -- nvim-ufo shortcuts; override folding keymaps.
+            -- nvim-ufo shortcuts; override folding keymaps.
             vim.keymap.set('n', "zR", require("ufo").openAllFolds)
             vim.keymap.set('n', "zM", require("ufo").closeAllFolds)
 
-        -- nvim-tree shortcuts
+            -- nvim-tree shortcuts
             vim.keymap.set('n', "<leader>fo", ":NvimTreeOpen<cr>", {noremap=true, silent=true, desc="Open nvim-tree"})
             vim.keymap.set('n', "<leader>fc", ":NvimTreeClose<cr>", {noremap=true, silent=true, desc="Close nvim-tree"})
             vim.keymap.set('n', "<leader>ff", ":NvimTreeFocus<cr>", {noremap=true, silent=true, desc="Focus to nvim-tree"})
             vim.keymap.set('n', "<leader>ft", ":NvimTreeToggle<cr>", {noremap=true, silent=true, desc="Toggle nvim-tree"})
 
-        -- Gitsigns shortcuts
+            -- Gitsigns shortcuts
             -- Logic:
             -- * = lowercase characters
             -- ^ = uppercase characters
@@ -119,6 +119,7 @@ return {
             --     [gt*] toggles/switches
 
             vim.keymap.set('n', "<leader>gP", require("gitsigns").diffthis, {noremap=true, silent=true, desc="Show buffer changes"})
+            vim.keymap.set('n', "<leader>gi", require("gitignore").generate, {noremap=true, silent=true, desc="Generate .gitignore file"})
 
             vim.keymap.set('n', "<leader>gps", require("gitsigns").preview_hunk, {noremap=true, silent=true, desc="Preview hunk"})
             vim.keymap.set('n', "<leader>gpa", require("gitsigns").prev_hunk, {noremap=true, silent=true, desc="Preview previous hunk"})

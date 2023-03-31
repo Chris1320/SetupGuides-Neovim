@@ -24,7 +24,7 @@ return {
                 use(                                                 -- Fuzzy finder
                     {
                         "nvim-telescope/telescope.nvim",
-                        requires = {"nvim-lua/plenary.nvim"}
+                        requires = "nvim-lua/plenary.nvim"
                     }
                 )
                 use(                                                 -- Native Telescope Sorter
@@ -46,28 +46,24 @@ return {
                 use(
                     {
                         "nvim-lualine/lualine.nvim",
-                        requires = {"kyazdani42/nvim-web-devicons"}
+                        requires = "kyazdani42/nvim-web-devicons"
                     }
                 )                       -- Customizable statusline
                 use("rcarriga/nvim-notify")                          -- Notification Manager
                 use(                                                 -- Tabline plugin
                     {
                         "romgrk/barbar.nvim",
-                        requires = {"kyazdani42/nvim-web-devicons"}
+                        requires = "kyazdani42/nvim-web-devicons"
                     }
                 )
                 use("lukas-reineke/indent-blankline.nvim")           -- Indentation guides
                 use(
                     {
                         "kevinhwang91/nvim-ufo",
-                        requires = {"kevinhwang91/promise-async"}
+                        requires = "kevinhwang91/promise-async"
                     }
                 )
-                use(
-                    {
-                        "RRethy/vim-illuminate"
-                    }
-                )
+                use("RRethy/vim-illuminate")
                 use("folke/which-key.nvim")                          -- Displays possible key bindings
 
                 -- Autocompletion
@@ -80,7 +76,7 @@ return {
                 use(
                     {
                         "petertriho/cmp-git",                        -- nvim-cmp plugin for git integration
-                        requires = {"nvim-lua/plenary.nvim"}
+                        requires = "nvim-lua/plenary.nvim"
                     }
                 )
                 use("L3MON4D3/LuaSnip")                              -- Snippets
@@ -92,7 +88,15 @@ return {
                 use(
                     {
                         "kyazdani42/nvim-tree.lua",
-                        requires = {{"kyazdani42/nvim-web-devicons"}},
+                        requires = "kyazdani42/nvim-web-devicons"
+                    }
+                )
+
+                -- Other stuff
+                use(
+                    {
+                        "wintermute-cell/gitignore.nvim",  -- Generate .gitignore files.
+                        requires = "nvim-telescope/telescope.nvim"
                     }
                 )
             end
