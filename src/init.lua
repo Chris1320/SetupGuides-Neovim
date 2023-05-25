@@ -1,13 +1,11 @@
 --[[
-init.lua - This is part of a custom config file for Neovim v0.8.0+.
+This is part of a custom config file for Neovim v0.8.0+.
 
 You can get it from:
 https://github.com/SetupGuides/Neovim
 
 This is the entry point for the init script.
-]]--
 
---[[
 Cheatsheet:
 
 vim.g    -- global variables (`let` command in vim)
@@ -16,16 +14,30 @@ vim.cmd  -- commands
 vim.opt  -- options (`set` command in vim)
 ]]--
 
-local flagFile = require("core.utils.flagFile")
+local vars = require("vars")
 
-require("options").setup()  -- Set options.
-local first_run = require("plugins.plugins").setup()  -- Load plugins.
-require("keymaps").setup()  -- Set keymaps.
-
--- Update flag file.
-local flag_file_update_result = flagFile.update()
-if flag_file_update_result["exit_code"] ~= 0 then
-    vim.notify(flag_file_update_result["message"])
+-- Bootsrap lazy.nvim plugin manager
+if not vim.loop.fs_stat(vars.lazy.path.home) then
+    vim.fn.system(
+        {
+            "git",
+            "clone",
+            "--filter=blob:none",
+            "https://github.com/folke/lazy.nvim.git",
+            "--branch=stable",
+            vars.lazy.path.home,
+        }
+    )
 end
 
-require("post_ops").run(first_run)  -- Run post-install operations.
+vim.opt.rtp:prepend(vars.lazy.path.home)
+
+require("lazy").setup(
+    "plugins",
+    {
+        root = vars.lazy.path.root,
+        install = vars.lazy.install,
+        checker = vars.lazy.checker,
+        change_detection = vars.lazy.change_detection,
+    }
+)

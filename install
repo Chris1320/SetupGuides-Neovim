@@ -1,37 +1,24 @@
 #!/usr/bin/env bash
 
 # This script has been tested on the following systems:
+# - GNU bash v5.1.16 on Arch Linux
 # - GNU bash v5.1.16 on Linux Mint 21
 # - GNU bash v5.1.16 on Kali Linux Rolling
 # - GNU bash v5.2.2 on Termux Terminal Emulator 0.118.0
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 9 2)  # Installer version; different from config version and Neovim version.
+version=(0 10 0)  # Installer version; different from config version and Neovim version.
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_branch="main"  # The branch to which the configs will be pulled from.
-
-current_wd="${PWD}"
+target_branch="lazy-rewrite"  # The branch to which the configs will be pulled from.
 installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
-nvim_data_path="${HOME}/.local/share/nvim"
-packer_installation_path="${nvim_data_path}/site/pack/packer/start/packer.nvim"
-flag_file="${nvim_data_path}/.plugins_installed"  # The file that is created after installing the config.
 
 filelist="files.txt"
 filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/${filelist}"
 
 min_nvim_version=(0 8 0)  # Minimum Neovim version required.
-
-# Enable force re-install if `--reinstall` is passed as argument.
-if [[ "$1" = "--reinstall" ]]; then
-    force_reinstall=true
-
-else
-    force_reinstall=false
-
-fi
 
 echo
 echo "$title"
@@ -127,28 +114,9 @@ else  # If Neovim is installed, check its version.
     fi
 fi
 
-# Check what to do.
-if [[ -e "${nvim_config_path}" ]] && ! $force_reinstall; then
-    config_perform="update"
-
-else
-    config_perform="install"
-fi
-
-if [[ -e "${packer_installation_path}" ]] && ! $force_reinstall; then
-    packer_perform="update"
-
-else
-    packer_perform="install"
-
-fi
-
 # ? Ask for user confirmation.
 echo
-echo "This will perform the following:"
-echo
-echo "- ${config_perform} ${name} on \`${nvim_config_path}\`."
-echo "- ${packer_perform} packer.nvim on \`${packer_installation_path}\`."
+echo "This will install ${name} on \`${nvim_config_path}\`."
 echo
 echo "This will overwrite existing files in the said directory."
 echo
@@ -174,19 +142,7 @@ done
 # ? Install the customization files.
 echo
 
-if [[ "${config_perform}" = "install" ]]; then
-    if [[ -e "${flag_file}" ]]; then
-        printf "Removing flag file in \`%s\`...\r" "${flag_file}"
-        rm -- "${flag_file}"
-        printf "Removing flag file in \`%s\`... Done!\n" "${flag_file}"
-
-    else
-        echo "No existing flag file found in \`${flag_file}\`."
-
-    fi
-fi
-
-# Install or update, remove the configuration files.
+# Remove the configuration files.
 if [[ -e "${nvim_config_path}" ]]; then
     printf "Removing existing files in \`%s\`...\r" "${nvim_config_path}"
     rm -r -- "${nvim_config_path}"  # Delete the existing Neovim configuration directory.
@@ -194,48 +150,6 @@ if [[ -e "${nvim_config_path}" ]]; then
 
 else
     echo "No existing files found in \`${nvim_config_path}\`."
-
-fi
-
-# Only remove the packer installation files if performing a new install.
-if [[ "${packer_perform}" = "install" ]]; then
-    if [[ -e "${packer_installation_path}" ]]; then
-        printf "Removing existing files in \`%s\`...\r" "${packer_installation_path}"
-        rm -rf -- "${packer_installation_path}"
-        printf "Removing existing files in \`%s\`... Done!\n" "${packer_installation_path}"
-
-    else
-        echo "No existing files found in \`${packer_installation_path}\`."
-
-    fi
-fi
-
-if [[ "${packer_perform}" = "install" ]]; then
-    echo
-    if ! git clone --depth=1 "https://github.com/wbthomason/packer.nvim.git" "${packer_installation_path}"; then
-        echo "Failed to clone packer.nvim"
-        exit 8
-
-    fi
-    echo
-
-else
-    echo
-    if ! cd "${packer_installation_path}"; then
-        echo "Git pull failed. Changing directory to Packer installation path failed."
-        cd "${current_wd}" || exit 9
-        exit 9
-    fi
-    if ! git pull; then
-        echo "Git pull failed."
-        cd "${current_wd}" || exit 9
-        exit 9
-    fi
-    if ! cd "${current_wd}"; then
-        echo "Git pull failed. Unable to get back to directory."
-        exit 9
-    fi
-    echo
 
 fi
 
