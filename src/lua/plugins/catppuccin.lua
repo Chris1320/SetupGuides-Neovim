@@ -5,6 +5,7 @@ return {
 
     name = "catppuccin",
     enabled = true,
+
     lazy = false,
     priority = 1000,
     -- FIXME: I can't get `opts` to work,
