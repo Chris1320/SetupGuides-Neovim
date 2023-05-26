@@ -4,10 +4,8 @@ return {
     name = "which-key",
     enabled = true,
 
+    lazy = true,
+    priority = 80,
+
     event = "VeryLazy",
-    init = function()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 500
-    end,
-    opts = {}
 }

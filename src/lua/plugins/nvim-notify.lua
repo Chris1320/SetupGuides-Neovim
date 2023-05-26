@@ -5,12 +5,12 @@ return {
     enabled = true,
 
     lazy = false,
+    priority = 80,
     config = function()
         local vars = require("vars")
         local notify = require("notify")
 
-        vim.opt.termguicolors = true
-
+        -- Change the default notification handler.
         vim.notify = function(msg, ...)
             for _, silenced_msg in ipairs(vars.blocklisted_notifications) do
                 if msg:match(silenced_msg) then
