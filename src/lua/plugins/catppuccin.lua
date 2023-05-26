@@ -1,5 +1,3 @@
-local vars = require("vars")
-
 return {
     "catppuccin/nvim",
 
@@ -11,6 +9,8 @@ return {
     -- FIXME: I can't get `opts` to work,
     -- so I'm going to use `config` for now.
     config = function()
+        local vars = require("vars")
+
         require("catppuccin").setup(
             {
                 flavour = vars.colorscheme.catppuccin_flavor,
