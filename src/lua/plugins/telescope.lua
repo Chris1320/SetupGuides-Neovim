@@ -4,6 +4,7 @@ return {
     enabled = true,
 
     priority = 80,
+    cmd = "Telescope",
     event = {"BufReadPost", "BufNewFile"},
     dependencies = {
         {
