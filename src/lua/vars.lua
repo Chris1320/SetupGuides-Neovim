@@ -31,7 +31,41 @@ return {
         catppuccin_flavor = "mocha",  -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
         catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin"
     },
-    blocklisted_notifications = {
-
+    treesitter = {
+        languages = {                          -- [add|remove] languages you [don't] want to use.
+            "bash",                            -- Reference: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+            "c",
+            "cpp",
+            "css",
+            "c_sharp",
+            "cmake",
+            "dockerfile",
+            "html",
+            "java",
+            "javascript",
+            "json",
+            "json5",
+            "jsonc",
+            "kotlin",
+            "latex",
+            "lua",
+            "make",
+            "markdown",
+            "markdown_inline",
+            "python",
+            "rst",
+            "rust",
+            "toml",
+            "typescript",
+            "vim",
+            "yaml"
+        }
+    },
+    notifications = {
+        -- Silenced notifications for nvim-notify
+        blocked = {
+            -- This is a table of strings.
+            -- Add notifications you don't want to see here.
+        }
     }
 }
