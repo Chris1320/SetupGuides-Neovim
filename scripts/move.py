@@ -20,7 +20,7 @@ def getOriginalPath(path: str) -> pathlib.Path:
 def getBackupPath(path: str) -> pathlib.Path:
     return pathlib.Path(path + PATH_SUFFIX).expanduser()
 
-def main(return_to_original: bool = False) -> int:
+def main(return_to_original: bool = False, force: bool = False) -> int:
     """
     Temporarily rename Neovim directories to test new configuration changes.
 
@@ -37,9 +37,10 @@ def main(return_to_original: bool = False) -> int:
                 continue
 
             if destination.exists():
-                if input(f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > ") != 'y':
-                    print(f"[+] Skipping `{source}`.")
-                    continue
+                if not force:
+                    if input(f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > ") != 'y':
+                        print(f"[+] Skipping `{source}`.")
+                        continue
 
                 shutil.rmtree(destination)
 
@@ -56,8 +57,13 @@ def main(return_to_original: bool = False) -> int:
 
 if __name__ == "__main__":
     if "--return" in sys.argv:
-        print("[*] Returning to original directory names.")
-        sys.exit(main(return_to_original=True))
+        if "--force" in sys.argv:
+            print("[*] Forcibly returning to original directory names.")
+            sys.exit(main(return_to_original=True, force=True))
+
+        else:
+            print("[*] Returning to original directory names.")
+            sys.exit(main(return_to_original=True))
 
     print("[*] Renaming directories.")
     sys.exit(main())
