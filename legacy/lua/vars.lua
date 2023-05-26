@@ -38,42 +38,6 @@ return {
     -- Gitsigns
     git_blame_format = "<author>, on <author_time:%Y-%m-%d> • <summary>",
 
-    -- Treesitter
-    treesitter_languages = {                          -- [add|remove] languages you [don't] want to use.
-        "bash",                            -- Reference: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
-        "c",
-        "cpp",
-        "css",
-        "c_sharp",
-        "cmake",
-        "dockerfile",
-        "html",
-        "java",
-        "javascript",
-        "json",
-        "json5",
-        "jsonc",
-        "kotlin",
-        "latex",
-        "lua",
-        "make",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "rst",
-        "rust",
-        "toml",
-        "typescript",
-        "vim",
-        "yaml"
-    },
-
-    -- Silenced notifications for nvim-notify
-    blocklisted_notifications = {
-        -- "received `end` message with no corresponding `begin`",  -- Java lsp server error (WIP)
-        -- "Could not find `Cargo.toml`"  -- Rust lspconfig warning (WIP)
-    },
-
     mason_bin_path = vim.fn.stdpath("data") .. "/mason/bin/",
     catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
     plugins_installed_path = vim.fn.stdpath("data") .. "/.plugins_installed"  -- The file to look for when checking if nvim has already run.
