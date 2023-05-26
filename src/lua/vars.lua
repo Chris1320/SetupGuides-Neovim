@@ -30,5 +30,8 @@ return {
     colorscheme = {
         catppuccin_flavor = "mocha",  -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
         catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin"
+    },
+    blocklisted_notifications = {
+
     }
 }

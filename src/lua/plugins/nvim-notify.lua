@@ -1,8 +1,16 @@
-local vars = require("vars")
-local notify = require("notify")
-
 return {
-    setup = function()
+    "rcarriga/nvim-notify",
+
+    name = "nvim-notify",
+    enabled = true,
+
+    lazy = false,
+    config = function()
+        local vars = require("vars")
+        local notify = require("notify")
+
+        vim.opt.termguicolors = true
+
         vim.notify = function(msg, ...)
             for _, silenced_msg in ipairs(vars.blocklisted_notifications) do
                 if msg:match(silenced_msg) then
