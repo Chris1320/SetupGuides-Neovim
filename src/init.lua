@@ -32,6 +32,7 @@ end
 
 vim.opt.rtp:prepend(vars.lazy.path.home)
 
+-- Setup lazy.
 require("lazy").setup(
     "plugins",
     {

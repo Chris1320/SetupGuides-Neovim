@@ -14,7 +14,7 @@ return {
         },
         install = {
             missing = true,
-            colorscheme = {"catppuccin"}
+            colorscheme = {"catppuccin-mocha"}
         },
         checker = {
             enabled = true,
