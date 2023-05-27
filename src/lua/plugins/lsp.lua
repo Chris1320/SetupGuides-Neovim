@@ -2,37 +2,17 @@ return {
     "neovim/nvim-lspconfig",
 
     enabled = true,
-    priority = 80,
-    build = ":MasonUpdate",
+    event = {"BufReadPost", "BufNewFile"},
     dependencies = {
-        -- LSP
-        "williamboman/mason.nvim",
+        "mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-
-        -- Autocomplete
-        "nvim-cmp"
     },
     config = function()
         -- This part has a lot of stuff going on.
         -- This sets up the LSP and autocompletion.
         local mlsp = require("mason-lspconfig")
         local lspconfig = require("lspconfig")
-        local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-        -- Setup mason
-        require("mason").setup(
-            {
-                ui = {
-                    check_outdated_packages_on_open = true,
-                    icons = {
-                        -- you can change these icons to whatever you want.
-                        package_installed = "✓",
-                        server_pending = "➜",
-                        server_uninstalled = "✗"
-                    }
-                }
-            }
-        )
         -- Setup mason-lspconfig
         mlsp.setup()
 
@@ -41,7 +21,7 @@ return {
         lsp_default_conf.capabilities = vim.tbl_deep_extend(
             "force",
             lsp_default_conf.capabilities,
-            cmp_nvim_lsp.default_capabilities()
+            require("cmp_nvim_lsp").default_capabilities()
         )
         lsp_default_conf.capabilities.textDocument.foldingRange = {
             dynamicRegistration = false,

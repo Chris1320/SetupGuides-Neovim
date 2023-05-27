@@ -5,16 +5,16 @@ return {
     lazy = false,
     priority = 80,
     dependencies = {
-        "hrsh7th/cmp-nvim-lsp",                          -- nvim-cmp plugin for LSP integration
-        "hrsh7th/cmp-nvim-lsp-signature-help",           -- nvim-cmp plugin for showing LSP function signatures
-        "hrsh7th/cmp-buffer",                            -- nvim-cmp plugin for buffer suggestions
-        "hrsh7th/cmp-path",                              -- nvim-cmp plugin for filesystem suggestions
-        "hrsh7th/cmp-cmdline",                           -- nvim-cmp plugin for cmdline suggestions
+        "hrsh7th/cmp-nvim-lsp",                 -- nvim-cmp plugin for LSP integration
+        "hrsh7th/cmp-nvim-lsp-signature-help",  -- nvim-cmp plugin for showing LSP function signatures
+        "hrsh7th/cmp-buffer",                   -- nvim-cmp plugin for buffer suggestions
+        "hrsh7th/cmp-path",                     -- nvim-cmp plugin for filesystem suggestions
+        "hrsh7th/cmp-cmdline",                  -- nvim-cmp plugin for cmdline suggestions
         {
-            "petertriho/cmp-git",                        -- nvim-cmp plugin for git integration
+            "petertriho/cmp-git",               -- nvim-cmp plugin for git integration
             dependencies = "nvim-lua/plenary.nvim"
         },
-        "saadparwaiz1/cmp_luasnip",                      -- LuaSnip integration for nvim-cmp
+        "saadparwaiz1/cmp_luasnip",             -- LuaSnip integration for nvim-cmp
         "LuaSnip"
     },
     config = function()
@@ -31,7 +31,7 @@ return {
                     end
                 },
                 sources = {  -- Set autocomplete sources.
-                    {name="nvim_lsp_signature_help"},
+                    {name = "nvim_lsp_signature_help"},
                     {
                         name = "nvim_lsp",  -- Use LSPs as source.
                         option = {
@@ -60,7 +60,7 @@ return {
                             keyword_length = 1
                         }
                     },
-                    {name="copilot.vim"}
+                    {name = "copilot.vim"}
                 },
                 mapping = cmp.mapping.preset.insert(
                     {
@@ -113,8 +113,8 @@ return {
             {
                 sources = cmp.config.sources(
                     {
-                        {name="cmp_git"},
-                        {name="buffer"}
+                        {name = "cmp_git"},
+                        {name = "buffer"}
                     }
                 )
             }
