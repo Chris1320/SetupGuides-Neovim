@@ -6,6 +6,7 @@ return {
 
     lazy = false,
     priority = 1000,
+    build = ":CatppuccinCompile",
     -- FIXME: I can't get `opts` to work,
     -- so I'm going to use `config` for now.
     config = function()
