@@ -5,7 +5,7 @@ return {
     enabled = true,
 
     lazy = false,
-    priority = 80,
+    priority = 90,
     config = function()
         local vars = require("vars")
         local notify = require("notify")

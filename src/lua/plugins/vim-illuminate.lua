@@ -1,8 +1,10 @@
-local illuminate = require("illuminate")
-
 return {
-    setup = function()
-        illuminate.configure(
+    "RRethy/vim-illuminate",
+
+    enabled = true,
+    event = {"BufReadPost", "BufNewFile"},
+    config = function()
+        require("illuminate").configure(
             {
                 providers = {
                     "lsp",
