@@ -7,29 +7,66 @@ https://github.com/SetupGuides/Neovim
 ]]--
 
 return {
-    lazy = {
+    lazy = {  -- configuration for lazy.nvim package manager
         path = {
             root = vim.fn.stdpath("data") .. "/lazy",
             home = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
         },
-        install = {
+        install = {  -- This table is passed directly to lazy.nvim
             missing = true,
             colorscheme = {"catppuccin-mocha"}
         },
-        checker = {
+        checker = {  -- This table is passed directly to lazy.nvim
             enabled = true,
             concurrency = nil,
             notify = true,
             frequency = 10800
         },
-        change_detection = {
+        change_detection = {  -- This table is passed directly to lazy.nvim
             enabled = true,
             notify = true
         }
     },
-    colorscheme = {
-        catppuccin_flavor = "mocha",  -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
-        catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin"
+    appearance = {
+        show_eols = false,  -- Show EOL characters
+        show_spaces = false,  -- Show spaces
+        show_trails = true,  -- Show trailing spaces
+        colorscheme = {
+            catppuccin_flavor = "mocha",  -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
+            catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
+            line_number_color = "grey"
+        },
+        git_blame_format = "<author>, on <author_time:%Y-%m-%d> • <summary>",
+        icons = {
+            eol = '¬',
+            space = '⋅',
+            trail = '·',
+            fold = {        -- Characters for fold indicators
+                fold = ' ',        -- Fold text
+                open = '',       -- Opened fold
+                close = '',      -- Closed fold
+                sep = ' ',         -- Fold separator
+                eob = ' '          -- Empty lines at the end of a buffer
+            }
+        }
+    },
+    behavior = {
+        line_wrapping = false,
+        use_spaces = true,
+        tab_size = 4,  -- if use_spaces is true, this is the number of spaces to use for each tab.
+    },
+    keymapping = {
+        leaderkey = ','
+    },
+    notifications = {
+        -- Silenced notifications for nvim-notify
+        blocked = {
+            -- This is a table of strings.
+            -- Add notifications you don't want to see here.
+            -- For example, if you want to silence all notifications
+            -- with the word "annoying" in them, you would add that
+            -- word to this table.
+        }
     },
     treesitter = {
         languages = {                          -- [add|remove] languages you [don't] want to use.
@@ -59,13 +96,6 @@ return {
             "typescript",
             "vim",
             "yaml"
-        }
-    },
-    notifications = {
-        -- Silenced notifications for nvim-notify
-        blocked = {
-            -- This is a table of strings.
-            -- Add notifications you don't want to see here.
         }
     }
 }

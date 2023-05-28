@@ -13,8 +13,8 @@ return {
 
         require("catppuccin").setup(
             {
-                flavour = vars.colorscheme.catppuccin_flavor,
-                compile_path = vars.colorscheme.catppuccin_cache_dir,
+                flavour = vars.appearance.colorscheme.catppuccin_flavor,
+                compile_path = vars.appearance.colorscheme.catppuccin_cache_dir,
                 term_colors = true,
                 dim_inactive = {
                     enabled = true,
@@ -49,6 +49,6 @@ return {
                 }
             }
         )
-        vim.cmd("colorscheme catppuccin-" .. vars.colorscheme.catppuccin_flavor)
+        vim.cmd("colorscheme catppuccin-" .. vars.appearance.colorscheme.catppuccin_flavor)
     end
 }
