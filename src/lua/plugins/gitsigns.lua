@@ -1,9 +1,13 @@
-local vars = require("vars")
-local gitsigns = require("gitsigns")
-
 return {
-    setup = function()
-        gitsigns.setup(
+    "lewis6991/gitsigns.nvim",
+
+    enabled = true,
+    priority = 80,
+    event = {"BufReadPost", "BufNewFile"},
+    config = function()
+        local vars = require("vars")
+
+        require("gitsigns").setup(
             {
                 current_line_blame = true,
                 current_line_blame_opts = {
@@ -12,7 +16,7 @@ return {
                     delay = 1000,
                     ignore_whitespace = false
                 },
-                current_line_blame_formatter = vars["git_blame_format"],
+                current_line_blame_formatter = vars.appearance.git_blame_format,
             }
         )
     end

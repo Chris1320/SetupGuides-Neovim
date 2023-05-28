@@ -9,13 +9,6 @@ return {
 
                 -- Visual plugins
                 use("stevearc/dressing.nvim")                        -- UI Customization
-                use("lewis6991/gitsigns.nvim")                       -- Git Integration
-                use(
-                    {
-                        "nvim-lualine/lualine.nvim",
-                        requires = "kyazdani42/nvim-web-devicons"
-                    }
-                )                       -- Customizable statusline
                 use(                                                 -- Tabline plugin
                     {
                         "romgrk/barbar.nvim",

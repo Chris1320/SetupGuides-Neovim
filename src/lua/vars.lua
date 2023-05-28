@@ -97,5 +97,19 @@ return {
             "vim",
             "yaml"
         }
+    },
+    lualine = {
+        ignored_filetypes = {
+            "mason",
+            "NvimTree",
+            "TelescopePrompt",
+            "Trouble"
+        },
+        filename_config = {
+            "filename",
+            file_status = true,
+            newfile_status = true,
+            path = 0  -- Show only the filename.
+        }
     }
 }
