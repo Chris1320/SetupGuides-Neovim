@@ -111,5 +111,11 @@ return {
             newfile_status = true,
             path = 0  -- Show only the filename.
         }
+    },
+    lsp = {
+        auto_install = false,
+        ensure_installed = {  -- Make sure these LSPs are installed. (See `https://github.com/williamboman/mason-lspconfig.nvim#default-configuration`)
+            "lua_ls"
+        }
     }
 }

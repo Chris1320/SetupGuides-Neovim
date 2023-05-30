@@ -3,7 +3,6 @@ return {
 
     enabled = true,
     lazy = false,
-    priority = 80,
     dependencies = {
         "gitsigns.nvim",
         "kyazdani42/nvim-web-devicons"

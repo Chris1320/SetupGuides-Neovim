@@ -3,7 +3,6 @@ return {
 
     enabled = true,
     lazy = false,
-    priority = 80,
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",                 -- nvim-cmp plugin for LSP integration
         "hrsh7th/cmp-nvim-lsp-signature-help",  -- nvim-cmp plugin for showing LSP function signatures
@@ -14,8 +13,10 @@ return {
             "petertriho/cmp-git",               -- nvim-cmp plugin for git integration
             dependencies = "nvim-lua/plenary.nvim"
         },
-        "saadparwaiz1/cmp_luasnip",             -- LuaSnip integration for nvim-cmp
-        "LuaSnip"
+        {
+            "saadparwaiz1/cmp_luasnip",         -- LuaSnip integration for nvim-cmp
+            dependencies = {"LuaSnip"}
+        }
     },
     config = function()
         local cmp = require("cmp")

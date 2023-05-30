@@ -2,19 +2,27 @@ return {
     "neovim/nvim-lspconfig",
 
     enabled = true,
-    event = {"BufReadPost", "BufNewFile"},
+    lazy = false,
+    -- Do not lazy load LSPs.
+    -- Some servers fail to attach to buffers when we do that.
+    -- event = {"BufReadPost", "BufNewFile"},
     dependencies = {
         "mason.nvim",
         "williamboman/mason-lspconfig.nvim",
     },
     config = function()
         -- This part has a lot of stuff going on.
-        -- This sets up the LSP and autocompletion.
         local mlsp = require("mason-lspconfig")
         local lspconfig = require("lspconfig")
+        local vars = require("vars")
 
         -- Setup mason-lspconfig
-        mlsp.setup()
+        mlsp.setup(
+            {
+                automatic_installation = vars.lsp.auto_install,
+                ensure_installed = vars.lsp.ensure_installed
+            }
+        )
 
         -- Append client capabilities to default configuration.
         local lsp_default_conf = lspconfig.util.default_config

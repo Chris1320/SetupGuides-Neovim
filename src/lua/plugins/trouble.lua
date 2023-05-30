@@ -3,7 +3,6 @@ return {
 
     enabled = true,
 
-    priority = 80,
     cmd = {"TroubleToggle", "Trouble"},
     event = {"BufReadPost", "BufNewFile"},
     dependencies = {

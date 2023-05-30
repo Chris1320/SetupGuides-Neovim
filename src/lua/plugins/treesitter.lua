@@ -3,7 +3,6 @@ return {
 
     enabled = true,
 
-    priority = 80,
     build = ":TSUpdate",
     event = {"BufReadPost", "BufNewFile"},
     config = function()

@@ -2,7 +2,6 @@ return {
     "lewis6991/gitsigns.nvim",
 
     enabled = true,
-    priority = 80,
     event = {"BufReadPost", "BufNewFile"},
     config = function()
         local vars = require("vars")
