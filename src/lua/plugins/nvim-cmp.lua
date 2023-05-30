@@ -114,7 +114,7 @@ return {
             {
                 sources = cmp.config.sources(
                     {
-                        {name = "cmp_git"},
+                        {name = "git"},
                         {name = "buffer"}
                     }
                 )
@@ -142,6 +142,51 @@ return {
             }
         )
 
-        require("cmp_git").setup()
+        require("cmp_git").setup(
+            {
+                filetypes = {"gitcommit"},
+                git = {
+                    commits = {
+                        sort_by = require("cmp_git.sort").git.commits,
+                        format = require("cmp_git.format").git.commits
+                    }
+                },
+                github = {
+                    issues = {
+                        fields = {"title", "number", "body", "updatedAt", "state"},
+                        filter = "all", -- assigned, created, mentioned, subscribed, all, repos
+                        state = "open", -- open, closed, all
+                        sort_by = require("cmp_git.sort").github.issues,
+                        format = require("cmp_git.format").github.issues
+                    },
+                    mentions = {
+                        sort_by = require("cmp_git.sort").github.mentions,
+                        format = require("cmp_git.format").github.mentions
+                    },
+                    pull_requests = {
+                        fields = {"title", "number", "body", "updatedAt", "state"},
+                        state = "open", -- open, closed, merged, all
+                        sort_by = require("cmp_git.sort").github.pull_requests,
+                        format = require("cmp_git.format").github.pull_requests
+                    }
+                },
+                gitlab = {
+                    issues = {
+                        state = "opened", -- opened, closed, all
+                        sort_by = require("cmp_git.sort").gitlab.issues,
+                        format = require("cmp_git.format").gitlab.issues
+                    },
+                    mentions = {
+                        sort_by = require("cmp_git.sort").gitlab.mentions,
+                        format = require("cmp_git.format").gitlab.mentions
+                    },
+                    pull_requests = {
+                        state = "opened", -- opened, closed, locked, merged
+                        sort_by = require("cmp_git.sort").gitlab.merge_requests,
+                        format = require("cmp_git.format").gitlab.merge_requests
+                    }
+                }
+            }
+        )
     end
 }
