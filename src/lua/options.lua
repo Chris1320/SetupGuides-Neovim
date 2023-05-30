@@ -10,8 +10,6 @@ vim.opt.ttyfast = true  -- indicate fast terminal connection to speed up scrolli
 vim.o.timeout = true
 vim.o.timeoutlen = 500
 
-vim.g.mapleader = vars.keymapping.leaderkey
-
 vim.opt.mouse = 'a'  -- enable usage of mouse in all modes.
 vim.opt.clipboard = "unnamedplus"  -- enable usage of system clipboard.
 

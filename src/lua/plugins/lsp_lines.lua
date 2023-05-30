@@ -11,5 +11,21 @@ return {
                 virtual_lines = true
             }
         )
-    end
+    end,
+    keys = {
+        {
+            "<leader>l",
+            function()
+                -- Toggle values of `virtual_text` and `virtual_lines`.
+                vim.diagnostic.config(
+                    {
+                        virtual_text = not vim.diagnostic.config().virtual_text,
+                        virtual_lines = not vim.diagnostic.config().virtual_lines
+                    }
+                )
+            end,
+            'n',
+            desc = "Toggle LSP Lines"
+        }
+    }
 }
