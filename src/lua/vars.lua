@@ -115,7 +115,14 @@ return {
     lsp = {
         auto_install = false,
         ensure_installed = {  -- Make sure these LSPs are installed. (See `https://github.com/williamboman/mason-lspconfig.nvim#default-configuration`)
-            "lua_ls"
+            "lua_ls",
+            "pyright"
+        }
+    },
+    dap = {
+        auto_install = false,
+        ensure_installed = {  -- Make sure these DAPs are installed. (See `https://github.com/jay-babu/mason-nvim-dap.nvim#default-configuration`)
+            "python"
         }
     }
 }
