@@ -40,8 +40,8 @@ return {
                 -- - random guesses
                 -- - default Python installation path
                 mason_registry.get_package("debugpy"):get_install_path() .. "/venv/bin/python",
-                (os.getenv("VIRTUAL_ENV") or "") .. "/bin/python",
-                vim.fn.getcwd() .. "/env/bin/python",
+                (os.getenv("VIRTUAL_ENV") or "") .. "/bin/python",  -- FIXME: Is this method safe? I'm thinking of returning nil if env isn't set.
+                vim.fn.getcwd() .. "/env/bin/python",               --        What if there's a malicious /bin/python executable?
                 vim.fn.getcwd() .. "/venv/bin/python",
                 vim.fn.getcwd() .. "/.env/bin/python",
                 vim.fn.getcwd() .. "/.venv/bin/python",
@@ -70,31 +70,31 @@ return {
                                 "debugpy.adapter"
                             }
                         }
+                        config.configurations = {
+                            {
+                                type = "python",
+                                request = "launch",
+                                name = "Launch Single File",
+                                program = "${file}",
+                                cwd = vim.fn.getcwd,
+                                pythonPath = getPythonPath()
+                            },
+                            {
+                                type = "python",
+                                request = "launch",
+                                name = "Launch Module",
+                                module = function()
+                                    return vim.fn.input("Path to module: ", vim.fn.getcwd() .. '/', 'file')
+                                end,
+                                cwd = vim.fn.getcwd,
+                                pythonPath = getPythonPath()
+                            }
+                        }
                         mdap.default_setup(config)
                     end
                 }
             }
         )
-
-        -- Setup DAP configurations.
-        dap.configurations.python = {
-            {
-                type = "python",
-                request = "launch",
-                name = "Launch Single File",
-                program = "${file}",
-                cwd = vim.fn.getcwd,
-                pythonPath = getPythonPath
-            },
-            {
-                type = "python",
-                request = "launch",
-                name = "Launch Module",
-                module = "${fileDirname}",  -- FIXME: This is not how it should be used. Try to automatically detect the module name.
-                cwd = vim.fn.getcwd,
-                pythonPath = getPythonPath
-            }
-        }
 
         -- Setup DAP UI.
         dapui.setup()
@@ -132,10 +132,10 @@ return {
         {"<leader>dC", function() require("dap").run_last() end, 'n', desc="Run last"},
 
         {"<leader>du", function() require("dapui").toggle() end, 'n', desc="Toggle DAP UI"},
-        {"<Leader>dh", function() require('dap.ui.widgets').hover() end, {'n', 'v'}, desc="Show hover panel"},
-        {"<Leader>dp", function() require('dap.ui.widgets').preview() end, {'n', 'v'}, desc="Show preview panel"},
+        {"<Leader>dph", function() require('dap.ui.widgets').hover() end, {'n', 'v'}, desc="Show hover panel"},
+        {"<Leader>dpp", function() require('dap.ui.widgets').preview() end, {'n', 'v'}, desc="Show preview panel"},
         {
-            "<Leader>df",
+            "<Leader>dpf",
             function()
                 local widgets = require('dap.ui.widgets')
                 widgets.centered_float(widgets.frames)
@@ -144,7 +144,7 @@ return {
             desc = "Show frame panel"
         },
         {
-            "<Leader>ds",
+            "<Leader>dps",
             function()
                 local widgets = require('dap.ui.widgets')
                 widgets.centered_float(widgets.scopes)
