@@ -16,24 +16,27 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
         - [cmp-nvim-lsp-signature-help](https://github.com/hrsh7th/cmp-nvim-lsp-signature-help): nvim-cmp source for displaying function signatures.
         - [cmp-path](https://github.com/hrsh7th/cmp-path): nvim-cmp source for filesystem paths.
         - [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip): nvim-cmp source for LuaSnip.
-- Dependencies
-    - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons): Provides filetype icons.
-    - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim): A Lua library.
-    - [promise-async](https://github.com/kevinhwang91/promise-async): A port of *Promise & Async* from JavaScript to Lua.
+- Debugging
+    - [mason-nvim-dap.nvim](https://github.com/jay-babu/mason-nvim-dap.nvim): mason.nvim and nvim-dap integration.
+    - [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol client implementation for Neovim.
+    - [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): A UI for nvim-dap.
+    - [nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text): Adds virtual text support to nvim-dap.
 - File Explorer
     - [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua): File explorer tree
 - Fuzzy Search
     - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
         - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
 - Linting and Syntax Checking/Highlighting
-    - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
-        - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
+    - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
     - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Language Server Protocol (LSP) configuration helper.
     - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Better syntax highlighting.
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
     - [vim-illuminate](https://github.com/RRethy/vim-illuminate): Highlight all occurrences of words under cursor.
-- Plugin Manager
-    - [packer](https://github.com/wbthomason/packer.nvim): Plugin Manager for Neovim.
+- Plugin Managers
+    - [lazy.nvim](https://github.com/folke/lazy.nvim): A modern plugin manager for Neovim.
+    - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
+- Quality-of-Life Plugins
+    - [gitignore.nvim](https://github.com/wintermute-cell/gitignore.nvim): A neovim plugin for generating .gitignore files.
 - Theming and Visual Plugins
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
@@ -45,21 +48,14 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
-- QoL Plugins
-    - [gitignore.nvim](https://github.com/wintermute-cell/gitignore.nvim): A neovim plugin for generating .gitignore files.
 
 ## Custom Key Bindings
 
-The `which-key` plugin will also show you available keymaps as you type.
+The `which-key` plugin will show you available keymaps as you type.
 
 | Key           | Resulting Command                      | Action                                         | Source/Plugin         |
 |---------------|----------------------------------------|------------------------------------------------|-----------------------|
 | `,`           |                                        | Leader key                                     | Neovim                |
-|               |                                        |                                                |                       |
-| `<leader>/`   | `:nohlsearch`                          | Clear last search highlight                    | Neovim                |
-| `<leader>w`   | `:set wrap` or `:set nowrap`           | Toggle word wrap.                              | Neovim                |
-|               |                                        |                                                |                       |
-| `<leader>r`   | `vim.lsp.buf.rename()`                 | Rename highlighted symbol.                     | LSP                   |
 |               |                                        |                                                |                       |
 | `<A-,>`       | `:BufferPrevious`                      | Go to previous buffer                          | Barbar                |
 | `<A-.>`       | `:BufferNext`                          | Go to next buffer                              | Barbar                |
@@ -75,53 +71,6 @@ The `which-key` plugin will also show you available keymaps as you type.
 | `<A-0>`       | `:BufferLast`                          | Go to the last buffer                          | Barbar                |
 | `<A-<>`       | `:BufferMovePrevious`                  | Move current buffer to [i-1]                   | Barbar                |
 | `<A->>`       | `:BufferMoveNext`                      | Move current buffer to [i+1]                   | Barbar                |
-| `<leader>bp`  | `:BufferPin`                           | Pin the current buffer                         | Barbar                |
-| `<leader>bon` | `:BufferOrderByBufferNumber`           | Order buffers by buffer number                 | Barbar                |
-| `<leader>bod` | `:BufferOrderByDirectory`              | Order buffers by directory                     | Barbar                |
-| `<leader>bol` | `:BufferOrderByLanguage`               | Order buffers by language                      | Barbar                |
-| `<leader>bow` | `:BufferOrderByWindowNumber`           | Order buffers by windows number                | Barbar                |
-|               |                                        |                                                |                       |
-| `<leader>tt`  | `:Telescope`                           | Open Telescope                                 | Telescope             |
-| `<leader>tb`  | `:Telescope buffers`                   | Open Telescope Buffer Searcher                 | Telescope             |
-| `<leader>tS`  | `:Telescope live_grep`                 | Search text in project using Telescope.        | Telescope             |
-| `<leader>tF`  | `:Telescope find_files`                | Search file in project using Telescope         | Telescope             |
-| `<leader>ts`  | `:Telescope treesitter`                | Open Telescope treesitter explorer             | Telescope, Treesitter |
-| `<leader>tf`  | `:Telescope current_buffer_fuzzy_find` | Open fuzzy finder for current buffer           | Telescope             |
-| `<leader>tr`  | `:Telescope lsp_references`            | Show references of highlighted symbol.         | Telescope, LSP        |
-| `<leader>td`  | `:Telescope lsp_definitions`           | Show definitions of highlighted symbol.        | Telescope, LSP        |
-| `<leader>th`  | `:Telescope notify`                    | Show notification history.                     | Telescope, Notify     |
-| `<leader>gs`  | `:Telescope git_status`                | Show git status.                               | Telescope             |
-| `<leader>gc`  | `:Telescope git_commits`               | Show git commits.                              | Telescope             |
-| `<leader>gb`  | `:Telescope git_branches`              | Show git branches.                             | Telescope             |
-|               |                                        |                                                |                       |
-| `<leader>ewd` | `:TroubleToggle workspace_diagnostics` | Toggle Trouble workspace diagnostics panel     | Trouble               |
-| `<leader>edd` | `:TroubleToggle document_diagnostics`  | Toggle Trouble document diagnostics panel      | Trouble               |
-| `<leader>eqf` | `:TroubleToggle quickfix`              | Toggle Trouble quick fix panel                 | Trouble               |
-| `<leader>elr` | `:TroubleToggle lsp_references`        | Toggle Trouble LSP References panel            | Trouble, LSP          |
-| `<leader>elc` | `:TroubleToggle loclist`               | Toggle Trouble Location List panel             | Trouble               |
-|               |                                        |                                                |                       |
-| `<leader>l`   |                                        | Toggle LSP Lines and LSP virtual text          | LSP Lines             |
-|               |                                        |                                                |                       |
-| `<leader>fo`  | `:NvimTreeOpen`                        | Open Nvim-tree                                 | Nvim-tree             |
-| `<leader>fc`  | `:NvimTreeClose`                       | Close Nvim-tree                                | Nvim-tree             |
-| `<leader>ff`  | `:NvimTreeFocus`                       | (Open and) Focus the cursor to Nvim-tree       | Nvim-tree             |
-| `<leader>ft`  | `:NvimTreeToggle`                      | Toggle Nvim-tree file explorer                 | Nvim-tree             |
-|               |                                        |                                                |                       |
-| `<leader>gP`  | `gitsigns.diffthis()`                  | Show buffer changes.                           | Gitsigns              |
-| `<leader>gi`  | `gitignore.generate()`                 | Generate `.gitignore` file.                    | gitignore.nvim        |
-| `<leader>gps` | `gitsigns.preview_hunk()`              | Preview hunk.                                  | Gitsigns              |
-| `<leader>gpa` | `gitsigns.prev_hunk()`                 | Preview previous hunk.                         | Gitsigns              |
-| `<leader>gpd` | `gitsigns.next_hunk()`                 | Preview next hunk.                             | Gitsigns              |
-| `<leader>ghs` | `gitsigns.stage_hunk()`                | Stage hunk.                                    | Gitsigns              |
-| `<leader>ghr` | `gitsigns.reset_hunk()`                | Reset hunk.                                    | Gitsigns              |
-| `<leader>ghS` | `gitsigns.stage_buffer()`              | Stage current buffer.                          | Gitsigns              |
-| `<leader>ghR` | `gitsigns.reset_buffer()`              | Reset current buffer.                          | Gitsigns              |
-| `<leader>ghu` | `gitsigns.undo_stage_hunk()`           | Undo stage hunk.                               | Gitsigns              |
-| `<leader>gtb` | `gitsigns.toggle_current_line_blame()` | Toggle line blame.                             | Gitsigns              |
-| `<leader>gtd` | `gitsigns.toggle_deleted()`            | Toggle deleted lines.                          | Gitsigns              |
-|               |                                        |                                                |                       |
-| `<leader>iv`  | `cmds.showConfigVersion()`             | Show Neovim configuration version.             | Custom                |
-| `<leader>il`  | `:LspInfo`                             | Show LSP Server information.                   | LSP                   |
 |               |                                        |                                                |                       |
 | `<esc>`       |                                        | Close the `nvim-cmp` panel if open.            | nvim-cmp              |
 | `<cr>`        |                                        | Accept suggestion if `nvim-cmp` panel is open. | nvim-cmp              |
@@ -130,13 +79,14 @@ The `which-key` plugin will also show you available keymaps as you type.
 
 This setup has been tested on the following platforms:
 
+- Arch Linux
 - Kali Linux WSL
 - Linux Mint 21
 - Termux Android Terminal Emulator
 
 ## Requirements
 
-- [Neovim](https://neovim.io/) v0.8.0+
+- [Neovim](https://neovim.io/) v0.9.0+
 - [Git](https://git-scm.com/)
 - [gcc](https://gcc.gnu.org/) or [clang](https://clang.llvm.org/)
 - [make](https://www.gnu.org/software/make/)
@@ -151,60 +101,49 @@ This setup has been tested on the following platforms:
 1. Update APT. `sudo apt update`
 2. Install git. `sudo apt install git`
 3. Install Neovim.
-    - Check if Neovim v0.8.0+ is available in your package manager. `$ apt show neovim`
-    - If version 0.8.0 above is available, install it. `$ apt install --upgrade neovim`
+    - Check if Neovim v0.9.0+ is available in your package manager. `$ apt show neovim`
+    - If version 0.9.0 above is available, install it. `$ apt install --upgrade neovim`
     - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
 4. Install requirements.
 5. Run the installer.
     - Using *wget*: `bash <(wget -q -O - https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
     - Using *curl*: `bash <(curl -sSf https://raw.githubusercontent.com/SetupGuides/Neovim/main/install)`
-6. Run `nvim` and allow installation of plugins.[^5]
-7. Exit Neovim by running `:q` and re-run `nvim` to install tree-sitter grammars.[^3]
-8. Check for errors by running `:checkhealth`.
-9. Configure LSPs using Mason. `:Mason`
+6. Run `nvim` and allow installation of plugins.
+7. Check for errors by running `:checkhealth`.
+8. Install LSPs, DAPs, and linters using Mason. `:Mason`
 
 ### Manual Customization Guide
 
 1. Install git. `$ sudo apt update -y && sudo apt install -y git`
 2. Installing Neovim
-    - Check if Neovim v0.8.0+ is available in your package manager. `$ apt show neovim`
-    - If version 0.8.0 above is available, install it. `$ apt install --upgrade neovim`
+    - Check if Neovim v0.9.0+ is available in your package manager. `$ apt show neovim`
+    - If version 0.9.0 above is available, install it. `$ apt install --upgrade neovim`
     - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
-3. Clone and install packer. `$ git clone --depth=1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
-4. Copy the contents of [src/](https://github.com/SetupGuides/Neovim/tree/main/src) to your `~/.config/nvim/`. The directory must look like this:
+3. Copy the contents of [src/](https://github.com/SetupGuides/Neovim/tree/main/src) to your `~/.config/nvim/`. The directory must look like this:
 
     ```
     $ tree ~/.config/nvim/
+
     /home/<user>/.config/nvim/
     ├── init.lua
     └── lua
-        ├── core
-        │   ├── info.lua
-        │   └── utils
-        │       ├── flagFile.lua
-        │       └── misc.lua
+        ├── info.lua
         ├── keymaps.lua
+        ├── misc.lua
         ├── options.lua
         ├── plugins
-        │   ├── plugins.lua
-        │   └── <plugin name>   <-- Most of the plugins have a `main.lua` file in their directory.
-        │       └── main.lua
-        ├── post_ops.lua
+        │   └── <plugin-name>.lua
         └── vars.lua
 
-    23 directories, 28 files
+    5 directories, 34 files
     ```
 
-5. Install dependencies. `$ sudo apt install --upgrade clang curl make nodejs`[^2]
-6. Run `nvim`. Packer will now update, install, and compile the plugins.
-7. After installation, quit Neovim by entering `:q`.
-8. Re-open `nvim`. nvim-treesitter will now install treesitter parsers. Run `:TSInstallInfo` to check if all languages you want to install are now installed.[^3]
-9. Enter `:PackerStatus` to verify all plugins are installed.
-10. To check if everything is installed correctly, enter `:checkhealth`.
-11. Install LSP/DAP servers, linters, and formatters by running `:Mason` inside Neovim.[^4]
+4. Install dependencies. `$ sudo apt install --upgrade clang curl make nodejs`[^2]
+5. Run `nvim`. lazy.nvim will now update, install, and compile the plugins.
+6. To check if everything is installed correctly, enter `:checkhealth`.
+7. Install LSP/DAP servers, linters, and formatters by running `:Mason` inside Neovim.[^4]
 
 [^1]: To download and install using wget and dpkg: `wget -O ./nvim-linux64.deb https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb && sudo dpkg -i ./nvim-linux64.deb`
 [^2]: You can also install recommended but optional additional packages used by Telescope: `$ sudo apt install --upgrade fd-find ripgrep` (`fd-find` is `fd` on Termux systems.)
-[^3]: You can install a language by running `:TSInstall <language>` or editing the `languages` variable in `~/.config/nvim/lua/vars.lua`. Read [the documentation](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages) for more information.
-[^4]: Manual configuration is necessary for each LSP server, but I configured some of them in `src/lua/plugins/lspconfig/main.lua`.
-[^5]: If a Packer installation fails, just retry with `:PackerSync`. You might need to restart Neovim.
+[^3]: You can install a language by running `:TSInstall <language>` or editing the `treesitter.languages` variable in `~/.config/nvim/lua/vars.lua`. Read [the documentation](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages) for more information.
+[^4]: Manual configuration is necessary for each LSP server, but I configured some of them in `src/lua/plugins/lsp.lua`.
