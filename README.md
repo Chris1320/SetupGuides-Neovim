@@ -35,6 +35,8 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
 - Plugin Managers
     - [lazy.nvim](https://github.com/folke/lazy.nvim): A modern plugin manager for Neovim.
     - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
+- Proprietary Plugins[^5]
+    - [copilot.vim](https://github.com/github/copilot.vim):  Neovim plugin for GitHub Copilot.
 - Quality-of-Life Plugins
     - [gitignore.nvim](https://github.com/wintermute-cell/gitignore.nvim): A neovim plugin for generating .gitignore files.
 - Theming and Visual Plugins
@@ -147,3 +149,4 @@ This setup has been tested on the following platforms:
 [^2]: You can also install recommended but optional additional packages used by Telescope: `$ sudo apt install --upgrade fd-find ripgrep` (`fd-find` is `fd` on Termux systems.)
 [^3]: You can install a language by running `:TSInstall <language>` or editing the `treesitter.languages` variable in `~/.config/nvim/lua/vars.lua`. Read [the documentation](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages) for more information.
 [^4]: Manual configuration is necessary for each LSP server, but I configured some of them in `src/lua/plugins/lsp.lua`.
+[^5]: Proprietary plugins are optional to install.
