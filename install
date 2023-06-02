@@ -8,17 +8,16 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 10 0)  # Installer version; different from config version and Neovim version.
+version=(0 11 1)  # Installer version; different from config version and Neovim version.
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_branch="lazy-rewrite"  # The branch to which the configs will be pulled from.
+target_open_branch="main"  # The branch to which the configs will be pulled from.
+target_pro_branch="proprietary-lazy"  # The branch to which the configs with proprietary plugins will be pulled from.
 installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
-
 filelist="files.txt"
-filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/${filelist}"
 
-min_nvim_version=(0 8 0)  # Minimum Neovim version required.
+min_nvim_version=(0 9 0)  # Minimum Neovim version required.
 
 echo
 echo "$title"
@@ -135,7 +134,6 @@ while true; do
     else
         echo "Unknown answer."
         echo
-
     fi
 done
 
@@ -167,6 +165,28 @@ if [[ -d "$installation_files" ]]; then
     fi
 
 else
+    while true; do
+        printf "Do you want to install proprietary plugins? (y/N) > "
+        read -r prop_install_answer
+
+        if [[ "${prop_install_answer}" == "" || "${prop_install_answer}" =~ ^[n|N].* ]]; then
+            echo "Okay, do not install proprietary plugins."
+            target_branch=$target_open_branch
+            break
+
+        elif [[ "${prop_install_answer}" =~ ^[y|Y].* ]]; then
+            echo "Okay, installing proprietary plugins."
+            target_branch=$target_pro_branch
+            break
+
+        else
+            echo "Unknown answer."
+            echo
+        fi
+    done
+
+    filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/${filelist}"
+
     echo "Downloading file list..."
     files_to_download=$(curl -sSfL "${filelist_url}")
     printf "Downloading customization files to \`%s\`...\r" "${nvim_config_path}"
