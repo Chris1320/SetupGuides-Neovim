@@ -42,6 +42,52 @@ return {
                 function(server_name)  -- the default handler
                     lspconfig[server_name].setup({capabilities=lsp_default_conf})
                 end,
+                ["bashls"] = function()  -- Custom handler for bashls LSP
+                    lspconfig["bashls"].setup(
+                        {
+                            bashIde = {
+                                highlightParsingErrors = true
+                            }
+                        }
+                    )
+                end,
+                ["clangd"] = function()  -- Custom handler for clangd LSP
+                    local clangd_capabilities = lsp_default_conf.capabilities
+                    clangd_capabilities.offsetEncoding = {"utf-16"}  -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
+                    lspconfig["clangd"].setup({capabilities=clangd_capabilities})
+                end,
+                ["docker_compose_language_service"] = function()
+                    lspconfig["docker_compose_language_service"].setup(
+                        {
+                            telemetry = {
+                                enableTelemetry = false
+                            }
+                        }
+                    )
+                end,
+                ["html"] = function()  -- Custom handler for html LSP
+                    lspconfig["html"].setup(
+                        {
+                            html = {
+                                format = {
+                                    templating = true
+                                },
+                                mirrorCursorOnMatchingTag = true
+                            }
+                        }
+                    )
+                end,
+                ["jdtls"] = function()
+                    lspconfig["jdtls"].setup(
+                        {
+                            redhat = {
+                                telemetry = {
+                                    enabled = false
+                                }
+                            }
+                        }
+                    )
+                end,
                 ["lua_ls"] = function()  -- Custom handler for sumneko_lua LSP
                     lspconfig["lua_ls"].setup(
                         {
@@ -60,32 +106,6 @@ return {
                                 }
                             },
                             capabilities = lsp_default_conf
-                        }
-                    )
-                end,
-                ["bashls"] = function()  -- Custom handler for bashls LSP
-                    lspconfig["bashls"].setup(
-                        {
-                            bashIde = {
-                                highlightParsingErrors = true
-                            }
-                        }
-                    )
-                end,
-                ["clangd"] = function()  -- Custom handler for clangd LSP
-                    local clangd_capabilities = lsp_default_conf.capabilities
-                    clangd_capabilities.offsetEncoding = {"utf-16"}  -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
-                    lspconfig["clangd"].setup({capabilities=clangd_capabilities})
-                end,
-                ["html"] = function()  -- Custom handler for html LSP
-                    lspconfig["html"].setup(
-                        {
-                            html = {
-                                format = {
-                                    templating = true
-                                },
-                                mirrorCursorOnMatchingTag = true
-                            }
                         }
                     )
                 end,

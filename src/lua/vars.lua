@@ -121,8 +121,25 @@ return {
     lsp = {
         auto_install = false,
         ensure_installed = {  -- Make sure these LSPs are installed. (See `https://github.com/williamboman/mason-lspconfig.nvim#default-configuration`)
+            -- "asm-lsp",  -- Few people work with Assembly so I think I'm gonna disable this by default.
+            "bashls",
+            "clangd",
+            "cssls",
+            "diagnosticls",
+            "docker_compose_language_service",
+            "html",
+            "jdtls",
+            "jsonls",
+            "kotlin_language_server",
+            "lemminx",
             "lua_ls",
-            "pyright"
+            "omnisharp",
+            -- "omnisharp-mono",  -- I use omnisharp on Linux, but I use omnisharp-mono on Termux since there's no dotnet on the said platform.
+            "pyright",
+            "rust_analyzer",
+            "sqlls",
+            "tsserver",
+            "yamlls"
         }
     },
     dap = {
