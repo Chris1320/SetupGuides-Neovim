@@ -14,6 +14,7 @@ vim.opt.mouse = 'a'  -- enable usage of mouse in all modes.
 vim.opt.clipboard = "unnamedplus"  -- enable usage of system clipboard.
 
 vim.opt.number = true  -- enable line numbers.
+vim.opt.colorcolumn = vars.appearance.colorcolumn.default_columns  -- Highlight these columns.
 vim.cmd("highlight LineNr ctermfg=" .. vars.appearance.colorscheme.line_number_color)  -- Set the color of the line numbers
 
 vim.opt.showmatch = true  -- show matching brackets.
