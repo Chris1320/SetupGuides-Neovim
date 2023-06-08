@@ -10,12 +10,12 @@ return {
     -- FIXME: I can't get `opts` to work,
     -- so I'm going to use `config` for now.
     config = function()
-        local vars = require("vars")
+        local colorscheme = require("vars").appearance.colorscheme
 
         require("catppuccin").setup(
             {
-                flavour = vars.appearance.colorscheme.catppuccin_flavor,
-                compile_path = vars.appearance.colorscheme.catppuccin_cache_dir,
+                flavour = colorscheme.catppuccin_flavor,
+                compile_path = colorscheme.catppuccin_cache_dir,
                 term_colors = true,
                 dim_inactive = {
                     enabled = true,
@@ -50,6 +50,6 @@ return {
                 }
             }
         )
-        vim.cmd("colorscheme catppuccin-" .. vars.appearance.colorscheme.catppuccin_flavor)
+        vim.cmd("colorscheme catppuccin-" .. colorscheme.catppuccin_flavor)
     end
 }
