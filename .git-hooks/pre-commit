@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+root_path="$(git rev-parse --show-cdup)"
+
+cd "$root_path"
+python3 ./scripts/generate_file_list.py
+git add ./files.txt
