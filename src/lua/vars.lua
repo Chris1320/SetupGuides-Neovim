@@ -31,6 +31,12 @@ return {
         show_eols = false,  -- Show EOL characters
         show_spaces = false,  -- Show spaces
         show_trails = true,  -- Show trailing spaces
+        colorcolumn = {
+            default_columns = {80},  -- Which columns should be highlighted
+            custom_colorcolumns = {
+                java = {120}
+            }
+        },
         colorscheme = {
             catppuccin_flavor = "mocha",  -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
             catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
