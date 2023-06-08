@@ -5,6 +5,7 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/misc.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/options.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/barbar.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/catppuccin.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/comment.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/dap.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/deadcolumn.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/dressing.lua
