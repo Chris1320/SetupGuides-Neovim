@@ -14,24 +14,41 @@ return {
         -- This part has a lot of stuff going on.
         local mlsp = require("mason-lspconfig")
         local lspconfig = require("lspconfig")
-        local vars = require("vars")
+        local lsp_vars = require("vars").lsp
+
+        --- Detects the root project of the current buffer.
+        -- This is used in omnisharp and omnisharp_mono LSPs.
+        --
+        -- @param filename The filename of the current buffer.
+        -- @return The root project of the current buffer.
+        local function detectRootProject(filename, _)
+            local root
+
+            root = lspconfig.util.find_git_ancestor(filename)
+            root = root or lspconfig.util.root_pattern(".sln")
+            root = root or lspconfig.util.root_pattern(".csproj")
+            root = root or '.'
+
+            return root
+        end
 
         -- Setup mason-lspconfig
         mlsp.setup(
             {
-                automatic_installation = vars.lsp.auto_install,
-                ensure_installed = vars.lsp.ensure_installed
+                automatic_installation = lsp_vars.auto_install,
+                ensure_installed = lsp_vars.ensure_installed
             }
         )
 
         -- Append client capabilities to default configuration.
-        local lsp_default_conf = lspconfig.util.default_config
-        lsp_default_conf.capabilities = vim.tbl_deep_extend(
+        local lsp_capabilities = vim.tbl_deep_extend(
             "force",
-            lsp_default_conf.capabilities,
+            {},
+            vim.lsp.protocol.make_client_capabilities(),
             require("cmp_nvim_lsp").default_capabilities()
         )
-        lsp_default_conf.capabilities.textDocument.foldingRange = {
+        -- Tell LSP servers the capability of foldingRange
+        lsp_capabilities.textDocument.foldingRange = {
             dynamicRegistration = false,
             lineFoldingOnly = true
         }
@@ -40,39 +57,66 @@ return {
         mlsp.setup_handlers(
             {
                 function(server_name)  -- the default handler
-                    lspconfig[server_name].setup({capabilities=lsp_default_conf})
+                    lspconfig[server_name].setup(
+                        {capabilities=lsp_capabilities}
+                    )
                 end,
                 ["bashls"] = function()  -- Custom handler for bashls LSP
                     lspconfig["bashls"].setup(
                         {
-                            bashIde = {
-                                highlightParsingErrors = true
+                            capabilities = lsp_capabilities,
+                            filetypes = {"sh", "bash"},
+                            single_file_support = true,
+                            settings = {
+                                bashIde = {
+                                    highlightParsingErrors = true
+                                }
                             }
                         }
                     )
                 end,
                 ["clangd"] = function()  -- Custom handler for clangd LSP
-                    local clangd_capabilities = lsp_default_conf.capabilities
-                    clangd_capabilities.offsetEncoding = {"utf-16"}  -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
-                    lspconfig["clangd"].setup({capabilities=clangd_capabilities})
+                    local clangd_capabilities = lsp_capabilities
+                    -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
+                    clangd_capabilities.offsetEncoding = {"utf-16"}
+                    lspconfig["clangd"].setup(
+                        {
+                            capabilities = clangd_capabilities,
+                            single_file_support = true
+                        }
+                    )
                 end,
                 ["docker_compose_language_service"] = function()
                     lspconfig["docker_compose_language_service"].setup(
                         {
-                            telemetry = {
-                                enableTelemetry = false
+                            capabilities = lsp_capabilities,
+                            single_file_support = true,
+                            settings = {
+                                telemetry = {
+                                    enableTelemetry = false
+                                }
                             }
                         }
                     )
                 end,
                 ["html"] = function()  -- Custom handler for html LSP
+                    local html_capabilities = lsp_capabilities
+                    html_capabilities.textDocument.completion
+                        .completionItem.snippetSupport = true
                     lspconfig["html"].setup(
                         {
-                            html = {
-                                format = {
-                                    templating = true
-                                },
-                                mirrorCursorOnMatchingTag = true
+                            capabilities = html_capabilities,
+                            init_options = {
+                                provideFormatter = true
+                            },
+                            single_file_support = true,
+                            settings = {
+                                html = {
+                                    format = {
+                                        templating = true
+                                    },
+                                    mirrorCursorOnMatchingTag = true
+                                }
                             }
                         }
                     )
@@ -80,9 +124,13 @@ return {
                 ["jdtls"] = function()
                     lspconfig["jdtls"].setup(
                         {
-                            redhat = {
-                                telemetry = {
-                                    enabled = false
+                            capabilities = lsp_capabilities,
+                            single_file_support = true,
+                            settings = {
+                                redhat = {
+                                    telemetry = {
+                                        enabled = false
+                                    }
                                 }
                             }
                         }
@@ -91,6 +139,7 @@ return {
                 ["lua_ls"] = function()  -- Custom handler for sumneko_lua LSP
                     lspconfig["lua_ls"].setup(
                         {
+                            capabilities = lsp_capabilities,
                             settings = {
                                 Lua = {
                                     diagnostics = {
@@ -104,51 +153,42 @@ return {
                                         checkThirdParty = false  -- Context: https://github.com/sumneko/lua-language-server/discussions/1688
                                     }
                                 }
-                            },
-                            capabilities = lsp_default_conf
+                            }
                         }
                     )
                 end,
                 ["omnisharp"] = function()  -- Custom handler for omnisharp LSP
+                    local cs_capabilities = lsp_capabilities
+                    cs_capabilities.semanticTokensProvider = nil
+
                     lspconfig["omnisharp"].setup(
                         {
-                            root_dir = function(filename, _)
-                                local root
-
-                                root = lspconfig.util.find_git_ancestor(filename)
-                                root = root or lspconfig.util.root_pattern(".sln")
-                                root = root or lspconfig.util.root_pattern(".csproj")
-                                root = root or '.'
-
-                                return root
-                            end
+                            capabilities = lsp_capabilities,
+                            enable_editorconfig_support = true,
+                            enable_roslyn_analyzers = true,
+                            settings = {
+                                root_dir = detectRootProject
+                            }
                         }
                     )
                 end,
                 ["omnisharp_mono"] = function()  -- Custom handler for omnisharp LSP (mono version)
                     lspconfig["omnisharp_mono"].setup(
-                        {
-                            root_dir = function(filename, _)
-                                local root
-
-                                root = lspconfig.util.find_git_ancestor(filename)
-                                root = root or lspconfig.util.root_pattern(".sln")
-                                root = root or lspconfig.util.root_pattern(".csproj")
-                                root = root or '.'
-
-                                return root
-                            end
-                        }
+                        {capabilities = lsp_capabilities}
                     )
                 end,
                 ["pyright"] = function()  -- Custom handler for pyright LSP
                     lspconfig["pyright"].setup(
                         {
-                            python = {
-                                analysis = {
-                                    typeCheckingMode = "basic",
-                                    diagnosticMode = "workspace",
-                                    useLibraryCodeForTypes = true
+                            capabilities = lsp_capabilities,
+                            single_file_support = true,
+                            settings = {
+                                python = {
+                                    analysis = {
+                                        typeCheckingMode = "basic",
+                                        diagnosticMode = "workspace",
+                                        useLibraryCodeForTypes = true
+                                    }
                                 }
                             }
                         }
@@ -157,11 +197,9 @@ return {
                 ["yamlls"] = function()  -- Custom handler for yamlls LSP
                     lspconfig["yamlls"].setup(
                         {
-                            redhat = {
-                                telemetry = {
-                                    enabled = false
-                                }
-                            }
+                            capabilities = lsp_capabilities,
+                            single_file_support = true,
+                            settings = {redhat={telemetry={enabled=false}}}
                         }
                     )
                 end
