@@ -32,11 +32,19 @@ return {
             return root
         end
 
+        local function getEnsureInstalled()
+            if lsp_vars.enforce_ensure_installed then
+                return lsp_vars.ensure_installed
+            else
+                return {}
+            end
+        end
+
         -- Setup mason-lspconfig
         mlsp.setup(
             {
                 automatic_installation = lsp_vars.auto_install,
-                ensure_installed = lsp_vars.ensure_installed
+                ensure_installed = getEnsureInstalled()
             }
         )
 

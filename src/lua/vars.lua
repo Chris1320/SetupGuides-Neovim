@@ -7,6 +7,10 @@ https://github.com/SetupGuides/Neovim
 ]]--
 
 return {
+    proprietary = {
+        -- Set keys to true to enable the plugins.
+        copilot = false
+    },
     lazy = {  -- configuration for lazy.nvim package manager
         path = {
             root = vim.fn.stdpath("data") .. "/lazy",
@@ -125,6 +129,7 @@ return {
         }
     },
     lsp = {
+        enforce_ensure_installed = false,
         auto_install = false,
         ensure_installed = {  -- Make sure these LSPs are installed. (See `https://github.com/williamboman/mason-lspconfig.nvim#default-configuration`)
             -- "asm-lsp",  -- Few people work with Assembly so I think I'm gonna disable this by default.
@@ -149,6 +154,7 @@ return {
         }
     },
     dap = {
+        enforce_ensure_installed = false,
         auto_install = false,
         ensure_installed = {  -- Make sure these DAPs are installed. (See `https://github.com/jay-babu/mason-nvim-dap.nvim#default-configuration`)
             "python"

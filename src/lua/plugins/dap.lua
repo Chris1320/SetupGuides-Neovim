@@ -28,7 +28,7 @@ return {
         local dap = require("dap")
         local dapui = require("dapui")
         local mason_registry = require("mason-registry")
-        local vars = require("vars")
+        local dap_vars = require("vars").dap
 
         -- Try to find the path to the Python debugpy adapter.
         -- I haven't tried this on Windows systems yet.
@@ -52,11 +52,19 @@ return {
             end
         end
 
+        local function getEnsureInstalled()
+            if dap_vars.enforce_ensure_installed then
+                return dap_vars.ensure_installed
+            else
+                return {}
+            end
+        end
+
         -- Setup mason-nvim-dap
         mdap.setup(
             {
-                automatic_installation = vars.dap.auto_install,
-                ensure_installed = vars.dap.ensure_installed,
+                automatic_installation = dap_vars.auto_install,
+                ensure_installed = getEnsureInstalled(),
                 handlers = {
                     function(config)
                         mdap.default_setup(config)
