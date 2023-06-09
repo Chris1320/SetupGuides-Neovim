@@ -42,7 +42,8 @@ return {
             }
         },
         colorscheme = {
-            catppuccin_flavor = "mocha",  -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
+            -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
+            catppuccin_flavor = "mocha",
             catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
             line_number_color = "grey"
         },
@@ -63,7 +64,8 @@ return {
     behavior = {
         line_wrapping = false,
         use_spaces = true,
-        tab_size = 4,  -- if use_spaces is true, this is the number of spaces to use for each tab.
+        -- if use_spaces is true, this is the number of spaces to use for each tab.
+        tab_size = 4,
     },
     keymapping = {
         leaderkey = ','
@@ -79,8 +81,11 @@ return {
         }
     },
     treesitter = {
-        languages = {                          -- [add|remove] languages you [don't] want to use.
-            "bash",                            -- Reference: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+        enforce_ensure_installed = true,
+        -- [add|remove] languages you [don't] want to use.
+        -- Reference: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+        languages = {
+            "bash",
             "c",
             "cpp",
             "css",
@@ -129,7 +134,7 @@ return {
         }
     },
     lsp = {
-        enforce_ensure_installed = false,
+        enforce_ensure_installed = true,
         auto_install = false,
         ensure_installed = {  -- Make sure these LSPs are installed. (See `https://github.com/williamboman/mason-lspconfig.nvim#default-configuration`)
             -- "asm-lsp",  -- Few people work with Assembly so I think I'm gonna disable this by default.
@@ -154,7 +159,7 @@ return {
         }
     },
     dap = {
-        enforce_ensure_installed = false,
+        enforce_ensure_installed = true,
         auto_install = false,
         ensure_installed = {  -- Make sure these DAPs are installed. (See `https://github.com/jay-babu/mason-nvim-dap.nvim#default-configuration`)
             "python"
