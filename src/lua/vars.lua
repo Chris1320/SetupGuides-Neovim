@@ -9,7 +9,7 @@ https://github.com/SetupGuides/Neovim
 return {
     proprietary = {
         -- Set keys to true to enable the plugins.
-        copilot = false
+        copilot = true
     },
     lazy = {  -- configuration for lazy.nvim package manager
         path = {
@@ -136,8 +136,8 @@ return {
     lsp = {
         enforce_ensure_installed = true,
         auto_install = false,
-        ensure_installed = {  -- Make sure these LSPs are installed. (See `https://github.com/williamboman/mason-lspconfig.nvim#default-configuration`)
-            -- "asm-lsp",  -- Few people work with Assembly so I think I'm gonna disable this by default.
+        ensure_installed = {
+            "asm_lsp",
             "bashls",
             "clangd",
             "cssls",
@@ -151,7 +151,7 @@ return {
             "lemminx",
             "lua_ls",
             -- "omnisharp",
-            -- "omnisharp-mono",  -- I use omnisharp on Linux, but I use omnisharp-mono on Termux since there's no dotnet on the said platform.
+            -- "omnisharp-mono",
             "pyright",
             "rust_analyzer",
             "sqlls",
@@ -162,7 +162,7 @@ return {
     dap = {
         enforce_ensure_installed = true,
         auto_install = false,
-        ensure_installed = {  -- Make sure these DAPs are installed. (See `https://github.com/jay-babu/mason-nvim-dap.nvim#default-configuration`)
+        ensure_installed = {
             "python"
         }
     }
