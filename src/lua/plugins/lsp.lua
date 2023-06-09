@@ -94,6 +94,11 @@ return {
                         }
                     )
                 end,
+                ["csharp_ls"] = function()  -- Custom handler for csharp_ls LSP
+                    lspconfig["csharp_ls"].setup(
+                        {capabilities=lsp_capabilities}
+                    )
+                end,
                 ["docker_compose_language_service"] = function()
                     lspconfig["docker_compose_language_service"].setup(
                         {
@@ -165,10 +170,9 @@ return {
                         }
                     )
                 end,
-                ["omnisharp"] = function()  -- Custom handler for omnisharp LSP
-                    local cs_capabilities = lsp_capabilities
-                    cs_capabilities.semanticTokensProvider = nil
-
+                -- FIXME: Disable omnisharp for now.
+                -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
+                --[[ ["omnisharp"] = function()  -- Custom handler for omnisharp LSP
                     lspconfig["omnisharp"].setup(
                         {
                             capabilities = lsp_capabilities,
@@ -184,7 +188,7 @@ return {
                     lspconfig["omnisharp_mono"].setup(
                         {capabilities = lsp_capabilities}
                     )
-                end,
+                end, ]]
                 ["pyright"] = function()  -- Custom handler for pyright LSP
                     lspconfig["pyright"].setup(
                         {

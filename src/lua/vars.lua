@@ -141,6 +141,7 @@ return {
             "bashls",
             "clangd",
             "cssls",
+            "csharp_ls",
             "diagnosticls",
             "docker_compose_language_service",
             "html",
@@ -149,7 +150,7 @@ return {
             "kotlin_language_server",
             "lemminx",
             "lua_ls",
-            "omnisharp",
+            -- "omnisharp",
             -- "omnisharp-mono",  -- I use omnisharp on Linux, but I use omnisharp-mono on Termux since there's no dotnet on the said platform.
             "pyright",
             "rust_analyzer",
