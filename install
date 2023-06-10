@@ -8,11 +8,11 @@
 
 # ? Set variables.
 name="Neovim Config Installer"
-version=(0 11 1)  # Installer version; different from config version and Neovim version.
+# Installer version; different from config version and Neovim version.
+version=(0 12 0)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
-target_open_branch="main"  # The branch to which the configs will be pulled from.
-target_pro_branch="proprietary-lazy"  # The branch to which the configs with proprietary plugins will be pulled from.
+target_branch="main"  # The branch to which the configs will be pulled from.
 installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 filelist="files.txt"
@@ -30,8 +30,7 @@ if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
     echo
     echo "\`git\` is not installed. Please install git and try again."
     echo
-    echo "  [REASON]: Used by the package manager and most plugins."
-    echo "- \`sudo apt update && sudo apt install git\`; or visit"
+    echo "- \`sudo apt update && sudo apt install git\`"
     echo "- https://git-scm.com/downloads"
     exit 1
 
@@ -46,7 +45,6 @@ if ! [[ -x "$(command -v gcc)" ]]; then
         echo "\`gcc\` or \`clang\` is not installed."
         echo "Please install either of the two and try again."
         echo
-        echo "  [REASON]: Used by tree-sitter and telescope-fzf-native plugins."
         echo "- \`sudo apt update && sudo apt install gcc\`"
         exit 2
 
@@ -64,7 +62,6 @@ if ! [[ -x "$(command -v make)" ]]; then
     echo "\`make\` is not installed."
     echo "Please install it and try again."
     echo
-    echo "  [REASON]: Used by telescope-fzf-native plugin."
     echo "- \`sudo apt update && sudo apt install make\`"
     exit 11
 
@@ -77,8 +74,7 @@ if ! [[ -x "$(command -v npm)" ]]; then
     echo
     echo "\`npm\` is not installed. Please install it and try again."
     echo
-    echo "  [REASON]: Used by Mason plugin and most LSP servers."
-    echo "- \`sudo apt update && sudo apt install nodejs npm\`; or visit"
+    echo "- \`sudo apt update && sudo apt install nodejs npm\`"
     echo "- https://nodejs.org/en/download/"
     exit 4
 
@@ -90,7 +86,7 @@ echo
 if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
     echo "\`nvim\` is not installed. Please install nvim and try again."
     echo
-    echo "- \`sudo apt update && sudo apt install neovim\`; or visit"
+    echo "- \`sudo apt update && sudo apt install neovim\`"
     echo "- https://github.com/neovim/neovim/releases/latest"
     exit 5
 
@@ -154,7 +150,8 @@ fi
 # Check if the installation files exist.
 if [[ -d "$installation_files" ]]; then
     printf "Copying customization files to \`%s\`...\r" "${nvim_config_path}"
-    if cp -r "$installation_files" "$nvim_config_path"; then  # Copy the customization files to the Neovim configuration directory.
+    # Copy the customization files to the Neovim configuration directory.
+    if cp -r "$installation_files" "$nvim_config_path"; then
         printf "Copying customization files to \`%s\`... Done!\n" "${nvim_config_path}"
         echo "Please run \`nvim\` to finish the installation."
         exit 0
@@ -165,26 +162,6 @@ if [[ -d "$installation_files" ]]; then
     fi
 
 else
-    while true; do
-        printf "Do you want to install proprietary plugins? (y/N) > "
-        read -r prop_install_answer
-
-        if [[ "${prop_install_answer}" == "" || "${prop_install_answer}" =~ ^[n|N].* ]]; then
-            echo "Okay, do not install proprietary plugins."
-            target_branch=$target_open_branch
-            break
-
-        elif [[ "${prop_install_answer}" =~ ^[y|Y].* ]]; then
-            echo "Okay, installing proprietary plugins."
-            target_branch=$target_pro_branch
-            break
-
-        else
-            echo "Unknown answer."
-            echo
-        fi
-    done
-
     filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/${filelist}"
 
     echo "Downloading file list..."
