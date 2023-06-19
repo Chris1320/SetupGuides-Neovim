@@ -38,7 +38,9 @@ return {
         colorcolumn = {
             default_columns = {80},  -- Which columns should be highlighted
             custom_colorcolumns = {
-                java = {120}
+                conf = {120},
+                java = {120},
+                sh = {120}
             }
         },
         colorscheme = {

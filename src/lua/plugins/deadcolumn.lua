@@ -1,7 +1,7 @@
 return {
     "Bekaboo/deadcolumn.nvim",
 
-    enabled = true,
+    enabled = false,
     event = "VeryLazy",
     dependencies = {
         "catppuccin"
