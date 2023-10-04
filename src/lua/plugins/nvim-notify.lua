@@ -21,5 +21,15 @@ return {
 
             notify(msg, ...)  -- Pass the parameters to nvim-notify.
         end
-    end
+    end,
+    keys = {
+        {
+            "<leader>n",
+            ":lua require('notify').dismiss()<cr>",
+            'n',
+            noremap=true,
+            silent=true,
+            desc="Dismiss notification"
+        }
+    }
 }
