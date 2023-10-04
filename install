@@ -9,7 +9,7 @@
 # ? Set variables.
 name="Neovim Config Installer"
 # Installer version; different from config version and Neovim version.
-version=(0 12 0)
+version=(0 12 1)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
@@ -92,18 +92,32 @@ if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
 
 else  # If Neovim is installed, check its version.
     echo "Neovim is installed. Checking its version..."
-    nvim_version=$(nvim -v)
-    nvim_version=${nvim_version[*]:5:6}  # Get the version of Neovim using `nvim -v` in format `vX.X.X`.
+    nvim_version=$(nvim -v | grep -oP 'v\d+\.\d+\.\d+')  # Get the version of Neovim using `nvim -v` in format `vX.X.X`.
     echo "Detected Neovim version: ${nvim_version}"
+    nvim_version_x=$(echo "${nvim_version}" | grep -oP '\d+' | sed -n 1p)
+    nvim_version_y=$(echo "${nvim_version}" | grep -oP '\d+' | sed -n 2p)
+    nvim_version_z=$(echo "${nvim_version}" | grep -oP '\d+' | sed -n 3p)
+    nvim_version_supported=true
 
-    # Calculate the value of the user's Neovim version and the required minimum Neovim version using positional notation since Neovim uses semantic versioning.
-    user_nvim_version_value=$(( (${nvim_version[*]:1:1} * (10 ** 2)) + (${nvim_version[*]:3:1} * (10 ** 1)) + (${nvim_version[*]:5:1} * (10 ** 0)) ))
-    min_nvim_version_value=$(( (${min_nvim_version[*]:0:1} * (10 ** 2)) + (${nvim_version[*]:3:1} * (10 ** 1)) + (${nvim_version[*]:5:1} * (10 ** 0)) ))
-    if [[ "$user_nvim_version_value" -lt "$min_nvim_version_value" ]]; then
+    # Check if the major version of Neovim is supported.
+    if [[ "$nvim_version_x" -lt "${min_nvim_version[*]:0:1}" ]]; then
+        nvim_version_supported=false
+    fi
+
+    # Check if the minor version of Neovim is supported.
+    if [[ "$nvim_version_y" -lt "${min_nvim_version[*]:1:1}" ]]; then
+        nvim_version_supported=false
+    fi
+
+    # Check if the patch version of Neovim is supported.
+    if [[ "$nvim_version_z" -lt "${min_nvim_version[*]:2:1}" ]]; then
+        nvim_version_supported=false
+    fi
+
+    if [[ "$nvim_version_supported" == false ]]; then
         echo "Neovim ${nvim_version} is not supported."
         echo "Please upgrade to at least v${min_nvim_version[*]:0:1}.${min_nvim_version[*]:1:1}.${min_nvim_version[*]:2:1} or higher and try again."
         exit 6
-
     else
         echo "User's Neovim version is supported."
     fi
