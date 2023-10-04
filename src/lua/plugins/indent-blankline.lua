@@ -3,5 +3,6 @@ return {
 
     enabled = true,
     event = {"BufReadPost", "BufNewFile"},
+    main = "ibl",
     opts = {}
 }
