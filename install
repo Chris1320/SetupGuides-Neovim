@@ -9,7 +9,7 @@
 # ? Set variables.
 name="Neovim Config Installer"
 # Installer version; different from config version and Neovim version.
-version=(0 12 1)
+version=(0 13 0)
 title="${name} v${version[*]:0:1}.${version[*]:1:1}.${version[*]:2:1}"
 
 target_branch="main"  # The branch to which the configs will be pulled from.
@@ -35,7 +35,7 @@ if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
     exit 1
 
 else
-    echo "Git       : installed"
+    echo "Git       : $(command -v git)"
 fi
 
 if ! [[ -x "$(command -v gcc)" ]]; then
@@ -49,11 +49,11 @@ if ! [[ -x "$(command -v gcc)" ]]; then
         exit 2
 
     else
-        echo "C compiler: clang"
+        echo "C compiler: $(command -v clang)"
     fi
 
 else
-    echo "C compiler: gcc"
+    echo "C compiler: $(command -v gcc)"
 fi
 
 if ! [[ -x "$(command -v make)" ]]; then
@@ -66,7 +66,7 @@ if ! [[ -x "$(command -v make)" ]]; then
     exit 11
 
 else
-    echo "make      : installed"
+    echo "make      : $(command -v make)"
 fi
 
 if ! [[ -x "$(command -v npm)" ]]; then
@@ -79,7 +79,7 @@ if ! [[ -x "$(command -v npm)" ]]; then
     exit 4
 
 else
-    echo "npm       : installed"
+    echo "npm       : $(command -v npm)"
 fi
 
 echo
@@ -147,7 +147,6 @@ while true; do
     fi
 done
 
-# ? Install the customization files.
 echo
 
 # Remove the configuration files.
