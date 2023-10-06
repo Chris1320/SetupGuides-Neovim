@@ -5,18 +5,18 @@ import sys
 from typing import Final
 
 FILELIST_PATH: Final[str] = "files.txt"
-URL: Final[str] = "https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>"  # <branch> will be replaced by install script.
-SEP: Final[str] = '/'
+# <branch> will be replaced by install script.
+URL: Final[str] = "https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>"
 
 
 def main() -> int:
     files = []
     for dirpath, _, filenames in os.walk("src"):  # Scan all files in `src/`
         for filename in filenames:
-            filepath = f"{dirpath}{SEP}{filename}"
-            files.append(f"{URL}{SEP}{filepath}")  # Result: URL + "src/" + file's filepath
+            filepath = '/'.join((dirpath, filename))
+            files.append('/'.join((URL, filepath)))
 
-    files.sort()
+    files.sort()  # So that Git can diff easily.
     with open(FILELIST_PATH, 'w') as f:
         f.write('\n'.join(files))
 
