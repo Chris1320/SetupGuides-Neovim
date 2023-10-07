@@ -8,7 +8,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true  -- enable for consistent color scheme across terminals.
 vim.opt.ttyfast = true  -- indicate fast terminal connection to speed up scrolling.
 vim.o.timeout = true
-vim.o.timeoutlen = 500
+vim.o.timeoutlen = 300
 
 vim.opt.mouse = 'a'  -- enable usage of mouse in all modes.
 vim.opt.clipboard = "unnamedplus"  -- enable usage of system clipboard.
