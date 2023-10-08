@@ -9,6 +9,8 @@ return {
         local ts_vars = require("vars").treesitter
         local treesitter = require("nvim-treesitter.configs")
 
+        --- Get the list of languages to automatically install.
+        --- @return table x A list of languages to install.
         local function getEnsureInstalled()
             if ts_vars.enforce_ensure_installed then
                 return ts_vars.languages

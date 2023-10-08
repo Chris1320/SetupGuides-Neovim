@@ -6,7 +6,7 @@ return {
     enabled = true,
     lazy = false,
     dependencies = {
-        "kyazdani42/nvim-web-devicons",
+        "nvim-tree/nvim-web-devicons",
         "gitsigns.nvim"
     },
     opts = {
@@ -39,6 +39,7 @@ return {
                     "diagnostics",
                     update_in_insert = true,
                     always_visible = false,
+                    sources = {"nvim_lsp", "nvim_diagnostic"},
                     on_click = function(...)
                         vim.cmd("TroubleToggle document_diagnostics")
                     end
@@ -49,15 +50,9 @@ return {
             lualine_y = {"searchcount", "progress"},
             lualine_z = {"location"}
         },
-        inactive_sections = {  -- This isn't used because globalstatus is set to true.
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = {vars_lualine.filename_config},
-            lualine_x = {"location", "filetype"},
-            lualine_y = {},
-            lualine_z = {}
-        },
         extensions = {  -- Enable integrations.
+            "lazy",
+            "nvim-dap-ui",
             "nvim-tree",
             "quickfix"
         }

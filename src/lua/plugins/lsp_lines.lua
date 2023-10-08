@@ -8,7 +8,7 @@ return {
         vim.diagnostic.config(
             {
                 virtual_text = false,
-                virtual_lines = true
+                virtual_lines = {only_current_line = true}
             }
         )
     end,
@@ -16,11 +16,19 @@ return {
         {
             "<leader>l",
             function()
-                -- Toggle values of `virtual_text` and `virtual_lines`.
-                vim.diagnostic.config(
+                local new_virtual_lines
+
+                local diag = vim.diagnostic
+                local new_virtual_text = not diag.config().virtual_text
+                if type(diag.config().virtual_lines) == "table" then
+                    new_virtual_lines = false
+                else new_virtual_lines = {only_current_line=true}
+                end
+
+                diag.config(
                     {
-                        virtual_text = not vim.diagnostic.config().virtual_text,
-                        virtual_lines = not vim.diagnostic.config().virtual_lines
+                        virtual_text = new_virtual_text,
+                        virtual_lines = new_virtual_lines
                     }
                 )
             end,

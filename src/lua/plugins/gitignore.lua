@@ -3,9 +3,7 @@ return {
 
     enabled = true,
     cmd = {"Gitignore"},
-    dependencies = {
-        "telescope.nvim"
-    },
+    dependencies = {"telescope.nvim"},
     keys = {
         {
             "<leader>gi",

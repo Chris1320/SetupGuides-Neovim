@@ -50,6 +50,7 @@ return {
                 }
             }
         )
-        vim.cmd("colorscheme catppuccin-" .. colorscheme.catppuccin_flavor)
+        -- vim.cmd("colorscheme catppuccin-" .. colorscheme.catppuccin_flavor)
+        vim.cmd.colorscheme("catppuccin-" .. colorscheme.catppuccin_flavor)
     end
 }

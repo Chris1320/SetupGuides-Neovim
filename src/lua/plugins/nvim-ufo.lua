@@ -3,9 +3,7 @@ return {
 
     enabled = true,
     event = {"BufReadPost", "BufNewFile"},
-    dependencies = {
-        "kevinhwang91/promise-async"
-    },
+    dependencies = {"kevinhwang91/promise-async"},
     opts = {},
     keys = {
         {

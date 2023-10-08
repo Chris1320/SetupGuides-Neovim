@@ -39,7 +39,7 @@ vim.opt.softtabstop = vars.behavior.tab_size  -- see multiple spaces as tabstops
 vim.opt.foldmethod = "manual"  -- use treesitter to determine where to fold.
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"  -- the expression to use for folding.
 vim.opt.foldcolumn = '1'
-vim.opt.foldlevel = 99  -- fold level.
+vim.opt.foldlevel = 99  -- Increased for nvim-ufo.
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
 
