@@ -5,13 +5,12 @@ vim.g.loaded_netrw = 1  -- netrw, recommended by nvim-tree
 vim.g.loaded_netrwPlugin = 1
 
 -- General options
-vim.opt.termguicolors = true  -- enable for consistent color scheme across terminals.
-vim.opt.ttyfast = true  -- indicate fast terminal connection to speed up scrolling.
+vim.opt.termguicolors = true  -- consistent color scheme across terminals.
+vim.opt.ttyfast = true  -- speed up scrolling.
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
 vim.opt.mouse = 'a'  -- enable usage of mouse in all modes.
--- vim.opt.clipboard = "unnamedplus"  -- enable usage of system clipboard by default.
 
 -- Check if running on WSL.
 -- Source: https://mitchellt.com/2022/05/15/WSL-Neovim-Lua-and-the-Windows-Clipboard.html
@@ -31,29 +30,31 @@ end
 
 vim.opt.number = true  -- enable line numbers.
 vim.opt.relativenumber = true  -- enable relative line numbers.
-vim.opt.colorcolumn = vars.appearance.colorcolumn.default_columns  -- Highlight these columns.
-vim.cmd("highlight LineNr ctermfg=" .. vars.appearance.colorscheme.line_number_color)  -- Set the color of the line numbers
+vim.opt.colorcolumn = vars.appearance.colorcolumn.default_columns
+vim.cmd(  -- Set the color of the line numbers
+    "highlight LineNr ctermfg="
+        .. vars.appearance.colorscheme.line_number_color
+)
 
 vim.opt.showmatch = true  -- show matching brackets.
 vim.opt.cursorline = true  -- enable cursor line.
-vim.opt.wrap = vars.behavior.line_wrapping  -- Disable line wrapping by default.
+vim.opt.wrap = vars.behavior.line_wrapping
 
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}  -- for completion
 vim.opt.wildmode = {"longest", "list"}  -- get bash-like tab completions.
 
-vim.cmd("syntax on")  -- enable syntax highlighting
+vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")  -- allow auto-indentation depending on file type.
 vim.opt.autoindent = true  -- Enable auto indent.
 -- vim.opt.smartindent = true  -- Enable smart indent.
-vim.opt.indentexpr = "nvim_treesitter#indentexpr()"  -- Use treesitter for indentation.
+-- vim.opt.indentexpr = "nvim_treesitter#indentexpr()"  -- Use treesitter for indentation.
 
-vim.opt.expandtab = vars.behavior.use_spaces  -- converts tabs to white space.
-vim.opt.shiftwidth = vars.behavior.tab_size  -- width for autoindents.
-vim.opt.tabstop = vars.behavior.tab_size  -- number of columns occupied by a tab.
-vim.opt.softtabstop = vars.behavior.tab_size  -- see multiple spaces as tabstops so <BS> does the right thing.
+vim.opt.expandtab = vars.behavior.use_spaces
+vim.opt.shiftwidth = vars.behavior.tab_size
+vim.opt.tabstop = vars.behavior.tab_size
+vim.opt.softtabstop = vars.behavior.tab_size
 
-vim.opt.foldmethod = "manual"  -- use treesitter to determine where to fold.
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"  -- the expression to use for folding.
+vim.opt.foldmethod = "manual"
 vim.opt.foldcolumn = '1'
 vim.opt.foldlevel = 99  -- Increased for nvim-ufo.
 vim.opt.foldlevelstart = 99
@@ -69,7 +70,7 @@ vim.opt.magic = true  -- enable regex.
 vim.cmd("filetype plugin on")  -- enable loading plugins for specific file types.
 
 vim.opt.list = true  -- enable display of unprintable characters.
-if vars.appearance.show_eols then  -- Enable if you want to display spaces, trailing spaces, and EOLs.
+if vars.appearance.show_eols then
     vim.opt.listchars:append("eol:" .. vars.appearance.icons.eol)
 end
 
