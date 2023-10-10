@@ -65,12 +65,37 @@ return {
             desc = "See open buffers"
         },
 
-        {"<leader>tf", require("telescope.builtin").current_buffer_fuzzy_find, 'n', desc="Search current buffer"},
-        {"<leader>tS", require("telescope.builtin").live_grep, 'n', desc="Search text"},
-        {"<leader>tF", require("telescope.builtin").find_files, 'n', desc="Search directory files"},
-        {"<leader>tg", require("telescope.builtin").git_files, 'n', desc="Search Git files"},
+        {
+            "<leader>tf",
+            function() require("telescope.builtin").current_buffer_fuzzy_find() end,
+            'n',
+            desc = "Search current buffer"
+        },
+        {
+            "<leader>tS",
+            function() require("telescope.builtin").live_grep() end,
+            'n',
+            desc = "Search text"
+        },
+        {
+            "<leader>tF",
+            function() require("telescope.builtin").find_files() end,
+            'n',
+            desc = "Search directory files"
+        },
+        {
+            "<leader>tg",
+            function() require("telescope.builtin").git_files() end,
+            'n',
+            desc = "Search Git files"
+        },
 
-        {"<leader>ts", require("telescope.builtin").treesitter, 'n', desc="See treesitter symbols"},
+        {
+            "<leader>ts",
+            function() require("telescope.builtin").treesitter() end,
+            'n',
+            desc = "See treesitter symbols"
+        },
         {
             "<leader>tr",
             function()

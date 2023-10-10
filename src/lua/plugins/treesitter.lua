@@ -3,6 +3,7 @@ return {
 
     enabled = true,
     build = ":TSUpdate",
+    cmd = {"TSInstall", "TSUpdate", "TSInstallInfo", "TSUninstall"},
     event = {"BufReadPost", "BufNewFile"},
     config = function()
         local ts_vars = require("vars").treesitter
