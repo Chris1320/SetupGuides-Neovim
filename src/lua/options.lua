@@ -7,8 +7,10 @@ vim.g.loaded_netrwPlugin = 1
 -- General options
 vim.opt.termguicolors = true  -- consistent color scheme across terminals.
 vim.opt.ttyfast = true  -- speed up scrolling.
+vim.opt.scrolloff = 8
 vim.o.timeout = true
 vim.o.timeoutlen = 300
+vim.opt.updatetime = 50
 
 vim.opt.mouse = 'a'  -- enable usage of mouse in all modes.
 
@@ -30,6 +32,7 @@ end
 
 vim.opt.number = true  -- enable line numbers.
 vim.opt.relativenumber = true  -- enable relative line numbers.
+vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = vars.appearance.colorcolumn.default_columns
 vim.cmd(  -- Set the color of the line numbers
     "highlight LineNr ctermfg="
@@ -68,6 +71,12 @@ vim.opt.ignorecase = true  -- case insensitive when searching.
 vim.opt.magic = true  -- enable regex.
 
 vim.cmd("filetype plugin on")  -- enable loading plugins for specific file types.
+
+vim.opt.swapfile = false  -- disable swap files.
+-- vim.opt.backup = false  -- disable backup files.
+
+-- vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
 
 vim.opt.list = true  -- enable display of unprintable characters.
 if vars.appearance.show_eols then

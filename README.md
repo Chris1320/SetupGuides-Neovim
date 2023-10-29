@@ -49,6 +49,7 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
     - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim): A Neovim statusline plugin.
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
+    - [smartcolumn.nvim](https://github.com/m4xshen/smartcolumn.nvim): A Neovim plugin hiding your colorcolumn when unneeded.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 
 ## Custom Key Bindings

@@ -9,13 +9,6 @@ return {
             "TelescopePrompt", "vim"
         },
         enable_check_bracket_line = true,
-        ts_config = {
-            lua = {
-                "string"
-            },
-            javascript = {
-                "template_string"
-            }
-        }
+        ts_config = {}
     }
 }
