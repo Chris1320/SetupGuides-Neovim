@@ -49,7 +49,7 @@ vim.opt.wildmode = {"longest", "list"}  -- get bash-like tab completions.
 vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")  -- allow auto-indentation depending on file type.
 vim.opt.autoindent = true  -- Enable auto indent.
--- vim.opt.smartindent = true  -- Enable smart indent.
+vim.opt.smartindent = true  -- Enable smart indent.
 -- vim.opt.indentexpr = "nvim_treesitter#indentexpr()"  -- Use treesitter for indentation.
 
 vim.opt.expandtab = vars.behavior.use_spaces

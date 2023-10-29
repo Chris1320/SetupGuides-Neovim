@@ -1,221 +1,262 @@
 return {
-    "neovim/nvim-lspconfig",
+    -- Set up lsp-zero
+    {
+        "VonHeikemen/lsp-zero.nvim",
 
-    enabled = true,
-    lazy = false,
-    -- Do not lazy load LSPs.
-    -- Some servers fail to attach to buffers when we do that.
-    -- event = {"BufReadPost", "BufNewFile"},
-    dependencies = {
-        "mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        enabled = true,
+        branch = "v3.x",
+        lazy = true,
+        config = false,
+        init = function()
+            -- Disable automatic setup, we are doing
+            -- it manually in the LSP section.
+            vim.g.lsp_zero_extend_cmp = 0
+            vim.g.lsp_zero_extend_lspconfig = 0
+        end
     },
-    config = function()
-        -- This part has a lot of stuff going on.
-        local mlsp = require("mason-lspconfig")
-        local lspconfig = require("lspconfig")
-        local lsp_vars = require("vars").lsp
 
-        --- Detects the root project of the current buffer.
-        -- This is used in omnisharp and omnisharp_mono LSPs.
-        --
-        -- @param filename The filename of the current buffer.
-        -- @return The root project of the current buffer.
-        local function detectRootProject(filename, _)
-            local root
+    -- Set up mason.nvim
+    {
+        "williamboman/mason.nvim",
 
-            root = lspconfig.util.find_git_ancestor(filename)
-            root = root or lspconfig.util.root_pattern(".sln")
-            root = root or lspconfig.util.root_pattern(".csproj")
-            root = root or '.'
-
-            return root
-        end
-
-        local function getEnsureInstalled()
-            if lsp_vars.enforce_ensure_installed then
-                return lsp_vars.ensure_installed
-            else
-                return {}
-            end
-        end
-
-        -- Setup mason-lspconfig
-        mlsp.setup(
-            {
-                automatic_installation = lsp_vars.auto_install,
-                ensure_installed = getEnsureInstalled()
+        enabled = true,
+        lazy = false,
+        build = ":MasonUpdate",
+        opts = {
+            ui = {
+                check_outdated_packages_on_open = true,
+                icons = {
+                    -- you can change these icons to whatever you want.
+                    package_installed = "✓",
+                    server_pending = "➜",
+                    server_uninstalled = "✗"
+                }
             }
-        )
-
-        -- Append client capabilities to default configuration.
-        local lsp_capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            require("cmp_nvim_lsp").default_capabilities()
-        )
-        -- Tell LSP servers the capability of foldingRange
-        lsp_capabilities.textDocument.foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true
         }
+    },
 
-        -- setup automatic server handling
-        mlsp.setup_handlers(
+    -- Set up nvim-cmp
+    {
+        "hrsh7th/nvim-cmp",
+
+        enabled = true,
+        event = "InsertEnter",
+        requires = {
+            -- Sources
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-path",
+            "saadparwaiz1/cmp_luasnip",
             {
-                function(server_name)  -- the default handler
-                    lspconfig[server_name].setup(
-                        {capabilities=lsp_capabilities}
-                    )
-                end,
-                ["bashls"] = function()  -- Custom handler for bashls LSP
-                    lspconfig["bashls"].setup(
+                "petertriho/cmp-git",
+                dependencies = "nvim-lua/plenary.nvim"
+            },
+            "github/copilot.vim",
+
+            -- Snippets
+            "L3MON4D3/LuaSnip",
+            "rafamadriz/friendly-snippets",
+        },
+        config = function()
+            local lsp_zero = require("lsp-zero")
+            lsp_zero.extend_cmp()
+
+            local cmp = require("cmp")
+            local cmp_action = lsp_zero.cmp_action()
+            local luasnip = require("luasnip")
+
+            cmp.setup(
+                {
+                    formatting = lsp_zero.cmp_format(),
+                    mapping = cmp.mapping.preset.insert(
                         {
-                            capabilities = lsp_capabilities,
-                            filetypes = {"sh", "bash"},
-                            single_file_support = true,
-                            settings = {
-                                bashIde = {
-                                    highlightParsingErrors = true
-                                }
-                            }
+                            ["<C-c>"] = cmp.mapping.abort(),
+                            ["<C-Space>"] = cmp.mapping.complete(),
+                            ["<C-k>"] = cmp.mapping.scroll_docs(-4),
+                            ["<C-j>"] = cmp.mapping.scroll_docs(4),
+                            ["<C-l>"] = cmp_action.luasnip_jump_forward(),
+                            ["<C-h>"] = cmp_action.luasnip_jump_backward(),
                         }
+                    ),
+                    snippet = {
+                        expand = function(args)
+                            luasnip.lsp_expand(args.body)
+                        end
+                    },
+                    sources = {
+                        {name="nvim_lsp", option={keyword_length=2}},
+                        {name="luasnip", option={keyword_length=3}},
+                        {name="buffer", option={keyword_length=2}},
+                        {name="path", option={keyword_length=3}},
+                        {name="copilot.vim"}
+                    },
+                    window = {
+                        completion = cmp.config.window.bordered(),
+                        documentation = cmp.config.window.bordered()
+                    }
+                }
+            )
+
+            -- Show suggestions from buffer when searching and entering commands.
+            cmp.setup.cmdline(
+                {'/', '?'},
+                {
+                    mapping = cmp.mapping.preset.cmdline(),
+                    sources = cmp.config.sources({{name="buffer"}})
+                }
+            )
+            cmp.setup.cmdline(
+                ':',
+                {
+                    mapping = cmp.mapping.preset.cmdline(),
+                    sources = cmp.config.sources(
+                        {{name="path"}, {name="cmdline"}}
                     )
-                end,
-                ["clangd"] = function()  -- Custom handler for clangd LSP
-                    local clangd_capabilities = lsp_capabilities
-                    -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
-                    clangd_capabilities.offsetEncoding = {"utf-16"}
-                    lspconfig["clangd"].setup(
-                        {
-                            capabilities = clangd_capabilities,
-                            single_file_support = true
+                }
+            )
+
+            cmp.setup.filetype(
+                "gitcommit",
+                {
+                    sources = cmp.config.sources(
+                        {{name="git"}, {name="buffer"}}
+                    )
+                }
+            )
+
+            -- Set up cmp-git for gitcommit buffers.
+            local cmp_git_sort = require("cmp_git.sort")
+            local cmp_git_format = require("cmp_git.format")
+            require("cmp_git").setup(
+                {
+                    filetypes = {"gitcommit"},
+                    git = {
+                        commits = {
+                            sort_by = cmp_git_sort.git.commits,
+                            format = cmp_git_format.git.commits
                         }
-                    )
-                end,
-                ["csharp_ls"] = function()  -- Custom handler for csharp_ls LSP
-                    lspconfig["csharp_ls"].setup(
-                        {capabilities=lsp_capabilities}
-                    )
-                end,
-                ["docker_compose_language_service"] = function()
-                    lspconfig["docker_compose_language_service"].setup(
-                        {
-                            capabilities = lsp_capabilities,
-                            single_file_support = true,
-                            settings = {
-                                telemetry = {
-                                    enableTelemetry = false
-                                }
-                            }
-                        }
-                    )
-                end,
-                ["html"] = function()  -- Custom handler for html LSP
-                    local html_capabilities = lsp_capabilities
-                    html_capabilities.textDocument.completion
-                        .completionItem.snippetSupport = true
-                    lspconfig["html"].setup(
-                        {
-                            capabilities = html_capabilities,
-                            init_options = {
-                                provideFormatter = true
+                    },
+                    github = {
+                        issues = {
+                            fields = {
+                                "title",
+                                "number",
+                                "body",
+                                "updatedAt",
+                                "state"
                             },
-                            single_file_support = true,
-                            settings = {
-                                html = {
-                                    format = {
-                                        templating = true
-                                    },
-                                    mirrorCursorOnMatchingTag = true
-                                }
-                            }
+                            filter = "all",
+                            state = "open",
+                            sort_by = cmp_git_sort.github.issues,
+                            format = cmp_git_format.github.issues
+                        },
+                        mentions = {
+                            sort_by = cmp_git_sort.github.mentions,
+                            format = cmp_git_format.github.mentions
+                        },
+                        pull_requests = {
+                            fields = {
+                                "title",
+                                "number",
+                                "body",
+                                "updatedAt",
+                                "state"
+                            },
+                            state = "open", -- open, closed, merged, all
+                            sort_by = cmp_git_sort.github.pull_requests,
+                            format = cmp_git_format.github.pull_requests
                         }
-                    )
-                end,
-                ["jdtls"] = function()
-                    lspconfig["jdtls"].setup(
-                        {
-                            capabilities = lsp_capabilities,
-                            single_file_support = true,
-                            settings = {
-                                redhat = {
-                                    telemetry = {
-                                        enabled = false
-                                    }
-                                }
-                            }
+                    },
+                    gitlab = {
+                        issues = {
+                            state = "opened", -- opened, closed, all
+                            sort_by = cmp_git_sort.gitlab.issues,
+                            format = cmp_git_format.gitlab.issues
+                        },
+                        mentions = {
+                            sort_by = cmp_git_sort.gitlab.mentions,
+                            format = cmp_git_format.gitlab.mentions
+                        },
+                        pull_requests = {
+                            state = "opened", -- opened, closed, locked, merged
+                            sort_by = cmp_git_sort.gitlab.merge_requests,
+                            format = cmp_git_format.gitlab.merge_requests
                         }
-                    )
-                end,
-                ["lua_ls"] = function()  -- Custom handler for sumneko_lua LSP
-                    lspconfig["lua_ls"].setup(
-                        {
-                            capabilities = lsp_capabilities,
-                            settings = {
-                                Lua = {
-                                    diagnostics = {
-                                        globals = {"vim"}
-                                    },
-                                    telemetry = {
-                                        enable = false
-                                    },
-                                    workspace = {
-                                        library = vim.api.nvim_get_runtime_file("", true),
-                                        checkThirdParty = false  -- Context: https://github.com/sumneko/lua-language-server/discussions/1688
-                                    }
-                                }
-                            }
-                        }
-                    )
-                end,
-                -- FIXME: Disable omnisharp for now.
-                -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
-                --[[ ["omnisharp"] = function()  -- Custom handler for omnisharp LSP
-                    lspconfig["omnisharp"].setup(
-                        {
-                            capabilities = lsp_capabilities,
-                            enable_editorconfig_support = true,
-                            enable_roslyn_analyzers = true,
-                            settings = {
-                                root_dir = detectRootProject
-                            }
-                        }
-                    )
-                end,
-                ["omnisharp_mono"] = function()  -- Custom handler for omnisharp LSP (mono version)
-                    lspconfig["omnisharp_mono"].setup(
-                        {capabilities = lsp_capabilities}
-                    )
-                end, ]]
-                ["pyright"] = function()  -- Custom handler for pyright LSP
-                    lspconfig["pyright"].setup(
-                        {
-                            capabilities = lsp_capabilities,
-                            single_file_support = true,
-                            settings = {
-                                python = {
-                                    analysis = {
-                                        typeCheckingMode = "basic",
-                                        diagnosticMode = "workspace",
-                                        useLibraryCodeForTypes = true
-                                    }
-                                }
-                            }
-                        }
-                    )
-                end,
-                ["yamlls"] = function()  -- Custom handler for yamlls LSP
-                    lspconfig["yamlls"].setup(
-                        {
-                            capabilities = lsp_capabilities,
-                            single_file_support = true,
-                            settings = {redhat={telemetry={enabled=false}}}
-                        }
-                    )
+                    }
+                }
+            )
+        end
+    },
+
+    -- Set up LSP
+    {
+        "neovim/nvim-lspconfig",
+        cmd = {"LspInfo", "LspInstall", "LspStart"},
+        event = {"BufReadPre", "BufNewFile"},
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-nvim-lua",
+            "williamboman/mason-lspconfig.nvim"
+        },
+        config = function()
+            local misc = require("misc")
+            local lspconfig = require("lspconfig")
+            local lsp_zero = require("lsp-zero")
+            local mlsp = require("mason-lspconfig")
+            lsp_zero.extend_lspconfig()
+
+            lsp_zero.on_attach(
+                function(_, bufnr)
+                    lsp_zero.default_keymaps({buffer = bufnr})
                 end
+            )
+
+            -- Append client capabilities to default configuration.
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                {},
+                vim.lsp.protocol.make_client_capabilities(),
+                require("cmp_nvim_lsp").default_capabilities()
+            )
+            -- Tell LSP servers the capability of foldingRange
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
             }
-        )
-    end
+
+            mlsp.setup(
+                {
+                    ensure_installed = misc.getEnsureInstalledLSPServers(),
+                    handlers = {
+                        -- lsp_zero.default_setup,
+                        function(name)
+                            require("lsp-zero.server").setup(
+                                name,
+                                {capabilities=capabilities}
+                            )
+                        end,
+                        lua_ls = function()
+                            local overrides = {
+                                capabilities = capabilities,
+                                settings = {
+                                    Lua = {
+                                        telemetry = {enable=false},
+                                        workspace = {checkThirdParty=false}
+                                    }
+                                }
+                            }
+
+                            lspconfig.lua_ls.setup(
+                                vim.tbl_deep_extend(
+                                    "force",
+                                    lsp_zero.nvim_lua_ls(),
+                                    overrides
+                                )
+                            )
+                        end
+                    }
+                }
+            )
+        end
+    }
 }

@@ -41,5 +41,20 @@ return {
         if vars.enforce_ensure_installed then return vars.ensure_installed
         else return {}
         end
-    end
+    end,
+
+
+    --- Detects the root project of the current buffer.
+    --- This is used in omnisharp and omnisharp_mono LSPs.
+    ---
+    --- @return string root The root project of the current buffer.
+    detectRootProject = function()
+        local root
+
+        root = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ';')
+        root = root or vim.fn.finddir(".sln", vim.fn.expand("%:p:h") .. ';')
+        root = root or vim.fn.finddir(".csproj", vim.fn.expand("%:p:h") .. ';')
+
+        return root
+        end
 }
