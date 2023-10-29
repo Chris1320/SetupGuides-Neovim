@@ -40,22 +40,23 @@ return {
         "hrsh7th/nvim-cmp",
 
         enabled = true,
-        event = "InsertEnter",
-        requires = {
+        lazy = false,
+        -- event = "InsertEnter",
+        dependencies = {
             -- Sources
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-path",
-            "saadparwaiz1/cmp_luasnip",
+            {"hrsh7th/cmp-buffer"},
+            {"hrsh7th/cmp-cmdline"},
+            {"hrsh7th/cmp-path"},
+            {"saadparwaiz1/cmp_luasnip"},
             {
                 "petertriho/cmp-git",
                 dependencies = "nvim-lua/plenary.nvim"
             },
-            "github/copilot.vim",
+            {"github/copilot.vim"},
 
             -- Snippets
-            "L3MON4D3/LuaSnip",
-            "rafamadriz/friendly-snippets",
+            {"L3MON4D3/LuaSnip"},
+            {"rafamadriz/friendly-snippets"},
         },
         config = function()
             local lsp_zero = require("lsp-zero")
@@ -63,7 +64,6 @@ return {
 
             local cmp = require("cmp")
             local cmp_action = lsp_zero.cmp_action()
-            local luasnip = require("luasnip")
 
             cmp.setup(
                 {
@@ -80,7 +80,7 @@ return {
                     ),
                     snippet = {
                         expand = function(args)
-                            luasnip.lsp_expand(args.body)
+                            require("luasnip").lsp_expand(args.body)
                         end
                     },
                     sources = {
