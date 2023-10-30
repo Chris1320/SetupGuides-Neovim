@@ -7,7 +7,7 @@ vim.g.loaded_netrwPlugin = 1
 -- General options
 vim.opt.termguicolors = true  -- consistent color scheme across terminals.
 vim.opt.ttyfast = true  -- speed up scrolling.
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 5
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 vim.opt.updatetime = 50

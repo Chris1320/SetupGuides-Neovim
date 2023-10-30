@@ -63,15 +63,28 @@ return {
             lsp_zero.extend_cmp()
 
             local cmp = require("cmp")
+            local luasnip = require("luasnip")
             local cmp_action = lsp_zero.cmp_action()
+
+            -- Load LuaSnip snippets.
+            require("luasnip.loaders.from_vscode").lazy_load()
 
             cmp.setup(
                 {
                     formatting = lsp_zero.cmp_format(),
                     mapping = cmp.mapping.preset.insert(
                         {
-                            ["<C-c>"] = cmp.mapping.abort(),
                             ["<C-Space>"] = cmp.mapping.complete(),
+                            ["<Tab>"] = cmp.mapping.select_next_item(),
+                            ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+                            ["<CR>"] = cmp.mapping.confirm(
+                                {
+                                    behavior = cmp.ConfirmBehavior.Replace,
+                                    select = true
+                                }
+                            ),
+                            ["<C-c>"] = cmp.mapping.abort(),
+
                             ["<C-k>"] = cmp.mapping.scroll_docs(-4),
                             ["<C-j>"] = cmp.mapping.scroll_docs(4),
                             ["<C-l>"] = cmp_action.luasnip_jump_forward(),
@@ -80,7 +93,7 @@ return {
                     ),
                     snippet = {
                         expand = function(args)
-                            require("luasnip").lsp_expand(args.body)
+                            luasnip.lsp_expand(args.body)
                         end
                     },
                     sources = {
