@@ -104,7 +104,7 @@ return {
                 )
             end,
             'n',
-            desc = "Show References"
+            desc = "Show references"
         },
         {
             "<leader>td",
@@ -114,7 +114,7 @@ return {
                 )
             end,
             'n',
-            desc = "Show Definitions"
+            desc = "Show definitions"
         },
 
         -- Git integration (Parent keymap `g` is

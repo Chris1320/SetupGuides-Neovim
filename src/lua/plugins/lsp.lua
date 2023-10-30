@@ -2,41 +2,43 @@
 --- This function is to be used on the LSPs'
 --- `on_attach` hooks.
 local function addLspKeybindings()
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-    vim.keymap.set('n', "gd", vim.lsp.buf.definition)
-    vim.keymap.set('n', "gD", vim.lsp.buf.declaration)
-    vim.keymap.set('n', "gi", vim.lsp.buf.implementation)
-    vim.keymap.set('n', "go", vim.lsp.buf.type_definition)
-    vim.keymap.set('n', "gr", vim.lsp.buf.references)
-    vim.keymap.set('n', "gs", vim.lsp.buf.signature_help)
-    vim.keymap.set('n', "<F2>", vim.lsp.buf.rename)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "Show symbol information" })
+    vim.keymap.set('n', "gd", vim.lsp.buf.definition, { desc = "Show symbol definition" })
+    vim.keymap.set('n', "gD", vim.lsp.buf.declaration, { desc = "Show symbol declaration" })
+    vim.keymap.set('n', "gi", vim.lsp.buf.implementation, { desc = "Show symbol implementation" })
+    vim.keymap.set('n', "go", vim.lsp.buf.type_definition, { desc = "Show symbol type definition" })
+    vim.keymap.set('n', "gr", vim.lsp.buf.references, { desc = "Show symbol references" })
+    vim.keymap.set('n', "gs", vim.lsp.buf.signature_help, { desc = "Show symbol signature" })
+    vim.keymap.set('n', "<F2>", vim.lsp.buf.rename, { desc = "Rename symbol" })
     vim.keymap.set(
         'n',
         "<F3>",
         function()
-            io.write("Formatting file...")
+            vim.notify("Formatting file...")
             vim.lsp.buf.format({ async = true })
-        end
+        end,
+        { desc = "Format file" }
     )
     vim.keymap.set(
         'x',
         "<F3>",
         function()
-            io.write("Formatting file...")
+            vim.notify("Formatting selection...")
             vim.lsp.buf.format({ async = true })
-        end
+        end,
+        { desc = "Format selection" }
     )
-    vim.keymap.set('n', "<F4>", vim.lsp.buf.code_action)
+    vim.keymap.set('n', "<F4>", vim.lsp.buf.code_action, { desc = "Show code actions" })
 
     if vim.lsp.buf.range_code_action then
-        vim.keymap.set('x', "<F4>", vim.lsp.buf.range_code_action)
+        vim.keymap.set('x', "<F4>", vim.lsp.buf.range_code_action, { desc = "Show code actions" })
     else
-        vim.keymap.set('x', "<F4>", vim.lsp.buf.code_action)
+        vim.keymap.set('x', "<F4>", vim.lsp.buf.code_action, { desc = "Show code actions" })
     end
 
-    vim.keymap.set('n', "gl", vim.diagnostic.open_float)
-    vim.keymap.set('n', "[d", vim.diagnostic.goto_prev)
-    vim.keymap.set('n', "]d", vim.diagnostic.goto_next)
+    vim.keymap.set('n', "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+    vim.keymap.set('n', "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+    vim.keymap.set('n', "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 end
 
 return {
