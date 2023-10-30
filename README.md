@@ -37,7 +37,7 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
     - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
         - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
 - Proprietary Plugins[^5]
-    - [copilot.vim](https://github.com/github/copilot.vim):  Neovim plugin for GitHub Copilot.
+    - [copilot.lua](https://github.com/zbirenbaum/copilot.lua): Fully featured & enhanced replacement for copilot.vim complete with API for interacting with Github Copilot.
 - Quality-of-Life Plugins
     - [gitignore.nvim](https://github.com/wintermute-cell/gitignore.nvim): A neovim plugin for generating .gitignore files.
 - Theming and Visual Plugins

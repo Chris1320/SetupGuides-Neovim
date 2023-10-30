@@ -78,7 +78,12 @@ return {
                 "petertriho/cmp-git",
                 dependencies = "nvim-lua/plenary.nvim"
             },
-            { "github/copilot.vim" },
+            {
+                "zbirenbaum/copilot-cmp",
+                config = function()
+                    require("copilot_cmp").setup()
+                end
+            },
 
             -- Snippets
             { "L3MON4D3/LuaSnip" },
@@ -141,11 +146,11 @@ return {
                         }
                     ),
                     sources = {
-                        { name = "nvim_lsp",   option = { keyword_length = 2 } },
-                        { name = "luasnip",    option = { keyword_length = 3 } },
-                        { name = "buffer",     option = { keyword_length = 2 } },
-                        { name = "path",       option = { keyword_length = 3 } },
-                        { name = "copilot.vim" }
+                        { name = "nvim_lsp"--[[ , option = { keyword_length = 2 }  ]]},
+                        { name = "luasnip",  option = { keyword_length = 3 } },
+                        { name = "buffer",   option = { keyword_length = 2 } },
+                        { name = "path",     option = { keyword_length = 3 } },
+                        { name = "copilot" }
                     },
                     window = {
                         completion = cmp.config.window.bordered(),
