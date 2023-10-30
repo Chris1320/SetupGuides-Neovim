@@ -1,20 +1,45 @@
-return {
-    -- Set up lsp-zero
-    {
-        "VonHeikemen/lsp-zero.nvim",
-
-        enabled = true,
-        branch = "v3.x",
-        lazy = true,
-        config = false,
-        init = function()
-            -- Disable automatic setup, we are doing
-            -- it manually in the LSP section.
-            vim.g.lsp_zero_extend_cmp = 0
-            vim.g.lsp_zero_extend_lspconfig = 0
+--- Set the keybindings for LSP-specific actions.
+--- This function is to be used on the LSPs'
+--- `on_attach` hooks.
+local function addLspKeybindings()
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+    vim.keymap.set('n', "gd", vim.lsp.buf.definition)
+    vim.keymap.set('n', "gD", vim.lsp.buf.declaration)
+    vim.keymap.set('n', "gi", vim.lsp.buf.implementation)
+    vim.keymap.set('n', "go", vim.lsp.buf.type_definition)
+    vim.keymap.set('n', "gr", vim.lsp.buf.references)
+    vim.keymap.set('n', "gs", vim.lsp.buf.signature_help)
+    vim.keymap.set('n', "<F2>", vim.lsp.buf.rename)
+    vim.keymap.set(
+        'n',
+        "<F3>",
+        function()
+            io.write("Formatting file...")
+            vim.lsp.buf.format({ async = true })
         end
-    },
+    )
+    vim.keymap.set(
+        'x',
+        "<F3>",
+        function()
+            io.write("Formatting file...")
+            vim.lsp.buf.format({ async = true })
+        end
+    )
+    vim.keymap.set('n', "<F4>", vim.lsp.buf.code_action)
 
+    if vim.lsp.buf.range_code_action then
+        vim.keymap.set('x', "<F4>", vim.lsp.buf.range_code_action)
+    else
+        vim.keymap.set('x', "<F4>", vim.lsp.buf.code_action)
+    end
+
+    vim.keymap.set('n', "gl", vim.diagnostic.open_float)
+    vim.keymap.set('n', "[d", vim.diagnostic.goto_prev)
+    vim.keymap.set('n', "]d", vim.diagnostic.goto_next)
+end
+
+return {
     -- Set up mason.nvim
     {
         "williamboman/mason.nvim",
@@ -40,68 +65,85 @@ return {
         "hrsh7th/nvim-cmp",
 
         enabled = true,
-        lazy = false,
-        -- event = "InsertEnter",
+        event = { "InsertEnter", "CmdlineEnter" },
         dependencies = {
             -- Sources
-            {"hrsh7th/cmp-buffer"},
-            {"hrsh7th/cmp-cmdline"},
-            {"hrsh7th/cmp-path"},
-            {"saadparwaiz1/cmp_luasnip"},
+            { "hrsh7th/cmp-buffer" },
+            { "hrsh7th/cmp-cmdline" },
+            { "hrsh7th/cmp-path" },
+            { "saadparwaiz1/cmp_luasnip" },
             {
                 "petertriho/cmp-git",
                 dependencies = "nvim-lua/plenary.nvim"
             },
-            {"github/copilot.vim"},
+            { "github/copilot.vim" },
 
             -- Snippets
-            {"L3MON4D3/LuaSnip"},
-            {"rafamadriz/friendly-snippets"},
+            { "L3MON4D3/LuaSnip" },
+            { "rafamadriz/friendly-snippets" },
         },
         config = function()
-            local lsp_zero = require("lsp-zero")
-            lsp_zero.extend_cmp()
-
             local cmp = require("cmp")
+            local misc = require("misc")
             local luasnip = require("luasnip")
-            local cmp_action = lsp_zero.cmp_action()
 
             -- Load LuaSnip snippets.
             require("luasnip.loaders.from_vscode").lazy_load()
 
             cmp.setup(
                 {
-                    formatting = lsp_zero.cmp_format(),
-                    mapping = cmp.mapping.preset.insert(
-                        {
-                            ["<C-Space>"] = cmp.mapping.complete(),
-                            ["<Tab>"] = cmp.mapping.select_next_item(),
-                            ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-                            ["<CR>"] = cmp.mapping.confirm(
-                                {
-                                    behavior = cmp.ConfirmBehavior.Replace,
-                                    select = true
-                                }
-                            ),
-                            ["<C-c>"] = cmp.mapping.abort(),
-
-                            ["<C-k>"] = cmp.mapping.scroll_docs(-4),
-                            ["<C-j>"] = cmp.mapping.scroll_docs(4),
-                            ["<C-l>"] = cmp_action.luasnip_jump_forward(),
-                            ["<C-h>"] = cmp_action.luasnip_jump_backward(),
-                        }
-                    ),
                     snippet = {
                         expand = function(args)
                             luasnip.lsp_expand(args.body)
                         end
                     },
+                    mapping = cmp.mapping.preset.insert(
+                        {
+                            ["<C-Space>"] = cmp.mapping.complete(),
+                            ["<Tab>"] = cmp.mapping(
+                                function(fallback)
+                                    if cmp.visible() then
+                                        cmp.select_next_item()
+                                    elseif luasnip.expand_or_locally_jumpable() then
+                                        luasnip.expand_or_jump()
+                                    elseif misc.hasWordsBefore() then
+                                        cmp.complete()
+                                    else
+                                        fallback()
+                                    end
+                                end,
+                                { "i", "s" }
+                            ),
+                            ["<S-Tab>"] = cmp.mapping(
+                                function(fallback)
+                                    if cmp.visible() then
+                                        cmp.select_prev_item()
+                                    elseif luasnip.jumpable(-1) then
+                                        luasnip.jump(-1)
+                                    else
+                                        fallback()
+                                    end
+                                end,
+                                { "i", "s" }
+                            ),
+                            ["<CR>"] = cmp.mapping.confirm(
+                                {
+                                    behavior = cmp.ConfirmBehavior.Replace,
+                                    select = false
+                                }
+                            ),
+                            ["<C-c>"] = cmp.mapping.abort(),
+
+                            ["<C-k>"] = cmp.mapping.scroll_docs(-4),
+                            ["<C-j>"] = cmp.mapping.scroll_docs(4)
+                        }
+                    ),
                     sources = {
-                        {name="nvim_lsp", option={keyword_length=2}},
-                        {name="luasnip", option={keyword_length=3}},
-                        {name="buffer", option={keyword_length=2}},
-                        {name="path", option={keyword_length=3}},
-                        {name="copilot.vim"}
+                        { name = "nvim_lsp",   option = { keyword_length = 2 } },
+                        { name = "luasnip",    option = { keyword_length = 3 } },
+                        { name = "buffer",     option = { keyword_length = 2 } },
+                        { name = "path",       option = { keyword_length = 3 } },
+                        { name = "copilot.vim" }
                     },
                     window = {
                         completion = cmp.config.window.bordered(),
@@ -110,12 +152,13 @@ return {
                 }
             )
 
-            -- Show suggestions from buffer when searching and entering commands.
+            -- Show suggestions from buffer when
+            -- searching and entering commands.
             cmp.setup.cmdline(
-                {'/', '?'},
+                { '/', '?' },
                 {
                     mapping = cmp.mapping.preset.cmdline(),
-                    sources = cmp.config.sources({{name="buffer"}})
+                    sources = cmp.config.sources({ { name = "buffer" } })
                 }
             )
             cmp.setup.cmdline(
@@ -123,7 +166,7 @@ return {
                 {
                     mapping = cmp.mapping.preset.cmdline(),
                     sources = cmp.config.sources(
-                        {{name="path"}, {name="cmdline"}}
+                        { { name = "path" }, { name = "cmdline" } }
                     )
                 }
             )
@@ -132,7 +175,7 @@ return {
                 "gitcommit",
                 {
                     sources = cmp.config.sources(
-                        {{name="git"}, {name="buffer"}}
+                        { { name = "git" }, { name = "buffer" } }
                     )
                 }
             )
@@ -142,7 +185,7 @@ return {
             local cmp_git_format = require("cmp_git.format")
             require("cmp_git").setup(
                 {
-                    filetypes = {"gitcommit"},
+                    filetypes = { "gitcommit" },
                     git = {
                         commits = {
                             sort_by = cmp_git_sort.git.commits,
@@ -204,70 +247,76 @@ return {
     -- Set up LSP
     {
         "neovim/nvim-lspconfig",
-        cmd = {"LspInfo", "LspInstall", "LspStart"},
-        event = {"BufReadPre", "BufNewFile"},
+        cmd = { "LspInfo", "LspInstall", "LspStart" },
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = {
+            "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lua",
+            "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim"
         },
         config = function()
             local misc = require("misc")
             local lspconfig = require("lspconfig")
-            local lsp_zero = require("lsp-zero")
-            local mlsp = require("mason-lspconfig")
-            lsp_zero.extend_lspconfig()
-
-            lsp_zero.on_attach(
-                function(_, bufnr)
-                    lsp_zero.default_keymaps({buffer = bufnr})
-                end
-            )
 
             -- Append client capabilities to default configuration.
-            local capabilities = vim.tbl_deep_extend(
+            local lsp_defaults = lspconfig.util.default_config
+            lsp_defaults.capabilities = vim.tbl_deep_extend(
                 "force",
-                {},
-                vim.lsp.protocol.make_client_capabilities(),
+                lsp_defaults.capabilities,
                 require("cmp_nvim_lsp").default_capabilities()
             )
-            -- Tell LSP servers the capability of foldingRange
-            capabilities.textDocument.foldingRange = {
+            -- Tell LSP servers the capability of foldingRange for nvim-ufo
+            lsp_defaults.capabilities.textDocument.foldingRange = {
                 dynamicRegistration = false,
                 lineFoldingOnly = true
             }
+            local default_config = {
+                on_attach = addLspKeybindings,
+                capabilities = lsp_defaults.capabilities
+            }
 
-            mlsp.setup(
+            local mlsp = require("mason-lspconfig")
+            mlsp.setup({ ensure_installed = misc.getEnsureInstalledLSPServers() })
+            mlsp.setup_handlers(
                 {
-                    ensure_installed = misc.getEnsureInstalledLSPServers(),
-                    handlers = {
-                        -- lsp_zero.default_setup,
-                        function(name)
-                            require("lsp-zero.server").setup(
-                                name,
-                                {capabilities=capabilities}
-                            )
-                        end,
-                        lua_ls = function()
-                            local overrides = {
-                                capabilities = capabilities,
-                                settings = {
-                                    Lua = {
-                                        telemetry = {enable=false},
-                                        workspace = {checkThirdParty=false}
+                    -- the default handler
+                    function(server_name)
+                        lspconfig[server_name].setup(default_config)
+                    end,
+                    lua_ls = function()
+                        local runtime_path = vim.split(package.path, ';')
+                        table.insert(runtime_path, "lua/?.lua")
+                        table.insert(runtime_path, "lua/?/init.lua")
+
+                        local overrides = {
+                            settings = {
+                                Lua = {
+                                    telemetry = { enable = false },
+                                    runtime = {
+                                        version = "LuaJIT",
+                                        path = runtime_path
+                                    },
+                                    diagnostics = { globals = { "vim" } },
+                                    workspace = {
+                                        checkThirdParty = false,
+                                        library = {
+                                            -- Make the server aware of Neovim runtime files
+                                            vim.fn.expand("$VIMRUNTIME/lua"),
+                                            vim.fn.stdpath("config") .. "/lua"
+                                        }
                                     }
                                 }
                             }
+                        }
 
-                            lspconfig.lua_ls.setup(
-                                vim.tbl_deep_extend(
-                                    "force",
-                                    lsp_zero.nvim_lua_ls(),
-                                    overrides
-                                )
+                        lspconfig.lua_ls.setup(
+                            vim.tbl_deep_extend(
+                                "force", default_config, overrides
                             )
-                        end
-                    }
+                        )
+                    end
                 }
             )
         end

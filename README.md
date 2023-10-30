@@ -28,7 +28,6 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
     - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
         - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
 - Linting and Syntax Checking/Highlighting
-    - [lsp-zero.nvim](https://github.com/VonHeikemen/lsp-zero.nvim): A starting point to setup some lsp related features in neovim.
     - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Language Server Protocol (LSP) configuration helper.
     - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Better syntax highlighting.
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.

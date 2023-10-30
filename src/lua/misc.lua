@@ -16,10 +16,10 @@ return {
     showConfigVersion = function()
         vim.notify(
             "Config Version: v"
-                .. table.concat(
-                    require("info").version,
-                    '.'
-                )
+            .. table.concat(
+                require("info").version,
+                '.'
+            )
         )
     end,
 
@@ -28,8 +28,10 @@ return {
     getEnsureInstalledTSParsers = function()
         local vars = require("vars").treesitter
 
-        if vars.enforce_ensure_installed then return vars.languages
-        else return {}
+        if vars.enforce_ensure_installed then
+            return vars.languages
+        else
+            return {}
         end
     end,
 
@@ -38,23 +40,31 @@ return {
     getEnsureInstalledLSPServers = function()
         local vars = require("vars").lsp
 
-        if vars.enforce_ensure_installed then return vars.ensure_installed
-        else return {}
+        if vars.enforce_ensure_installed then
+            return vars.ensure_installed
+        else
+            return {}
         end
     end,
 
-
     --- Detects the root project of the current buffer.
-    --- This is used in omnisharp and omnisharp_mono LSPs.
+    --- @param landmarks table A table containing a list of files that are
+    ---                         commonly found in the root directory.
     ---
     --- @return string root The root project of the current buffer.
-    detectRootProject = function()
+    detectRootProject = function(landmarks)
         local root
 
         root = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ';')
-        root = root or vim.fn.finddir(".sln", vim.fn.expand("%:p:h") .. ';')
-        root = root or vim.fn.finddir(".csproj", vim.fn.expand("%:p:h") .. ';')
+        if landmarks ~= nil then
+            for _, landmark in ipairs(landmarks) do
+                root = root or vim.fn.finddir(
+                    landmark,
+                    vim.fn.expand("%:p:h") .. ';'
+                )
+            end
+        end
 
         return root
-        end
+    end
 }
