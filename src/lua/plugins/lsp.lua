@@ -247,8 +247,9 @@ return {
     -- Set up LSP
     {
         "neovim/nvim-lspconfig",
-        cmd = { "LspInfo", "LspInstall", "LspStart" },
-        event = { "BufReadPre", "BufNewFile" },
+        lazy = false,
+        -- cmd = { "LspInfo", "LspInstall", "LspStart" },
+        -- event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
