@@ -80,35 +80,24 @@ return {
     },
     treesitter = {
         enforce_ensure_installed = true,
+        auto_install = true,
         -- [add|remove] languages you [don't] want to use.
         -- Reference: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
         languages = {
             "bash",
             "c",
-            "cpp",
-            "css",
             "c_sharp",
-            "cmake",
-            "dockerfile",
-            "html",
+            "comment",
+            "cpp",
+            "gitcommit",
             "java",
-            "javascript",
             "json",
-            "json5",
-            "jsonc",
-            "kotlin",
             "latex",
             "lua",
-            "make",
             "markdown",
             "markdown_inline",
             "python",
-            "rst",
-            "rust",
-            "toml",
-            "typescript",
-            "vim",
-            "yaml"
+            "regex",
         }
     },
     lualine = {
@@ -135,26 +124,13 @@ return {
         enforce_ensure_installed = true,
         auto_install = false,
         ensure_installed = {
-            "asm_lsp",
             "bashls",
             "clangd",
-            "cssls",
-            "csharp_ls",
             "diagnosticls",
-            "docker_compose_language_service",
-            "html",
             "jdtls",
-            "jsonls",
-            "kotlin_language_server",
-            "lemminx",
             "lua_ls",
-            -- "omnisharp",
-            -- "omnisharp-mono",
-            "pyright",
-            "rust_analyzer",
-            "sqlls",
-            "tsserver",
-            "yamlls"
+            "omnisharp",
+            "pyright"
         }
     },
     dap = {
