@@ -1,1 +1,1 @@
-return {version = {1, 8, 6}}
+return {version = {1, 8, 7}}

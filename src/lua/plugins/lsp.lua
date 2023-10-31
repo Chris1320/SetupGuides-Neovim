@@ -146,10 +146,10 @@ return {
                         }
                     ),
                     sources = {
-                        { name = "nvim_lsp"--[[ , option = { keyword_length = 2 }  ]]},
-                        { name = "luasnip",  option = { keyword_length = 3 } },
-                        { name = "buffer",   option = { keyword_length = 2 } },
-                        { name = "path",     option = { keyword_length = 3 } },
+                        { name = "nvim_lsp" },
+                        { name = "luasnip", option = { keyword_length = 3 } },
+                        { name = "buffer",  option = { keyword_length = 2 } },
+                        { name = "path",    option = { keyword_length = 3 } },
                         { name = "copilot" }
                     },
                     window = {
@@ -292,6 +292,40 @@ return {
                     -- the default handler
                     function(server_name)
                         lspconfig[server_name].setup(default_config)
+                    end,
+                    diagnosticls = function()
+                        local overrides = {
+                            filetypes = { "bash", "sh", "zsh" },
+                            init_options = {
+                                filetypes = {
+                                    bash = "shellcheck",
+                                    sh = "shellcheck",
+                                    zsh = "shellcheck"
+                                },
+                                linters = {
+                                    shellcheck = {
+                                        command = "shellcheck",
+                                        args = {
+                                            "--format", "gcc",
+                                            "--shell", "bash",
+                                            "-",
+                                        },
+                                        rootPatterns = {
+                                            ".git",
+                                            ".gitignore",
+                                            ".shellcheckrc"
+                                        },
+                                        onSaveOnly = false,
+                                    }
+                                }
+                            }
+                        }
+
+                        lspconfig.diagnosticls.setup(
+                            vim.tbl_deep_extend(
+                                "force", default_config, overrides
+                            )
+                        )
                     end,
                     lua_ls = function()
                         local runtime_path = vim.split(package.path, ';')
