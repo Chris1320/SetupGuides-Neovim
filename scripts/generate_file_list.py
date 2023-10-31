@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""
+Generate a text file containing a list of all files in `src/` directory.
+"""
+
 import os
 import sys
 from typing import Final
@@ -10,6 +14,9 @@ URL: Final[str] = "https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>
 
 
 def main() -> int:
+    """
+    The main function.
+    """
     files = []
     for dirpath, _, filenames in os.walk("src"):  # Scan all files in `src/`
         for filename in filenames:
@@ -17,7 +24,7 @@ def main() -> int:
             files.append('/'.join((URL, filepath)))
 
     files.sort()  # So that Git can diff easily.
-    with open(FILELIST_PATH, 'w') as f:
+    with open(FILELIST_PATH, 'w', encoding="utf-8") as f:
         f.write('\n'.join(files))
 
     print(f"Written {len(files)} lines in {FILELIST_PATH}.")
