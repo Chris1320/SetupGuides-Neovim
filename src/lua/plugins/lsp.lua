@@ -104,47 +104,44 @@ return {
                             luasnip.lsp_expand(args.body)
                         end
                     },
-                    mapping = cmp.mapping.preset.insert(
-                        {
-                            ["<C-Space>"] = cmp.mapping.complete(),
-                            ["<Tab>"] = cmp.mapping(
-                                function(fallback)
-                                    if cmp.visible() then
-                                        cmp.select_next_item()
-                                    elseif luasnip.expand_or_locally_jumpable() then
-                                        luasnip.expand_or_jump()
-                                    elseif misc.hasWordsBefore() then
-                                        cmp.complete()
-                                    else
-                                        fallback()
-                                    end
-                                end,
-                                { "i", "s" }
-                            ),
-                            ["<S-Tab>"] = cmp.mapping(
-                                function(fallback)
-                                    if cmp.visible() then
-                                        cmp.select_prev_item()
-                                    elseif luasnip.jumpable(-1) then
-                                        luasnip.jump(-1)
-                                    else
-                                        fallback()
-                                    end
-                                end,
-                                { "i", "s" }
-                            ),
-                            ["<CR>"] = cmp.mapping.confirm(
-                                {
-                                    behavior = cmp.ConfirmBehavior.Replace,
-                                    select = false
-                                }
-                            ),
-                            ["<C-c>"] = cmp.mapping.abort(),
-
-                            ["<C-k>"] = cmp.mapping.scroll_docs(-4),
-                            ["<C-j>"] = cmp.mapping.scroll_docs(4)
-                        }
-                    ),
+                    mapping = {
+                        ["<C-Space>"] = cmp.mapping.complete(),
+                        ["<Tab>"] = cmp.mapping(
+                            function(fallback)
+                                if cmp.visible() then
+                                    cmp.select_next_item()
+                                elseif luasnip.expand_or_locally_jumpable() then
+                                    luasnip.expand_or_jump()
+                                elseif misc.hasWordsBefore() then
+                                    cmp.complete()
+                                else
+                                    fallback()
+                                end
+                            end,
+                            { "i", "s" }
+                        ),
+                        ["<S-Tab>"] = cmp.mapping(
+                            function(fallback)
+                                if cmp.visible() then
+                                    cmp.select_prev_item()
+                                elseif luasnip.jumpable(-1) then
+                                    luasnip.jump(-1)
+                                else
+                                    fallback()
+                                end
+                            end,
+                            { "i", "s" }
+                        ),
+                        ["<CR>"] = cmp.mapping.confirm(
+                            {
+                                behavior = cmp.ConfirmBehavior.Replace,
+                                select = false
+                            }
+                        ),
+                        ["<C-c>"] = cmp.mapping.abort(),
+                        ["<C-k>"] = cmp.mapping.scroll_docs(-4),
+                        ["<C-j>"] = cmp.mapping.scroll_docs(4)
+                    },
                     sources = {
                         { name = "nvim_lsp" },
                         { name = "luasnip", option = { keyword_length = 3 } },
@@ -295,27 +292,150 @@ return {
                     end,
                     diagnosticls = function()
                         local overrides = {
-                            filetypes = { "bash", "sh", "zsh" },
+                            filetypes = { "bash", "lua", "luau", "python", "sh", "zsh" },
                             init_options = {
                                 filetypes = {
                                     bash = "shellcheck",
+                                    lua = "selene",
+                                    luau = "selene",
+                                    python = "pylint",
                                     sh = "shellcheck",
                                     zsh = "shellcheck"
                                 },
+                                formatFiletypes = {
+                                    bash = nil,
+                                    lua = "stylua",
+                                    luau = "stylua",
+                                    python = "black",
+                                    sh = nil,
+                                    zsh = nil
+                                },
                                 linters = {
+                                    pylint = {
+                                        sourceName = "pylint",
+                                        command = "pylint",
+                                        args = {
+                                            "--output-format", "text",
+                                            "--score", "no",
+                                            "--jobs", "0",
+                                            "--msg-template",
+                                            [['{line}:{column}:{category}:{msg} ({msg_id}:{symbol})']],
+                                            "--from-stdin",
+                                            "%filename"
+                                        },
+                                        rootPatterns = {
+                                            "pyproject.toml",
+                                            "setup.cfg",
+                                            "setup.py",
+                                            ".git",
+                                            ".gitignore"
+                                        },
+                                        onSaveOnly = false,
+                                        securities = {
+                                            informational = "hint",
+                                            refactor = "info",
+                                            convention = "info",
+                                            warning = "warning",
+                                            error = "error",
+                                            fatal = "error",
+                                        },
+                                        offsetColumn = 1,
+                                        formatLines = 1,
+                                        formatPattern = {
+                                            [[^(\d+?):(\d+?):([a-z]+?):(.*)$]],
+                                            {
+                                                line = 1,
+                                                column = 2,
+                                                security = 3,
+                                                message = { "[pylint] ", 4 }
+                                            }
+                                        }
+                                    },
+                                    selene = {
+                                        sourceName = "selene",
+                                        command = "selene",
+                                        args = {
+                                            "--display-style", "quiet",
+                                            "--no-summary",
+                                            '-'
+                                        },
+                                        rootPatterns = {
+                                            "selene.toml",
+                                            ".git",
+                                            ".gitignore"
+                                        },
+                                        onSaveOnly = false,
+                                        securities = {
+                                            error = "error",
+                                            warning = "warning"
+                                        },
+                                        formatPattern = {
+                                            [[^.*:(\d+):(\d+):\s(.*)\[.*\]:\s(.*)]],
+                                            {
+                                                line = 1,
+                                                column = 2,
+                                                security = 3,
+                                                message = { "[selene] ", 4 }
+                                            }
+                                        }
+                                    },
                                     shellcheck = {
+                                        sourceName = "shellcheck",
                                         command = "shellcheck",
                                         args = {
-                                            "--format", "gcc",
-                                            "--shell", "bash",
+                                            "--format", "json1",
                                             "-",
                                         },
                                         rootPatterns = {
+                                            ".shellcheckrc",
                                             ".git",
-                                            ".gitignore",
-                                            ".shellcheckrc"
+                                            ".gitignore"
                                         },
                                         onSaveOnly = false,
+                                        securities = {
+                                            error = "error",
+                                            warning = "warning",
+                                            info = "info",
+                                            style = "hint"
+                                        },
+                                        parseJson = {
+                                            errorsRoot = "comments",
+                                            sourceName = "file",
+                                            line = "line",
+                                            column = "column",
+                                            endLine = "endLine",
+                                            endColumn = "endColumn",
+                                            security = "level",
+                                            message = "[shellcheck] ${message} [SC${code}]",
+                                        }
+                                    }
+                                },
+                                formatters = {
+                                    black = {
+                                        command = "black",
+                                        args = { "--quiet", "-" },
+                                        rootPatterns = {
+                                            "pyproject.toml",
+                                            "setup.cfg",
+                                            "setup.py",
+                                            ".git",
+                                            ".gitignore"
+                                        },
+                                    },
+                                    stylua = {
+                                        command = "stylua",
+                                        args = {
+                                            "--color", "Never",
+                                            "--call-parentheses", "Always",
+                                            "--indent-type", "Spaces",
+                                            '-'
+                                        },
+                                        rootPatterns = {
+                                            ".stylua.toml",
+                                            "stylua.toml",
+                                            ".git",
+                                            ".gitignore"
+                                        },
                                     }
                                 }
                             }

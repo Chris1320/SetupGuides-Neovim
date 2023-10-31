@@ -99,7 +99,7 @@ else
     # Returns min_nvim_version_str if the user's Neovim version is supported.
     nvim_version_supported=$(echo -e "${min_nvim_version_str}\n${nvim_version}" | sort -V | head -n1)
 
-    if [[ ${nvim_version_supported} != ${min_nvim_version_str} ]]; then
+    if [[ ${nvim_version_supported} != "${min_nvim_version_str}" ]]; then
         echo "Neovim ${nvim_version} is not supported."
         echo "Please upgrade to at least ${min_nvim_version_str} or higher and try again."
         exit 6
