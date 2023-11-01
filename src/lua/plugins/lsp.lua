@@ -126,8 +126,8 @@ return {
                 sources = {
                     { name = "nvim_lsp" },
                     { name = "luasnip", option = { keyword_length = 3 } },
-                    { name = "buffer",  option = { keyword_length = 2 } },
-                    { name = "path",    option = { keyword_length = 3 } },
+                    { name = "buffer", option = { keyword_length = 2 } },
+                    { name = "path", option = { keyword_length = 3 } },
                     { name = "copilot" },
                 },
                 window = {
@@ -250,6 +250,18 @@ return {
                 -- the default handler
                 function(server_name)
                     lspconfig[server_name].setup(default_config)
+                end,
+                bashls = function()
+                    local overrides = {
+                        filetypes = { "sh", "bash" },
+                        single_file_support = true,
+                        settings = {
+                            bashIde = {
+                                highlightParsingErrors = true,
+                            },
+                        },
+                    }
+                    lspconfig.bashls.setup(vim.tbl_deep_extend("force", default_config, overrides))
                 end,
                 diagnosticls = function()
                     local overrides = {
@@ -451,6 +463,31 @@ return {
                     }
 
                     lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", default_config, overrides))
+                end,
+                pyright = function()
+                    local overrides = {
+                        single_file_support = true,
+                        settings = {
+                            python = {
+                                analysis = {
+                                    autoImportCompletions = true,
+                                    autoSearchPaths = true,
+                                    diagnosticMode = "workspace",
+                                    diagnosticSeverityOverrides = {
+                                        reportDeprecated = "warning",
+                                        reportImplicitOverride = "information",
+                                        reportIncompatibleMethodOverride = "warning",
+                                        reportShadowedImports = "information",
+                                        reportUninitializedInstanceVariable = "information",
+                                        reportUnnecessaryTypeIgnoreComment = "information",
+                                    },
+                                    typeCheckingMode = "strict",
+                                    useLibraryCodeForTypes = true,
+                                },
+                            },
+                        },
+                    }
+                    lspconfig.pyright.setup(vim.tbl_deep_extend("force", default_config, overrides))
                 end,
             })
         end,
