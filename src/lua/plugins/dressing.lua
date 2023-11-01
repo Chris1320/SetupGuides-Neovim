@@ -8,6 +8,6 @@ return {
         default_prompt = " >>> ",
         prompt_align = "center",
         insert_only = true,
-        start_in_insert = true
-    }
+        start_in_insert = true,
+    },
 }

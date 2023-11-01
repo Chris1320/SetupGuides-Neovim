@@ -24,9 +24,9 @@ return {
 
             -- Actual filetypes
             "markdown",
-            "text"
+            "text",
         },
         custom_colorcolumn = vars.appearance.colorcolumn.custom_colorcolumns,
-        scope = "window"
-    }
+        scope = "window",
+    },
 }

@@ -10,7 +10,7 @@ return {
         local notify = require("notify")
 
         -- Change the default notification handler.
-        vim.notify = function(msg, ...)
+        vim.notify = function(msg, ...) ---@diagnostic disable-line: duplicate-set-field
             for _, silenced_msg in ipairs(vars.notifications.blocked) do
                 if msg:match(silenced_msg) then
                     -- Do not show notification if part of its
@@ -19,21 +19,27 @@ return {
                 end
             end
 
-            notify(msg, ...)  -- Pass the parameters to nvim-notify.
+            notify(msg, ...) -- Pass the parameters to nvim-notify.
         end
     end,
     keys = {
         {
             "<leader>n",
             ":lua require('notify').dismiss()<cr>",
-            'n', noremap=true, silent=true, desc="Dismiss notification"
+            "n",
+            noremap = true,
+            silent = true,
+            desc = "Dismiss notification",
         },
 
         -- Telescope integration
         {
             "<leader>th",
             "<cmd>Telescope notify theme=dropdown<cr>",
-            'n', noremap=true, silent=true, desc="Show notification history"
-        }
-    }
+            "n",
+            noremap = true,
+            silent = true,
+            desc = "Show notification history",
+        },
+    },
 }

@@ -11,14 +11,12 @@ return {
         local misc = require("misc")
         local ts_config = require("nvim-treesitter.configs")
 
-        ts_config.setup(
-            {
-                ensure_installed = misc.getEnsureInstalledTSParsers(),
-                auto_install = require("vars").treesitter.auto_install,
-                autotag = { enable = true },
-                highlight = { enable = true },
-                indent = { enable = true }
-            }
-        )
-    end
+        ts_config.setup({
+            ensure_installed = misc.getEnsureInstalledTSParsers(),
+            auto_install = require("vars").treesitter.auto_install,
+            autotag = { enable = true },
+            highlight = { enable = true },
+            indent = { enable = true },
+        })
+    end,
 }
