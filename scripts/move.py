@@ -14,9 +14,10 @@ SOURCE_PATHS: Final[list] = [
     "~/.config/nvim",
     "~/.local/share/nvim",
     "~/.local/state/nvim",
-    "~/.cache/nvim"
+    "~/.cache/nvim",
 ]
 PATH_SUFFIX: Final[str] = ".bak"
+
 
 def get_original_path(path: str) -> pathlib.Path:
     """
@@ -25,12 +26,14 @@ def get_original_path(path: str) -> pathlib.Path:
 
     return pathlib.Path(path).expanduser()
 
+
 def get_backup_path(path: str) -> pathlib.Path:
     """
     Return the backup path of the directory.
     """
 
     return pathlib.Path(path + PATH_SUFFIX).expanduser()
+
 
 def main(return_to_original: bool = False, force: bool = False) -> int:
     """
@@ -41,8 +44,12 @@ def main(return_to_original: bool = False, force: bool = False) -> int:
     """
 
     for path in SOURCE_PATHS:
-        source = get_backup_path(path) if return_to_original else get_original_path(path)
-        destination = get_original_path(path) if return_to_original else get_backup_path(path)
+        source = (
+            get_backup_path(path) if return_to_original else get_original_path(path)
+        )
+        destination = (
+            get_original_path(path) if return_to_original else get_backup_path(path)
+        )
         try:
             if not source.exists():
                 print(f"[!] The directory `{source}` does not exist.")
@@ -50,9 +57,12 @@ def main(return_to_original: bool = False, force: bool = False) -> int:
 
             if destination.exists():
                 if not force:
-                    if input(
-                        f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > "
-                    ) != 'y':
+                    if (
+                        input(
+                            f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > "
+                        )
+                        != "y"
+                    ):
                         print(f"[+] Skipping `{source}`.")
                         continue
 

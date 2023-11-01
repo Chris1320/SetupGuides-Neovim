@@ -12,12 +12,12 @@ name="Neovim Config Installer"
 version=(0 13 0)
 title=$(printf "%s v%s.%s.%s" "${name}" "${version[@]}")
 
-target_branch="v2.0.0-dev"  # The branch to which the configs will be pulled from.
+target_branch="v2.0.0-dev" # The branch to which the configs will be pulled from.
 installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 filelist="files.txt"
 
-min_nvim_version=(0 9 1)  # Minimum Neovim version required.
+min_nvim_version=(0 9 1) # Minimum Neovim version required.
 
 echo
 echo "$title"
@@ -25,7 +25,7 @@ echo
 
 # ? Check requirements.
 echo "Checking requirements..."
-if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
+if ! [[ -x "$(command -v git)" ]]; then # Check if Git is installed.
     echo "Git       : not found"
     echo
     echo "\`git\` is not installed. Please install git and try again."
@@ -83,7 +83,7 @@ else
 fi
 
 echo
-if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
+if ! [[ -x "$(command -v nvim)" ]]; then # Check if Neovim is installed.
     echo "\`nvim\` is not installed. Please install nvim and try again."
     echo
     echo "- \`sudo apt update && sudo apt install neovim\`"
@@ -103,7 +103,8 @@ else
         echo "Neovim ${nvim_version} is not supported."
         echo "Please upgrade to at least ${min_nvim_version_str} or higher and try again."
         exit 6
-    else echo "User's Neovim version is supported. (Requires: >= ${min_nvim_version_str})"
+    else
+        echo "User's Neovim version is supported. (Requires: >= ${min_nvim_version_str})"
     fi
 fi
 
@@ -135,7 +136,7 @@ echo
 # Remove the configuration files.
 if [[ -e "${nvim_config_path}" ]]; then
     printf "Removing existing files in \`%s\`...\r" "${nvim_config_path}"
-    rm -r -- "${nvim_config_path}"  # Delete the existing Neovim configuration directory.
+    rm -r -- "${nvim_config_path}" # Delete the existing Neovim configuration directory.
     printf "Removing existing files in \`%s\`... Done!\n" "${nvim_config_path}"
 
 else
