@@ -34,9 +34,17 @@ return {
         colorcolumn = {
             default_columns = { 80 }, -- Which columns should be highlighted
             custom_colorcolumns = {
-                conf = { 120 },
+                -- NOTE: Line length references
+                -- bash, sh, zsh: N/A
+                -- lua, luau:     StyLua
+                -- python:        Black, Pylint
+                bash = { 120 },
                 java = { 120 },
+                lua = { 120 },
+                luau = { 120 },
+                python = { 88, 100 },
                 sh = { 120 },
+                zsh = { 120 },
             },
         },
         colorscheme = {

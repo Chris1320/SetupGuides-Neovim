@@ -23,6 +23,7 @@ return {
             "Trouble",
 
             -- Actual filetypes
+            "conf",
             "markdown",
             "text",
         },
