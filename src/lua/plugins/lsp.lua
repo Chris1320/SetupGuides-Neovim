@@ -303,12 +303,12 @@ return {
                                     zsh = "shellcheck"
                                 },
                                 formatFiletypes = {
-                                    bash = nil,
+                                    bash = "shfmt",
                                     lua = "stylua",
                                     luau = "stylua",
                                     python = "black",
-                                    sh = nil,
-                                    zsh = nil
+                                    sh = "shfmt",
+                                    zsh = "shfmt"
                                 },
                                 linters = {
                                     pylint = {
@@ -420,7 +420,18 @@ return {
                                             "setup.py",
                                             ".git",
                                             ".gitignore"
+                                        }
+                                    },
+                                    shfmt = {
+                                        command = "shfmt",
+                                        args = {
+                                            "--indent", '4',
+                                            '-'
                                         },
+                                        rootPatterns = {
+                                            ".git",
+                                            ".gitignore"
+                                        }
                                     },
                                     stylua = {
                                         command = "stylua",
@@ -435,7 +446,7 @@ return {
                                             "stylua.toml",
                                             ".git",
                                             ".gitignore"
-                                        },
+                                        }
                                     }
                                 }
                             }
