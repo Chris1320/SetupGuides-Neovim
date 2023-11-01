@@ -1,63 +1,63 @@
 --[[
 https://github.com/SetupGuides/Neovim
-]]--
+]]
 
 return {
     proprietary = {
         -- Set keys to true to enable the plugins.
-        copilot = true
+        copilot = true,
     },
-    lazy = {  -- configuration for lazy.nvim package manager
+    lazy = { -- configuration for lazy.nvim package manager
         path = {
             root = vim.fn.stdpath("data") .. "/lazy",
-            home = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+            home = vim.fn.stdpath("data") .. "/lazy/lazy.nvim",
         },
-        install = {  -- This table is passed directly to lazy.nvim
+        install = { -- This table is passed directly to lazy.nvim
             missing = true,
-            colorscheme = {"catppuccin-mocha"}
+            colorscheme = { "catppuccin-mocha" },
         },
-        checker = {  -- This table is passed directly to lazy.nvim
+        checker = { -- This table is passed directly to lazy.nvim
             enabled = true,
             concurrency = nil,
             notify = true,
-            frequency = 10800
+            frequency = 10800,
         },
-        change_detection = {  -- This table is passed directly to lazy.nvim
+        change_detection = { -- This table is passed directly to lazy.nvim
             enabled = true,
-            notify = true
-        }
+            notify = true,
+        },
     },
     appearance = {
-        show_eols = false,  -- Show EOL characters
-        show_spaces = false,  -- Show spaces
-        show_trails = true,  -- Show trailing spaces
+        show_eols = false, -- Show EOL characters
+        show_spaces = false, -- Show spaces
+        show_trails = true, -- Show trailing spaces
         colorcolumn = {
-            default_columns = {80},  -- Which columns should be highlighted
+            default_columns = { 80 }, -- Which columns should be highlighted
             custom_colorcolumns = {
-                conf = {120},
-                java = {120},
-                sh = {120}
-            }
+                conf = { 120 },
+                java = { 120 },
+                sh = { 120 },
+            },
         },
         colorscheme = {
             -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
             catppuccin_flavor = "mocha",
             catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
-            line_number_color = "grey"
+            line_number_color = "grey",
         },
         git_blame_format = "<author>, on <author_time:%Y-%m-%d> • <summary>",
         icons = {
-            eol = '¬',
-            space = '⋅',
-            trail = '·',
-            fold = {        -- Characters for fold indicators
-                fold = ' ',        -- Fold text
-                open = '',       -- Opened fold
-                close = '',      -- Closed fold
-                sep = ' ',         -- Fold separator
-                eob = ' '          -- Empty lines at the end of a buffer
-            }
-        }
+            eol = "¬",
+            space = "⋅",
+            trail = "·",
+            fold = { -- Characters for fold indicators
+                fold = " ", -- Fold text
+                open = "", -- Opened fold
+                close = "", -- Closed fold
+                sep = " ", -- Fold separator
+                eob = " ", -- Empty lines at the end of a buffer
+            },
+        },
     },
     behavior = {
         line_wrapping = false,
@@ -66,7 +66,7 @@ return {
         tab_size = 4,
     },
     keymapping = {
-        leaderkey = ','
+        leaderkey = ",",
     },
     notifications = {
         -- Silenced notifications for nvim-notify
@@ -76,7 +76,7 @@ return {
             -- For example, if you want to silence all notifications
             -- with the word "annoying" in them, you would add that
             -- word to this table.
-        }
+        },
     },
     treesitter = {
         enforce_ensure_installed = true,
@@ -98,7 +98,7 @@ return {
             "markdown_inline",
             "python",
             "regex",
-        }
+        },
     },
     lualine = {
         ignored_filetypes = {
@@ -111,14 +111,14 @@ return {
             "mason",
             "NvimTree",
             "TelescopePrompt",
-            "Trouble"
+            "Trouble",
         },
         filename_config = {
             "filename",
             file_status = true,
             newfile_status = true,
-            path = 0  -- Show only the filename.
-        }
+            path = 0, -- Show only the filename.
+        },
     },
     lsp = {
         enforce_ensure_installed = true,
@@ -130,14 +130,14 @@ return {
             "jdtls",
             "lua_ls",
             "omnisharp",
-            "pyright"
-        }
+            "pyright",
+        },
     },
     dap = {
         enforce_ensure_installed = true,
         auto_install = false,
         ensure_installed = {
-            "python"
-        }
-    }
+            "python",
+        },
+    },
 }
