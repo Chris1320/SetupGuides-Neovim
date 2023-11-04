@@ -53,4 +53,25 @@ return {
 
         return root
     end,
+
+    --- Check if a plugin is installed and enabled, and run the given function
+    --- if the former conditions are true.
+    ---
+    --- @param plugin_name string The name of the plugin.
+    --- @param fn function The function to run if the plugin is installed and enabled.
+    --- @param alt_fn? function The function to run if the plugin is not installed or enabled.
+    ---
+    --- @return any fn_return The return value of the function.
+    checkPluginThenRun = function(plugin_name, fn, alt_fn)
+        local plugin = require("lazy.core.config").plugins[plugin_name]
+        if plugin ~= nil then
+            if plugin.enable then
+                return fn()
+            end
+        end
+
+        if alt_fn ~= nil then
+            return alt_fn()
+        end
+    end,
 }

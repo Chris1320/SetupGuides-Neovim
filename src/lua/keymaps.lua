@@ -12,6 +12,7 @@ vim.keymap.set(
     { noremap = true, silent = true, desc = "Remove last search highlights" }
 )
 vim.keymap.set("n", "<leader>w", "<cmd>set wrap!<cr>", { noremap = true, silent = true, desc = "Toggle word wrap" })
+vim.keymap.set("n", "zZ", "zzzszH", { noremap = true, silent = true, desc = "Center cursor" })
 
 vim.keymap.set(
     "x",

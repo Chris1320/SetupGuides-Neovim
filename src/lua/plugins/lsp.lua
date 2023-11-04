@@ -1,34 +1,73 @@
 --- Set the keybindings for LSP-specific actions.
 --- This function is to be used on the LSPs'
 --- `on_attach` hooks.
-local function addLspKeybindings()
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show symbol information" })
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Show symbol definition" })
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Show symbol declaration" })
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Show symbol implementation" })
-    vim.keymap.set("n", "go", vim.lsp.buf.type_definition, { desc = "Show symbol type definition" })
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Show symbol references" })
-    vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, { desc = "Show symbol signature" })
-    vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { desc = "Rename symbol" })
-    vim.keymap.set("n", "<F3>", function()
-        vim.notify("Formatting file...")
-        vim.lsp.buf.format({ async = true })
-    end, { desc = "Format file" })
-    vim.keymap.set("x", "<F3>", function()
-        vim.notify("Formatting selection...")
-        vim.lsp.buf.format({ async = true })
-    end, { desc = "Format selection" })
-    vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, { desc = "Show code actions" })
+--- @param overrides? table The overrides to apply to the default keybindings.
+local function addLspKeybindings(overrides)
+    local default_keybindings = {
+        { "n", "K", vim.lsp.buf.hover, { desc = "Show symbol information" } },
+        { "n", "gd", vim.lsp.buf.definition, { desc = "Show symbol definition" } },
+        { "n", "gD", vim.lsp.buf.declaration, { desc = "Show symbol declaration" } },
+        { "n", "gi", vim.lsp.buf.implementation, { desc = "Show symbol implementation" } },
+        { "n", "go", vim.lsp.buf.type_definition, { desc = "Show symbol type definition" } },
+        { "n", "gr", vim.lsp.buf.references, { desc = "Show symbol references" } },
+        { "n", "gs", vim.lsp.buf.signature_help, { desc = "Show symbol signature" } },
+        { "n", "<F2>", vim.lsp.buf.rename, { desc = "Rename symbol" } },
+        { "n", "<F4>", vim.lsp.buf.code_action, { desc = "Show code actions" } },
+        { "n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" } },
+        { "n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" } },
+        { "n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" } },
+    }
 
-    if vim.lsp.buf.range_code_action then
-        vim.keymap.set("x", "<F4>", vim.lsp.buf.range_code_action, { desc = "Show code actions" })
-    else
-        vim.keymap.set("x", "<F4>", vim.lsp.buf.code_action, { desc = "Show code actions" })
+    --- @param notify_desc string Correct the notification description message.
+    local function formatFileOrSelection(notify_desc)
+        local misc = require("misc")
+
+        misc.checkPluginThenRun("conform.nvim", function()
+            vim.notify(string.format("Formatting %s...", notify_desc), vim.log.levels.INFO, { title = "conform.nvim" })
+            require("conform").format({ async = true, lsp_fallback = true })
+        end, function()
+            vim.notify(string.format("Formatting %s...", notify_desc), vim.log.levels.INFO, { title = "LSP" })
+            vim.lsp.buf.format({ async = true })
+        end)
     end
 
-    vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" })
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+    table.insert(default_keybindings, {
+        "n",
+        "<F3>",
+        function()
+            formatFileOrSelection("file")
+        end,
+        { desc = "Format file" },
+    })
+    table.insert(default_keybindings, {
+        "x",
+        "<F3>",
+        function()
+            formatFileOrSelection("selection")
+        end,
+        { desc = "Format selection" },
+    })
+
+    if vim.lsp.buf.range_code_action then
+        table.insert(
+            default_keybindings,
+            { "x", "<F4>", vim.lsp.buf.range_code_action, { desc = "Show code actions" } }
+        )
+    else
+        table.insert(default_keybindings, { "x", "<F4>", vim.lsp.buf.code_action, { desc = "Show code actions" } })
+    end
+
+    -- Add the default keybindings and then the overrides.
+    for _, keybindings in ipairs({ default_keybindings, overrides }) do
+        for _, keybinding in ipairs(keybindings) do
+            vim.keymap.set(
+                keybinding[1],
+                keybinding[2],
+                keybinding[3],
+                vim.tbl_extend("force", { silent = true }, keybinding[4])
+            )
+        end
+    end
 end
 
 return {
@@ -217,8 +256,6 @@ return {
     {
         "neovim/nvim-lspconfig",
         lazy = false,
-        -- cmd = { "LspInfo", "LspInstall", "LspStart" },
-        -- event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
@@ -230,15 +267,23 @@ return {
             local misc = require("misc")
             local lspconfig = require("lspconfig")
 
-            -- Append client capabilities to default configuration.
             local lsp_defaults = lspconfig.util.default_config
-            lsp_defaults.capabilities =
-                vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
-            -- Tell LSP servers the capability of foldingRange for nvim-ufo
-            lsp_defaults.capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
+            local nvim_ufo_capabilities = {
+                textDocument = {
+                    foldingRange = {
+                        dynamicRegistration = false,
+                        lineFoldingOnly = true,
+                    },
+                },
             }
+
+            lsp_defaults.capabilities = vim.tbl_deep_extend(
+                "force",
+                lsp_defaults.capabilities,
+                require("cmp_nvim_lsp").default_capabilities(), -- Add nvim-cmp capabilities.
+                nvim_ufo_capabilities -- Add nvim-ufo capabilities.
+            )
+
             local default_config = {
                 on_attach = addLspKeybindings,
                 capabilities = lsp_defaults.capabilities,
@@ -263,178 +308,32 @@ return {
                     }
                     lspconfig.bashls.setup(vim.tbl_deep_extend("force", default_config, overrides))
                 end,
-                diagnosticls = function()
+                clangd = function()
                     local overrides = {
-                        filetypes = { "bash", "lua", "luau", "python", "sh", "zsh" },
-                        init_options = {
-                            filetypes = {
-                                bash = "shellcheck",
-                                lua = "selene",
-                                luau = "selene",
-                                python = "pylint",
-                                sh = "shellcheck",
-                                zsh = "shellcheck",
-                            },
-                            formatFiletypes = {
-                                bash = "shfmt",
-                                lua = "stylua",
-                                luau = "stylua",
-                                python = "black",
-                                sh = "shfmt",
-                                zsh = "shfmt",
-                            },
-                            linters = {
-                                pylint = {
-                                    sourceName = "pylint",
-                                    command = "pylint",
-                                    args = {
-                                        "--output-format",
-                                        "text",
-                                        "--score",
-                                        "no",
-                                        "--jobs",
-                                        "0",
-                                        "--msg-template",
-                                        [['{line}:{column}:{category}:{msg} ({msg_id}:{symbol})']],
-                                        "--from-stdin",
-                                        "%filename",
-                                    },
-                                    rootPatterns = {
-                                        "pyproject.toml",
-                                        "setup.cfg",
-                                        "setup.py",
-                                        ".git",
-                                        ".gitignore",
-                                    },
-                                    onSaveOnly = false,
-                                    securities = {
-                                        informational = "hint",
-                                        refactor = "info",
-                                        convention = "info",
-                                        warning = "warning",
-                                        error = "error",
-                                        fatal = "error",
-                                    },
-                                    offsetColumn = 1,
-                                    formatLines = 1,
-                                    formatPattern = {
-                                        [[^(\d+?):(\d+?):([a-z]+?):(.*)$]],
-                                        {
-                                            line = 1,
-                                            column = 2,
-                                            security = 3,
-                                            message = { "[pylint] ", 4 },
-                                        },
-                                    },
-                                },
-                                selene = {
-                                    sourceName = "selene",
-                                    command = "selene",
-                                    args = {
-                                        "--display-style",
-                                        "quiet",
-                                        "--no-summary",
-                                        "-",
-                                    },
-                                    rootPatterns = {
-                                        "selene.toml",
-                                        ".git",
-                                        ".gitignore",
-                                    },
-                                    onSaveOnly = false,
-                                    securities = {
-                                        error = "error",
-                                        warning = "warning",
-                                    },
-                                    formatPattern = {
-                                        [[^.*:(\d+):(\d+):\s(.*)\[.*\]:\s(.*)]],
-                                        {
-                                            line = 1,
-                                            column = 2,
-                                            security = 3,
-                                            message = { "[selene] ", 4 },
-                                        },
-                                    },
-                                },
-                                shellcheck = {
-                                    sourceName = "shellcheck",
-                                    command = "shellcheck",
-                                    args = {
-                                        "--format",
-                                        "json1",
-                                        "-",
-                                    },
-                                    rootPatterns = {
-                                        ".shellcheckrc",
-                                        ".git",
-                                        ".gitignore",
-                                    },
-                                    onSaveOnly = false,
-                                    securities = {
-                                        error = "error",
-                                        warning = "warning",
-                                        info = "info",
-                                        style = "hint",
-                                    },
-                                    parseJson = {
-                                        errorsRoot = "comments",
-                                        sourceName = "file",
-                                        line = "line",
-                                        column = "column",
-                                        endLine = "endLine",
-                                        endColumn = "endColumn",
-                                        security = "level",
-                                        message = "[shellcheck] ${message} [SC${code}]",
-                                    },
-                                },
-                            },
-                            formatters = {
-                                black = {
-                                    command = "black",
-                                    args = { "--quiet", "-" },
-                                    rootPatterns = {
-                                        "pyproject.toml",
-                                        "setup.cfg",
-                                        "setup.py",
-                                        ".git",
-                                        ".gitignore",
-                                    },
-                                },
-                                shfmt = {
-                                    command = "shfmt",
-                                    args = {
-                                        "--indent",
-                                        "4",
-                                        "-",
-                                    },
-                                    rootPatterns = {
-                                        ".git",
-                                        ".gitignore",
-                                    },
-                                },
-                                stylua = {
-                                    command = "stylua",
-                                    args = {
-                                        "--color",
-                                        "Never",
-                                        "--call-parentheses",
-                                        "Always",
-                                        "--indent-type",
-                                        "Spaces",
-                                        "-",
-                                    },
-                                    rootPatterns = {
-                                        ".stylua.toml",
-                                        "stylua.toml",
-                                        ".git",
-                                        ".gitignore",
-                                    },
-                                },
-                            },
+                        capabilities = {
+                            -- Manually set the offsetEncoding capability to utf-16.
+                            -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
+                            offsetEncoding = { "utf-16" },
                         },
+                        cmd = {
+                            "clangd",
+                            "--clang-tidy",
+                            "--header-insertion=iwyu",
+                        },
+                        root_dir = function()
+                            misc.detectRootProject({
+                                "compile_commands.json",
+                                "compile_flags.txt",
+                                "configure.ac",
+                                ".git",
+                                ".clangd",
+                                ".clang-tidy",
+                                ".clang-format",
+                            })
+                        end,
                     }
 
-                    lspconfig.diagnosticls.setup(vim.tbl_deep_extend("force", default_config, overrides))
+                    lspconfig.clangd.setup(vim.tbl_deep_extend("force", default_config, overrides))
                 end,
                 lua_ls = function()
                     local runtime_path = vim.split(package.path, ";")

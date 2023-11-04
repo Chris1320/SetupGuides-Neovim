@@ -134,7 +134,6 @@ return {
         ensure_installed = {
             "bashls",
             "clangd",
-            "diagnosticls",
             "jdtls",
             "lua_ls",
             "omnisharp",
