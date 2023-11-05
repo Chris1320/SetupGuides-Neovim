@@ -1,7 +1,7 @@
 return {
     "mfussenegger/nvim-lint",
 
-    enable = true,
+    enabled = true,
     opts = {
         -- TODO: `TextChanged` fixes the linter diagnostics not being updated after
         --          <F3> (format) problem, but it probably is not the best solution.
