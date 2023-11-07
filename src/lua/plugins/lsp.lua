@@ -5,17 +5,64 @@
 local function addLspKeybindings(overrides)
     local default_keybindings = {
         { "n", "K", vim.lsp.buf.hover, { desc = "Show symbol information" } },
-        { "n", "gd", vim.lsp.buf.definition, { desc = "Show symbol definition" } },
         { "n", "gD", vim.lsp.buf.declaration, { desc = "Show symbol declaration" } },
-        { "n", "gi", vim.lsp.buf.implementation, { desc = "Show symbol implementation" } },
-        { "n", "go", vim.lsp.buf.type_definition, { desc = "Show symbol type definition" } },
-        { "n", "gr", vim.lsp.buf.references, { desc = "Show symbol references" } },
         { "n", "gs", vim.lsp.buf.signature_help, { desc = "Show symbol signature" } },
         { "n", "<F2>", vim.lsp.buf.rename, { desc = "Rename symbol" } },
         { "n", "<F4>", vim.lsp.buf.code_action, { desc = "Show code actions" } },
-        { "n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" } },
         { "n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" } },
         { "n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" } },
+        {
+            "n",
+            "gd",
+            function()
+                require("misc").checkPluginThenRun("telescope.nvim", function()
+                    require("telescope.builtin").lsp_definitions(
+                        require("telescope.themes").get_cursor({ previewer = false })
+                    )
+                end, vim.lsp.buf.definition)
+            end,
+            { desc = "Show symbol definition" },
+        },
+        {
+            "n",
+            "gi",
+            function()
+                require("misc").checkPluginThenRun("telescope.nvim", function()
+                    require("telescope.builtin").lsp_implementations()
+                end, vim.lsp.buf.implementation)
+            end,
+            { desc = "Show symbol implementation" },
+        },
+        {
+            "n",
+            "go",
+            function()
+                require("misc").checkPluginThenRun("telescope.nvim", function()
+                    require("telescope.builtin").lsp_type_definitions()
+                end, vim.lsp.buf.type_definition)
+            end,
+            { desc = "Show symbol type definition" },
+        },
+        {
+            "n",
+            "gr",
+            function()
+                require("misc").checkPluginThenRun("telescope.nvim", function()
+                    require("telescope.builtin").lsp_references(require("telescope.themes").get_ivy())
+                end, vim.lsp.buf.references)
+            end,
+            { desc = "Show symbol references" },
+        },
+        {
+            "n",
+            "gl",
+            function()
+                require("misc").checkPluginThenRun("telescope.nvim", function()
+                    require("telescope.builtin").diagnostics(require("telescope.themes").get_dropdown())
+                end, vim.diagnostic.open_float)
+            end,
+            { desc = "Show diagnostics" },
+        },
     }
 
     --- @param notify_desc string Correct the notification description message.
