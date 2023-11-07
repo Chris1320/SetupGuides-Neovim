@@ -5,7 +5,7 @@ return {
     cmd = { "Copilot" },
     event = { "InsertEnter" },
     build = function()
-        vim.notify("Please run `:Copilot setup` to complete the setup process.", vim.log.levels.INFO)
+        vim.notify("Please run `:Copilot auth` to complete the setup process.", vim.log.levels.INFO)
     end,
     config = function()
         require("copilot").setup({

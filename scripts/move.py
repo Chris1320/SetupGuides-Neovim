@@ -10,7 +10,7 @@ import pathlib
 from typing import Final
 
 # This list includes all directories that are used by Neovim.
-SOURCE_PATHS: Final[list] = [
+SOURCE_PATHS: Final[list[str]] = [
     "~/.config/nvim",
     "~/.local/share/nvim",
     "~/.local/state/nvim",
@@ -59,7 +59,7 @@ def main(return_to_original: bool = False, force: bool = False) -> int:
                 if not force:
                     if (
                         input(
-                                f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > "  # pylint: disable=line-too-long
+                            f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > "  # pylint: disable=line-too-long
                         )
                         != "y"
                     ):

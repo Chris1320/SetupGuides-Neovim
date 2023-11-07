@@ -17,7 +17,7 @@ def main() -> int:
     """
     The main function.
     """
-    files = []
+    files: list[str] = []
     for dirpath, _, filenames in os.walk("src"):  # Scan all files in `src/`
         for filename in filenames:
             filepath = "/".join((dirpath, filename))

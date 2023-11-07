@@ -65,7 +65,7 @@ return {
     checkPluginThenRun = function(plugin_name, fn, alt_fn)
         local plugin = require("lazy.core.config").plugins[plugin_name]
         if plugin ~= nil then
-            if plugin.enable then
+            if plugin.enabled then
                 return fn()
             end
         end

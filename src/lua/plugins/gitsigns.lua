@@ -14,17 +14,20 @@ return {
         current_line_blame_formatter = require("vars").appearance.git_blame_format,
     },
     keys = {
-        -- Gitsigns shortcuts
-        -- Logic:
-        -- * = lowercase characters
-        -- ^ = uppercase characters
-        --
-        -- [g] Gitsigns
-        --     [gP]  Buffer diff preview
-        --     [gp*] Hunk preview operations
-        --     [gh*] Hunk operations
-        --     [gh^] Buffer operations
-        --     [gt*] toggles/switches
+        --[[ 
+        Gitsigns shortcuts
+
+        Logic:
+        * = lowercase characters
+        ^ = uppercase characters
+
+        [g] Gitsigns
+            [gP]  Buffer diff preview
+            [gp*] Hunk preview operations
+            [gh*] Hunk operations
+            [gh^] Buffer operations
+            [gt*] toggles/switches
+        ]]
 
         {
             "<leader>gP",

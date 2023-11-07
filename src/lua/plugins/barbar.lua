@@ -133,13 +133,13 @@ return {
         },
 
         -- More barbar shortcuts
-        { "<leader>bp",  "<cmd>BufferPin<cr>",                 "n", desc = "Pin the current buffer" },
-        { "<leader>bb",  "<cmd>BufferPick<cr>",                "n", desc = "Enter buffer picking mode" },
-        { "<leader>bc",  "<cmd>BufferClose<cr>",               "n", desc = "Close the current buffer" },
-        { "<leader>bC",  "<cmd>BufferCloseAllButPinned<cr>",   "n", desc = "Close all unpinned buffers" },
+        { "<leader>bp", "<cmd>BufferPin<cr>", "n", desc = "Pin the current buffer" },
+        { "<leader>bb", "<cmd>BufferPick<cr>", "n", desc = "Enter buffer picking mode" },
+        { "<leader>bc", "<cmd>BufferClose<cr>", "n", desc = "Close the current buffer" },
+        { "<leader>bC", "<cmd>BufferCloseAllButPinned<cr>", "n", desc = "Close all unpinned buffers" },
         { "<leader>bon", "<cmd>BufferOrderByBufferNumber<cr>", "n", desc = "Order buffers by buffer number" },
-        { "<leader>bod", "<cmd>BufferOrderByDirectory<cr>",    "n", desc = "Order buffers by directory" },
-        { "<leader>bol", "<cmd>BufferOrderByLanguage<cr>",     "n", desc = "Order buffers by language" },
+        { "<leader>bod", "<cmd>BufferOrderByDirectory<cr>", "n", desc = "Order buffers by directory" },
+        { "<leader>bol", "<cmd>BufferOrderByLanguage<cr>", "n", desc = "Order buffers by language" },
         { "<leader>bow", "<cmd>BufferOrderByWindowNumber<cr>", "n", desc = "Order buffers by window number" },
     },
 }
