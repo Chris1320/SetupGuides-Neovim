@@ -7,16 +7,16 @@ return {
     end,
     cmd = { "TSInstall", "TSUpdate", "TSInstallInfo", "TSUninstall" },
     event = { "BufReadPost", "BufNewFile" },
-    config = function()
-        local misc = require("misc")
+    opts = {
+        ensure_installed = require("vars").ide.treesitter,
+        auto_install = true,
+        autotag = { enable = true },
+        highlight = { enable = true },
+        indent = { enable = true },
+    },
+    config = function(_, opts)
         local ts_config = require("nvim-treesitter.configs")
 
-        ts_config.setup({
-            ensure_installed = misc.getEnsureInstalledTSParsers(),
-            auto_install = require("vars").treesitter.auto_install,
-            autotag = { enable = true },
-            highlight = { enable = true },
-            indent = { enable = true },
-        })
+        ts_config.setup(opts)
     end,
 }

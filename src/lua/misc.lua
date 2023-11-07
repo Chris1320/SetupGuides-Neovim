@@ -1,47 +1,23 @@
 return {
-    hasWordsBefore = function()
-        -- This function is taken from
-        -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-    end,
-
     --- Show the current config version.
     showConfigVersion = function()
         vim.notify("Config Version: v" .. table.concat(require("info").version, "."))
     end,
 
-    --- Get the list of treesitter grammars to automatically install.
-    --- @return table x A list of languages to install.
-    getEnsureInstalledTSParsers = function()
-        local vars = require("vars").treesitter
-
-        if vars.enforce_ensure_installed then
-            return vars.languages
-        else
-            return {}
-        end
+    --- This function is taken from
+    --- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
+    --- @return boolean has_words_before Whether or not the current buffer has words before the cursor.
+    hasWordsBefore = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
     end,
 
-    --- Get the list of LSP Servers to automatically install.
-    --- @return table x A list of languages to install.
-    getEnsureInstalledLSPServers = function()
-        local vars = require("vars").lsp
-
-        if vars.enforce_ensure_installed then
-            return vars.ensure_installed
-        else
-            return {}
-        end
-    end,
-
-    --- Detects the root project of the current buffer.
-    --- @param landmarks table A table containing a list of files that are
-    ---                         commonly found in the root directory.
+    --- Detects the project root of the current buffer.
+    --- @param landmarks table A table containing a list of files that are commonly found in the root directory.
     ---
     --- @return string root The root project of the current buffer.
-    detectRootProject = function(landmarks)
+    detectProjectRoot = function(landmarks)
         local root
 
         root = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ";")

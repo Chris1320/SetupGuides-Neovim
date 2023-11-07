@@ -7,10 +7,11 @@ return {
     build = function()
         vim.notify("Please run `:Copilot auth` to complete the setup process.", vim.log.levels.INFO)
     end,
-    config = function()
-        require("copilot").setup({
-            suggestion = { enabled = false },
-            panel = { enabled = false },
-        })
+    opts = {
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+    },
+    config = function(_, opts)
+        require("copilot").setup(opts)
     end,
 }

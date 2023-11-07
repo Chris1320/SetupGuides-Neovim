@@ -1,33 +1,24 @@
---[[
-https://github.com/SetupGuides/Neovim
-
-This is the entry point for the init script.
-]]
-
-local vars = require("vars")
+local lazy_vars = require("vars").lazy
 
 -- Bootsrap lazy.nvim plugin manager
-if not vim.loop.fs_stat(vars.lazy.path.home) then
+if not vim.loop.fs_stat(lazy_vars.paths.home) then
     vim.fn.system({
         "git",
         "clone",
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
         "--branch=stable",
-        vars.lazy.path.home,
+        lazy_vars.paths.home,
     })
 end
 
-vim.opt.rtp:prepend(vars.lazy.path.home)
+vim.opt.rtp:prepend(lazy_vars.paths.home)
 
-require("options") -- Setup options.
-require("keymaps") -- Setup keymaps.
-require("lazy").setup( -- Setup lazy.
-    "plugins",
-    {
-        root = vars.lazy.path.root,
-        install = vars.lazy.install,
-        checker = vars.lazy.checker,
-        change_detection = vars.lazy.change_detection,
-    }
-)
+require("options")
+require("keymaps")
+
+-- Set up lazy.nvim
+local lazy_opts = { root = lazy_vars.paths.root }
+lazy_opts = vim.tbl_deep_extend("force", lazy_opts, lazy_vars.config)
+
+require("lazy").setup("plugins", lazy_opts)

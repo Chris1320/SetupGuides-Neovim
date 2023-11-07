@@ -23,10 +23,10 @@ local function addLspKeybindings(overrides)
         local misc = require("misc")
 
         misc.checkPluginThenRun("conform.nvim", function()
-            vim.notify(string.format("Formatting %s...", notify_desc), vim.log.levels.INFO, { title = "conform.nvim" })
+            print(string.format("[conform.nvim] Formatting %s...", notify_desc))
             require("conform").format({ async = true, lsp_fallback = true })
         end, function()
-            vim.notify(string.format("Formatting %s...", notify_desc), vim.log.levels.INFO, { title = "LSP" })
+            print(string.format("[LSP] Formatting %s...", notify_desc))
             vim.lsp.buf.format({ async = true })
         end)
     end
@@ -89,6 +89,30 @@ return {
                 },
             },
         },
+    },
+
+    -- Set up mason-tool-installer.nvim
+    {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+
+        enabled = true,
+        opts = {
+            auto_update = false,
+            run_on_start = true,
+            start_delay = 3000,
+        },
+        config = function(_, opts)
+            local ide_vars = require("vars").ide
+            local tools = {}
+            vim.list_extend(tools, ide_vars.lsp)
+            vim.list_extend(tools, ide_vars.dap)
+            vim.list_extend(tools, ide_vars.linters)
+            vim.list_extend(tools, ide_vars.formatters)
+
+            opts.ensure_installed = tools
+
+            require("mason-tool-installer").setup(opts)
+        end,
     },
 
     -- Set up nvim-cmp
@@ -290,7 +314,7 @@ return {
             }
 
             local mlsp = require("mason-lspconfig")
-            mlsp.setup({ ensure_installed = misc.getEnsureInstalledLSPServers() })
+            mlsp.setup({ ensure_installed = require("vars").ide.lsp })
             mlsp.setup_handlers({
                 -- the default handler
                 function(server_name)
@@ -312,7 +336,8 @@ return {
                     local overrides = {
                         capabilities = {
                             -- Manually set the offsetEncoding capability to utf-16.
-                            -- Context: https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
+                            -- Context:
+                            -- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
                             offsetEncoding = { "utf-16" },
                         },
                         cmd = {
@@ -321,7 +346,7 @@ return {
                             "--header-insertion=iwyu",
                         },
                         root_dir = function()
-                            misc.detectRootProject({
+                            misc.detectProjectRoot({
                                 "compile_commands.json",
                                 "compile_flags.txt",
                                 "configure.ac",
@@ -386,6 +411,7 @@ return {
                             },
                         },
                     }
+
                     lspconfig.pyright.setup(vim.tbl_deep_extend("force", default_config, overrides))
                 end,
             })

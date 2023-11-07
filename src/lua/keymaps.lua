@@ -2,7 +2,6 @@ local vars = require("vars")
 local misc = require("misc")
 
 vim.g.mapleader = vars.keymapping.leaderkey
-local vars_path = vim.fn.stdpath("config") .. "/lua/vars.lua"
 
 -- Set Neovim shortcuts
 vim.keymap.set(
@@ -22,12 +21,6 @@ vim.keymap.set(
 )
 
 -- Other stuff
-vim.keymap.set(
-    "n",
-    "<leader>ic",
-    "<cmd>e " .. vars_path .. "<cr>",
-    { noremap = true, silent = true, desc = "Edit vars.lua" }
-)
 vim.keymap.set(
     "n",
     "<leader>iv",
