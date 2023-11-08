@@ -49,6 +49,7 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
     - [dressing.nvim](https://github.com/stevearc/dressing.nvim): A UI customization plugin.
     - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git Integration for buffers.
     - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
+    - [lspkind.nvim](https://github.com/onsails/lspkind.nvim/): VSCode-like pictograms for Neovim LSP completion items.
     - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
     - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim): A Neovim statusline plugin.
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.

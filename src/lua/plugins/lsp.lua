@@ -169,6 +169,8 @@ return {
         enabled = true,
         event = { "InsertEnter", "CmdlineEnter" },
         dependencies = {
+            { "onsails/lspkind.nvim" },
+
             -- Sources
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-cmdline" },
@@ -193,6 +195,7 @@ return {
             local cmp = require("cmp")
             local misc = require("misc")
             local luasnip = require("luasnip")
+            local lspkind = require("lspkind")
 
             -- Load LuaSnip snippets.
             require("luasnip.loaders.from_vscode").lazy_load()
@@ -202,6 +205,13 @@ return {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
                     end,
+                },
+                formatting = {
+                    format = lspkind.cmp_format({
+                        mode = "symbol_text",
+                        maxwidth = 50,
+                        ellipsis_char = "...",
+                    }),
                 },
                 mapping = {
                     ["<C-Space>"] = cmp.mapping.complete(),
