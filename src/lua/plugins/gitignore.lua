@@ -8,7 +8,7 @@ return {
         {
             "<leader>gi",
             function()
-                require("gitignore").generate()
+                require("gitignore").generate({ nargs = "?", complete = "file" })
             end,
             "n",
             noremap = true,

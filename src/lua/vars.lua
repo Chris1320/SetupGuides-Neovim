@@ -52,11 +52,13 @@ return {
                 -- NOTE: Line length references
                 -- bash, sh, zsh: N/A
                 -- c, cpp:        Google C++ Style Guide
+                -- cs:            csharpier
                 -- lua, luau:     StyLua
                 -- python:        Black, Pylint
                 bash = { 120 },
                 c = { 80 },
                 cpp = { 80 },
+                cs = { 100 },
                 java = { 120 },
                 lua = { 120 },
                 luau = { 120 },
@@ -120,6 +122,8 @@ return {
         formatters = {
             "black",
             "clang-format",
+            "csharpier",
+            "isort",
             "shfmt",
             "stylua",
         },

@@ -343,6 +343,9 @@ return {
             "hrsh7th/cmp-nvim-lua",
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
+
+            -- Additional Features for C# Development
+            "Hoffs/omnisharp-extended-lsp.nvim",
         },
         config = function()
             local misc = require("misc")
@@ -444,6 +447,26 @@ return {
                     }
 
                     lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", default_config, overrides))
+                end,
+                omnisharp = function()
+                    local pid = vim.fn.getpid()
+                    local omnisharp_bin
+                    if misc.isWindows() then
+                        omnisharp_bin = "OmniSharp.exe"
+                    else
+                        omnisharp_bin = "omnisharp"
+                    end
+
+                    local overrides = {
+                        cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+                        handlers = {
+                            ["textDocument/definition"] = require("omnisharp_extended").handler,
+                        },
+                        -- enable_roslyn_analyzers = true,
+                        organize_imports_on_format = true,
+                    }
+
+                    lspconfig.omnisharp.setup(vim.tbl_deep_extend("force", default_config, overrides))
                 end,
                 pyright = function()
                     local overrides = {

@@ -11,9 +11,10 @@ return {
             bash = { "shfmt" },
             c = { "clang_format" },
             cpp = { "clang_format" },
+            cs = { "csharpier" },
             lua = { "stylua" },
             luau = { "stylua" },
-            python = { "black" },
+            python = { "black", "isort" },
             sh = { "shfmt" },
             zsh = { "shfmt" },
         },
@@ -30,6 +31,7 @@ return {
                 end,
             },
             clang_format = { prepend_args = { "--fallback-style=Google" } },
+            isort = { prepend_args = { "--profile", "black" } },
             shfmt = { prepend_args = { "--indent", "4" } },
             stylua = {
                 prepend_args = {
