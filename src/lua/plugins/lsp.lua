@@ -450,7 +450,6 @@ return {
                     vim.api.nvim_create_autocmd("FileType", {
                         pattern = "java",
                         callback = function()
-                            vim.notify("JDTLS callback started", vim.log.levels.INFO, { title = "JDTLS" })
                             require("jdtls").start_or_attach(vim.tbl_deep_extend("force", default_config, config))
                         end,
                     })
