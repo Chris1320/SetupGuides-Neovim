@@ -344,8 +344,11 @@ return {
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
 
-            -- Additional Features for C# Development
+            -- Additional features for C# development
             "Hoffs/omnisharp-extended-lsp.nvim",
+
+            -- Additional features for Java development
+            "mfussenegger/nvim-jdtls",
         },
         config = function()
             local misc = require("misc")
@@ -406,7 +409,7 @@ return {
                             "--header-insertion=iwyu",
                         },
                         root_dir = function()
-                            misc.detectProjectRoot({
+                            return misc.detectProjectRoot({
                                 "compile_commands.json",
                                 "compile_flags.txt",
                                 "configure.ac",
@@ -419,6 +422,38 @@ return {
                     }
 
                     lspconfig.clangd.setup(vim.tbl_deep_extend("force", default_config, overrides))
+                end,
+                jdtls = function()
+                    local landmarks = { "pom.xml", "build.xml", "mvnw", "gradlew", ".git" }
+                    local config = {
+                        cmd = {
+                            "jdtls",
+                            "-configuration",
+                            vim.fn.getenv("HOME") .. "/.cache/jdtls/config",
+                            "-data",
+                            vim.fn.getenv("HOME")
+                                .. "/.cache/jdtls/workspaces/"
+                                .. vim.fn.fnamemodify(misc.detectProjectRoot(landmarks) or vim.fn.getcwd(), ":p:h:t"),
+                        },
+                        root_dir = vim.fs.dirname(vim.fs.find(landmarks, { upward = true })[1]),
+                        capabilities = {
+                            workspace = { configuration = true },
+                            textDocument = { completion = { completionItem = { snippetSupport = true } } },
+                        },
+
+                        -- TODO: Configure the Java Debug Adapter.
+                        -- settings = { java = {} },
+                        -- init_options = { bundles = {"java-debug"} },
+                    }
+
+                    -- jdtls.start_or_attach() needs to be called for every Java buffer.
+                    vim.api.nvim_create_autocmd("FileType", {
+                        pattern = "java",
+                        callback = function()
+                            vim.notify("JDTLS callback started", vim.log.levels.INFO, { title = "JDTLS" })
+                            require("jdtls").start_or_attach(vim.tbl_deep_extend("force", default_config, config))
+                        end,
+                    })
                 end,
                 lua_ls = function()
                     local runtime_path = vim.split(package.path, ";")
