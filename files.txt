@@ -5,7 +5,9 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/misc.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/options.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/barbar.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/catppuccin.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/ccc.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/comment.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/conform.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/copilot.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/dressing.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/gitignore.lua
@@ -15,7 +17,9 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/ls
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lsp_lines.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lualine.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-autopairs.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-lint.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-notify.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-surround.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-tree.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-ufo.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/smartcolumn.lua
