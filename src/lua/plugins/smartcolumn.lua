@@ -9,6 +9,7 @@ return {
             colorcolumn = column_config.default_columns,
             disabled_filetypes = {
                 -- Neovim and plugin filetypes
+                "checkhealth",
                 "dap-repl",
                 "dapui_breakpoints",
                 "dapui_console",
