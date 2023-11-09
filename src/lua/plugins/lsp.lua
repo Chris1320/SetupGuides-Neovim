@@ -441,8 +441,25 @@ return {
                             textDocument = { completion = { completionItem = { snippetSupport = true } } },
                         },
 
+                        settings = {
+                            java = {
+                                completion = { enabled = true },
+                                eclipse = { downloadSources = true },
+                                format = {
+                                    enabled = true,
+                                    comments = { enabled = false },
+                                    --[[ settings = {
+                                        url = "...",
+                                        profile = "...",
+                                    }, ]]
+                                },
+                                implementationsCodeLens = { enabled = true },
+                                rename = { enabled = true },
+                                signatureHelp = { enabled = true, description = { enabled = true } },
+                            },
+                        },
+
                         -- TODO: Configure the Java Debug Adapter.
-                        -- settings = { java = {} },
                         -- init_options = { bundles = {"java-debug"} },
                     }
 
