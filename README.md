@@ -17,6 +17,7 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
         - [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip): nvim-cmp source for LuaSnip.
             - [LuaSnip](https://github.com/L3MON4D3/LuaSnip): Snippet engine for Neovim written in Lua.
             - [friendly-snippets](https://github.com/rafamadriz/friendly-snippets): Snippet collection for different programming languages.
+    - [nvim-surround](https://github.com/kylechui/nvim-surround): Add/change/delete surrounding delimiter pairs with ease.
 - Debugging
     - [mason-nvim-dap.nvim](https://github.com/jay-babu/mason-nvim-dap.nvim): mason.nvim and nvim-dap integration.
     - [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol client implementation for Neovim.
@@ -46,6 +47,7 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
 - Theming and Visual Plugins
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
+    - [ccc.nvim](https://github.com/uga-rosa/ccc.nvim): Color picker and highlighter plugin for Neovim.
     - [dressing.nvim](https://github.com/stevearc/dressing.nvim): A UI customization plugin.
     - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git Integration for buffers.
     - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
