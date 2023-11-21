@@ -2,28 +2,21 @@ return {
     "nvim-treesitter/nvim-treesitter",
 
     enabled = true,
+    build = function()
+        require("nvim-treesitter.install").update({ with_sync = true })
+    end,
+    cmd = { "TSInstall", "TSUpdate", "TSInstallInfo", "TSUninstall" },
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+        ensure_installed = require("vars").ide.treesitter,
+        auto_install = true,
+        autotag = { enable = true },
+        highlight = { enable = true },
+        indent = { enable = true },
+    },
+    config = function(_, opts)
+        local ts_config = require("nvim-treesitter.configs")
 
-    build = ":TSUpdate",
-    event = {"BufReadPost", "BufNewFile"},
-    config = function()
-        local ts_vars = require("vars").treesitter
-        local treesitter = require("nvim-treesitter.configs")
-
-        local function getEnsureInstalled()
-            if ts_vars.enforce_ensure_installed then
-                return ts_vars.languages
-            else
-                return {}
-            end
-        end
-
-        treesitter.setup(
-            {
-                ensure_installed = getEnsureInstalled(),
-                autotag = {enable = true},
-                highlight = {enable = true},
-                indent = {enable = true}
-            }
-        )
-    end
+        ts_config.setup(opts)
+    end,
 }

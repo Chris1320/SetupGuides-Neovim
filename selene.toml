@@ -1,0 +1,5 @@
+[selene]
+base = "LuaJIT"
+
+[vim]
+any = true

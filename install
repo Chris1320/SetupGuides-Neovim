@@ -9,15 +9,15 @@
 # ? Set variables.
 name="Neovim Config Installer"
 # Installer version; different from config version and Neovim version.
-version=(0 12 2)
+version=(0 13 0)
 title=$(printf "%s v%s.%s.%s" "${name}" "${version[@]}")
 
-target_branch="main"  # The branch to which the configs will be pulled from.
+target_branch="v2.0.0-dev" # The branch to which the configs will be pulled from.
 installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 filelist="files.txt"
 
-min_nvim_version=(0 9 1)  # Minimum Neovim version required.
+min_nvim_version=(0 9 1) # Minimum Neovim version required.
 
 echo
 echo "$title"
@@ -25,7 +25,7 @@ echo
 
 # ? Check requirements.
 echo "Checking requirements..."
-if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
+if ! [[ -x "$(command -v git)" ]]; then # Check if Git is installed.
     echo "Git       : not found"
     echo
     echo "\`git\` is not installed. Please install git and try again."
@@ -35,7 +35,7 @@ if ! [[ -x "$(command -v git)" ]]; then  # Check if Git is installed.
     exit 1
 
 else
-    echo "Git       : installed"
+    echo "Git       : $(command -v git)"
 fi
 
 if ! [[ -x "$(command -v gcc)" ]]; then
@@ -49,11 +49,11 @@ if ! [[ -x "$(command -v gcc)" ]]; then
         exit 2
 
     else
-        echo "C compiler: clang"
+        echo "C compiler: $(command -v clang)"
     fi
 
 else
-    echo "C compiler: gcc"
+    echo "C compiler: $(command -v gcc)"
 fi
 
 if ! [[ -x "$(command -v make)" ]]; then
@@ -66,7 +66,7 @@ if ! [[ -x "$(command -v make)" ]]; then
     exit 11
 
 else
-    echo "make      : installed"
+    echo "make      : $(command -v make)"
 fi
 
 if ! [[ -x "$(command -v npm)" ]]; then
@@ -79,11 +79,11 @@ if ! [[ -x "$(command -v npm)" ]]; then
     exit 4
 
 else
-    echo "npm       : installed"
+    echo "npm       : $(command -v npm)"
 fi
 
 echo
-if ! [[ -x "$(command -v nvim)" ]]; then  # Check if Neovim is installed.
+if ! [[ -x "$(command -v nvim)" ]]; then # Check if Neovim is installed.
     echo "\`nvim\` is not installed. Please install nvim and try again."
     echo
     echo "- \`sudo apt update && sudo apt install neovim\`"
@@ -99,11 +99,12 @@ else
     # Returns min_nvim_version_str if the user's Neovim version is supported.
     nvim_version_supported=$(echo -e "${min_nvim_version_str}\n${nvim_version}" | sort -V | head -n1)
 
-    if [[ ${nvim_version_supported} != ${min_nvim_version_str} ]]; then
+    if [[ ${nvim_version_supported} != "${min_nvim_version_str}" ]]; then
         echo "Neovim ${nvim_version} is not supported."
         echo "Please upgrade to at least ${min_nvim_version_str} or higher and try again."
         exit 6
-    else echo "User's Neovim version is supported. (Requires: >= ${min_nvim_version_str})"
+    else
+        echo "User's Neovim version is supported. (Requires: >= ${min_nvim_version_str})"
     fi
 fi
 
@@ -130,13 +131,12 @@ while true; do
     fi
 done
 
-# ? Install the customization files.
 echo
 
 # Remove the configuration files.
 if [[ -e "${nvim_config_path}" ]]; then
     printf "Removing existing files in \`%s\`...\r" "${nvim_config_path}"
-    rm -r -- "${nvim_config_path}"  # Delete the existing Neovim configuration directory.
+    rm -r -- "${nvim_config_path}" # Delete the existing Neovim configuration directory.
     printf "Removing existing files in \`%s\`... Done!\n" "${nvim_config_path}"
 
 else

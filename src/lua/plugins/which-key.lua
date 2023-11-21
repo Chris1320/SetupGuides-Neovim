@@ -6,5 +6,5 @@ return {
     lazy = true,
     priority = 80,
     event = "VeryLazy",
-    opts = {}
+    opts = {},
 }

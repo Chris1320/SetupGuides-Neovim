@@ -1,32 +1,35 @@
-local vars = require("vars")
-
 return {
     "m4xshen/smartcolumn.nvim",
 
     enabled = true,
     event = "VeryLazy",
-    opts = {
-        colorcolumn = vars.appearance.colorcolumn.default_columns,
-        disabled_filetypes = {
-            -- Neovim and plugin filetypes
-            "dap-repl",
-            "dapui_breakpoints",
-            "dapui_console",
-            "dapui_scopes",
-            "dapui_stacks",
-            "dapui_watches",
-            "help",
-            "lazy",
-            "mason",
-            "NvimTree",
-            "TelescopePrompt",
-            "Trouble",
+    opts = function(_, opts)
+        local column_config = require("vars").appearance.colorcolumn
+        return vim.tbl_extend("force", opts, {
+            colorcolumn = column_config.default_columns,
+            disabled_filetypes = {
+                -- Neovim and plugin filetypes
+                "checkhealth",
+                "dap-repl",
+                "dapui_breakpoints",
+                "dapui_console",
+                "dapui_scopes",
+                "dapui_stacks",
+                "dapui_watches",
+                "help",
+                "lazy",
+                "mason",
+                "NvimTree",
+                "TelescopePrompt",
+                "Trouble",
 
-            -- Actual filetypes
-            "markdown",
-            "text"
-        },
-        custom_colorcolumn = vars.appearance.colorcolumn.custom_colorcolumns,
-        scope = "window"
-    }
+                -- Actual filetypes
+                "conf",
+                "markdown",
+                "text",
+            },
+            custom_colorcolumn = column_config.custom_colorcolumns,
+            scope = "window",
+        })
+    end,
 }

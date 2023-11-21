@@ -1,167 +1,134 @@
---[[
-https://github.com/SetupGuides/Neovim
-]]--
-
 return {
-    proprietary = {
-        -- Set keys to true to enable the plugins.
-        copilot = true
-    },
-    lazy = {  -- configuration for lazy.nvim package manager
-        path = {
+    -- Configuration for lazy.nvim package manager
+    --
+    -- The `config` table is passed directly to lazy.nvim's `setup` function.
+    -- View the documentation here:
+    -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-configuration
+    lazy = {
+        paths = {
             root = vim.fn.stdpath("data") .. "/lazy",
-            home = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+            home = vim.fn.stdpath("data") .. "/lazy/lazy.nvim",
         },
-        install = {  -- This table is passed directly to lazy.nvim
-            missing = true,
-            colorscheme = {"catppuccin-mocha"}
+        config = {
+            install = {
+                missing = true,
+                colorscheme = { "catppuccin-mocha" },
+            },
+            change_detection = {
+                enabled = true,
+                notify = true,
+            },
         },
-        checker = {  -- This table is passed directly to lazy.nvim
-            enabled = true,
-            concurrency = nil,
-            notify = true,
-            frequency = 10800
+    },
+    -- Enable or disable plugins that are proprietary.
+    proprietary = {
+        copilot = true,
+    },
+    keymapping = {
+        leaderkey = ",",
+    },
+    behavior = {
+        line_wrapping = false,
+        use_spaces = true,
+        tab_size = 4,
+        notifications = {
+            -- Silenced notifications for nvim-notify
+            blocked = {
+                -- This is a table of strings.
+                -- Add notifications you don't want to see here.
+                -- For example, if you want to silence all notifications
+                -- with the word "annoying" in them, you would add that
+                -- word to this table.
+            },
         },
-        change_detection = {  -- This table is passed directly to lazy.nvim
-            enabled = true,
-            notify = true
-        }
     },
     appearance = {
-        show_eols = false,  -- Show EOL characters
-        show_spaces = false,  -- Show spaces
-        show_trails = true,  -- Show trailing spaces
+        show_eols = false, -- Show EOL characters
+        show_spaces = false, -- Show spaces
+        show_trails = true, -- Show trailing spaces
         colorcolumn = {
-            default_columns = {80},  -- Which columns should be highlighted
+            default_columns = { 80 }, -- Which columns should be highlighted
             custom_colorcolumns = {
-                conf = {120},
-                java = {120},
-                sh = {120}
-            }
+                -- NOTE: Line length references
+                -- bash, sh, zsh: N/A
+                -- c, cpp:        Google C++ Style Guide
+                -- cs:            csharpier
+                -- lua, luau:     StyLua
+                -- python:        Black, Pylint
+                bash = { 120 },
+                c = { 80 },
+                cpp = { 80 },
+                cs = { 100 },
+                java = { 120 },
+                lua = { 120 },
+                luau = { 120 },
+                python = { 88, 100 },
+                sh = { 120 },
+                zsh = { 120 },
+            },
         },
         colorscheme = {
             -- Available flavors: `latte`, `frappe`, `macchiato`, `mocha`
             catppuccin_flavor = "mocha",
             catppuccin_cache_dir = vim.fn.stdpath("cache") .. "/catppuccin",
-            line_number_color = "grey"
+            line_number_color = "grey",
         },
         git_blame_format = "<author>, on <author_time:%Y-%m-%d> • <summary>",
         icons = {
-            eol = '¬',
-            space = '⋅',
-            trail = '·',
-            fold = {        -- Characters for fold indicators
-                fold = ' ',        -- Fold text
-                open = '',       -- Opened fold
-                close = '',      -- Closed fold
-                sep = ' ',         -- Fold separator
-                eob = ' '          -- Empty lines at the end of a buffer
-            }
-        }
+            eol = "¬",
+            space = "⋅",
+            trail = "·",
+            fold = { -- Characters for fold indicators
+                fold = " ", -- Fold text
+                open = "", -- Opened fold
+                close = "", -- Closed fold
+                sep = " ", -- Fold separator
+                eob = " ", -- Empty lines at the end of a buffer
+            },
+        },
     },
-    behavior = {
-        line_wrapping = false,
-        use_spaces = true,
-        -- if use_spaces is true, this is the number of spaces to use for each tab.
-        tab_size = 4,
-    },
-    keymapping = {
-        leaderkey = ','
-    },
-    notifications = {
-        -- Silenced notifications for nvim-notify
-        blocked = {
-            -- This is a table of strings.
-            -- Add notifications you don't want to see here.
-            -- For example, if you want to silence all notifications
-            -- with the word "annoying" in them, you would add that
-            -- word to this table.
-        }
-    },
-    treesitter = {
-        enforce_ensure_installed = true,
+    ide = {
         -- [add|remove] languages you [don't] want to use.
         -- Reference: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
-        languages = {
+        treesitter = {
             "bash",
             "c",
-            "cpp",
-            "css",
             "c_sharp",
-            "cmake",
-            "dockerfile",
-            "html",
+            "comment",
+            "cpp",
+            "gitcommit",
             "java",
-            "javascript",
             "json",
-            "json5",
-            "jsonc",
-            "kotlin",
             "latex",
             "lua",
-            "make",
             "markdown",
             "markdown_inline",
             "python",
-            "rst",
-            "rust",
-            "toml",
-            "typescript",
-            "vim",
-            "yaml"
-        }
-    },
-    lualine = {
-        ignored_filetypes = {
-            "dap-repl",
-            "dapui_breakpoints",
-            "dapui_console",
-            "dapui_scopes",
-            "dapui_stacks",
-            "dapui_watches",
-            "mason",
-            "NvimTree",
-            "TelescopePrompt",
-            "Trouble"
+            "regex",
         },
-        filename_config = {
-            "filename",
-            file_status = true,
-            newfile_status = true,
-            path = 0  -- Show only the filename.
-        }
-    },
-    lsp = {
-        enforce_ensure_installed = true,
-        auto_install = false,
-        ensure_installed = {
-            "asm_lsp",
+        lsp = {
             "bashls",
             "clangd",
-            "cssls",
-            "csharp_ls",
-            "diagnosticls",
-            "docker_compose_language_service",
-            "html",
             "jdtls",
-            "jsonls",
-            "kotlin_language_server",
-            "lemminx",
             "lua_ls",
-            -- "omnisharp",
-            -- "omnisharp-mono",
+            "omnisharp",
             "pyright",
-            "rust_analyzer",
-            "sqlls",
-            "tsserver",
-            "yamlls"
-        }
+        },
+        linters = {
+            "pylint",
+            "selene",
+            "shellcheck",
+        },
+        formatters = {
+            "black",
+            "clang-format",
+            "csharpier",
+            "isort",
+            "shfmt",
+            "stylua",
+        },
+        dap = {
+            "debugpy",
+        },
     },
-    dap = {
-        enforce_ensure_installed = true,
-        auto_install = false,
-        ensure_installed = {
-            "python"
-        }
-    }
 }

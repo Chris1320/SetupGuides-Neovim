@@ -5,29 +5,32 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
 ## Plugins List
 
 - Code Completion
-    - [LuaSnip](https://github.com/L3MON4D3/LuaSnip): Snippet engine for Neovim written in Lua.
-        - [friendly-snippets](https://github.com/rafamadriz/friendly-snippets): Snippet collection for different programming languages.
+    - [Comment.nvim](https://github.com/numToStr/Comment.nvim): Smart and powerful comment plugin for Neovim.
     - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): A super powerful autopair plugin for Neovim that supports multiple characters.
     - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp): A completion plugin for neovim coded in Lua.
         - [cmp-buffer](https://github.com/hrsh7th/cmp-buffer): nvim-cmp source for buffer words.
         - [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline): nvim-cmp source for cmdline.
         - [cmp-git](https://github.com/petertriho/cmp-git): nvim-cmp source for git.
-        - [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp): nvim-cmp source for neovim builtin LSP client
-        - [cmp-nvim-lsp-signature-help](https://github.com/hrsh7th/cmp-nvim-lsp-signature-help): nvim-cmp source for displaying function signatures.
+        - [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp): nvim-cmp source for neovim builtin LSP client.
+        - [cmp-nvim-lua](https://github.com/hrsh7th/cmp-nvim-lua): nvim-cmp source for nvim lua.
         - [cmp-path](https://github.com/hrsh7th/cmp-path): nvim-cmp source for filesystem paths.
         - [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip): nvim-cmp source for LuaSnip.
+            - [LuaSnip](https://github.com/L3MON4D3/LuaSnip): Snippet engine for Neovim written in Lua.
+            - [friendly-snippets](https://github.com/rafamadriz/friendly-snippets): Snippet collection for different programming languages.
+    - [nvim-surround](https://github.com/kylechui/nvim-surround): Add/change/delete surrounding delimiter pairs with ease.
 - Debugging
     - [mason-nvim-dap.nvim](https://github.com/jay-babu/mason-nvim-dap.nvim): mason.nvim and nvim-dap integration.
     - [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol client implementation for Neovim.
     - [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): A UI for nvim-dap.
     - [nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text): Adds virtual text support to nvim-dap.
 - File Explorer
-    - [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua): File explorer tree
+    - [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua): File explorer tree
 - Fuzzy Search
     - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): Fuzzy Finder.
         - [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim): Telescope native sorter.
 - Linting and Syntax Checking/Highlighting
-    - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
+    - [conform.nvim](https://github.com/stevearc/conform.nvim):  Lightweight yet powerful formatter plugin for Neovim.
+    - [nvim-lint](https://github.com/mfussenegger/nvim-lint):  An asynchronous linter plugin for Neovim complementary to the built-in Language Server Protocol support.
     - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Language Server Protocol (LSP) configuration helper.
     - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Better syntax highlighting.
     - [trouble.nvim](https://github.com/folke/trouble.nvim): Error and status line manager.
@@ -35,20 +38,25 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
 - Plugin Managers
     - [lazy.nvim](https://github.com/folke/lazy.nvim): A modern plugin manager for Neovim.
     - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
+        - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
+        - [mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim):  Install and upgrade third party tools automatically.
 - Proprietary Plugins[^5]
-    - [copilot.vim](https://github.com/github/copilot.vim):  Neovim plugin for GitHub Copilot.
+    - [copilot.lua](https://github.com/zbirenbaum/copilot.lua): Fully featured & enhanced replacement for copilot.vim complete with API for interacting with Github Copilot.
 - Quality-of-Life Plugins
     - [gitignore.nvim](https://github.com/wintermute-cell/gitignore.nvim): A neovim plugin for generating .gitignore files.
 - Theming and Visual Plugins
     - [barbar.nvim](https://github.com/romgrk/barbar.nvim): Better tabs for Neovim.
     - [catppuccin](https://github.com/catppuccin/nvim): A Neovim theme.
+    - [ccc.nvim](https://github.com/uga-rosa/ccc.nvim): Color picker and highlighter plugin for Neovim.
     - [dressing.nvim](https://github.com/stevearc/dressing.nvim): A UI customization plugin.
     - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git Integration for buffers.
     - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim): Indentation guides.
+    - [lspkind.nvim](https://github.com/onsails/lspkind.nvim/): VSCode-like pictograms for Neovim LSP completion items.
     - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
     - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim): A Neovim statusline plugin.
     - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
     - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
+    - [smartcolumn.nvim](https://github.com/m4xshen/smartcolumn.nvim): A Neovim plugin hiding your colorcolumn when unneeded.
     - [which-key.nvim](https://github.com/folke/which-key.nvim): Show available key bindings.
 
 ## Custom Key Bindings
