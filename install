@@ -12,7 +12,7 @@ name="Neovim Config Installer"
 version=(0 13 0)
 title=$(printf "%s v%s.%s.%s" "${name}" "${version[@]}")
 
-target_branch="v2.0.0-dev" # The branch to which the configs will be pulled from.
+target_branch="main" # The branch to which the configs will be pulled from.
 installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 filelist="files.txt"
