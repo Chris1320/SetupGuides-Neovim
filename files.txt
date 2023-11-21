@@ -24,6 +24,7 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nv
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-ufo.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/smartcolumn.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/telescope.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/todo-comments.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/treesitter.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/trouble.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/vim-illuminate.lua
