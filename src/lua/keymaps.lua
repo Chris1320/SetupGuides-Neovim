@@ -33,3 +33,9 @@ vim.keymap.set(
     "<cmd>LspInfo<cr>",
     { noremap = true, silent = true, desc = "Show active LSP information" }
 )
+vim.keymap.set(
+    "n",
+    "<leader>if",
+    "<cmd>ConformInfo<cr>",
+    { noremap = true, silent = true, desc = "Show active formatters information" }
+)
