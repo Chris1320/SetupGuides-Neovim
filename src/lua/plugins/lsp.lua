@@ -126,6 +126,7 @@ return {
         lazy = false,
         build = ":MasonUpdate",
         opts = {
+            PATH = "append",
             ui = {
                 check_outdated_packages_on_open = true,
                 icons = {
