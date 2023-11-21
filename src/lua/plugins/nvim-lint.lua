@@ -6,8 +6,12 @@ return {
         -- TODO: `TextChanged` fixes the linter diagnostics not being updated after
         --          <F3> (format) problem, but it probably is not the best solution.
         lint_on_event = { "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" },
+        -- linters that should be run on all filetypes.
+        linters_for_all = { "codespell" },
         linters_by_ft = {
             bash = { "shellcheck" },
+            -- TODO: Add `commitlint` and configure it.
+            -- gitcommit = { "commitlint" },
             lua = { "selene" },
             luau = { "selene" },
             python = { "pylint" },
@@ -31,6 +35,9 @@ return {
         vim.api.nvim_create_autocmd(opts.lint_on_event, {
             callback = function()
                 nvim_lint.try_lint()
+                for _, linter in ipairs(opts.linters_for_all) do
+                    nvim_lint.try_lint(linter)
+                end
             end,
         })
     end,

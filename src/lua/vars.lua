@@ -115,6 +115,9 @@ return {
             "pyright",
         },
         linters = {
+            "codespell",
+            -- TODO: Add `commitlint` and configure it.
+            -- "commitlint",
             "pylint",
             "selene",
             "shellcheck",
