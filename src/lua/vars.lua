@@ -116,8 +116,7 @@ return {
         },
         linters = {
             "codespell",
-            -- TODO: Add `commitlint` and configure it.
-            -- "commitlint",
+            "commitlint",
             "pylint",
             "selene",
             "shellcheck",

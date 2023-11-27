@@ -10,8 +10,7 @@ return {
         linters_for_all = { "codespell" },
         linters_by_ft = {
             bash = { "shellcheck" },
-            -- TODO: Add `commitlint` and configure it.
-            -- gitcommit = { "commitlint" },
+            gitcommit = { "commitlint" },
             lua = { "selene" },
             luau = { "selene" },
             python = { "pylint" },
@@ -19,6 +18,14 @@ return {
             zsh = { "shellcheck" },
         },
         linters_overrides = {
+            commitlint = {
+                -- FIXME: This should not be hardcoded. However, commitlint cannot find
+                -- the module when it is used globally.
+                args = {
+                    "--extends",
+                    vim.fn.stdpath("data") .. "/mason/packages/commitlint/node_modules/@commitlint/config-conventional",
+                },
+            },
             pylint = { args = { "--jobs", "0", "--output-format", "json" } },
         },
     },
