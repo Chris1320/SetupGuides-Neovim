@@ -21,6 +21,7 @@ jobs:
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   args: --display-style=quiet .
+                  version: 0.26.1
 
             - name: Lint GH Actions, Markdown, Python, and Shell Files
               uses: super-linter/super-linter/slim@v5
