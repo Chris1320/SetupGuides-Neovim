@@ -1,0 +1,29 @@
+---
+name: Linter
+# yamllint disable-line rule:truthy
+on:
+    pull_request: ~
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        name: Linter
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Lint
+              uses: super-linter/super-linter/slim@v5
+              env:
+                  DEFAULT_BRANCH: main
+                  EDITORCONFIG_FILE_NAME: .editorconfig
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  VALIDATE_ALL_CODEBASE: false
+                  VALIDATE_GITHUB_ACTIONS: true
+                  VALIDATE_MARKDOWN: true
+                  VALIDATE_PYTHON_PYLINT: true
+                  VALIDATE_SHELL_SHFMT: true
