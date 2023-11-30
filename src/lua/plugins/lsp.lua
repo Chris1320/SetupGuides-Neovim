@@ -478,6 +478,7 @@ return {
                     table.insert(runtime_path, "lua/?/init.lua")
 
                     local overrides = {
+                        before_init = require("neodev.lsp").before_init,
                         settings = {
                             Lua = {
                                 telemetry = { enable = false },
@@ -490,6 +491,7 @@ return {
                                     checkThirdParty = false,
                                     library = {
                                         -- Make the server aware of Neovim runtime files
+                                        vim.api.nvim_get_runtime_file("", true),
                                         vim.fn.expand("$VIMRUNTIME/lua"),
                                         vim.fn.stdpath("config") .. "/lua",
                                     },

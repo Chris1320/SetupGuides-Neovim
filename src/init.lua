@@ -1,6 +1,6 @@
 local lazy_vars = require("vars").lazy
 
--- Bootsrap lazy.nvim plugin manager
+-- Bootstrap lazy.nvim plugin manager
 if not vim.loop.fs_stat(lazy_vars.paths.home) then
     vim.fn.system({
         "git",
