@@ -52,4 +52,20 @@ return {
     isWindows = function()
         return vim.loop.os_uname().version:match("Windows")
     end,
+
+    --- Check if a keybinding exists.
+    ---
+    ---@param keymap string The keymap to check for.
+    ---@param mode string The mode to check the keymap in.
+    ---
+    ---@return boolean exists Whether or not the keymap exists.
+    checkKeymapExists = function(keymap, mode)
+        local existing_keymaps = vim.api.nvim_get_keymap(mode)
+        for _, keybinding in ipairs(existing_keymaps) do
+            if keybinding.lhs == keymap then
+                return true
+            end
+        end
+        return false
+    end,
 }

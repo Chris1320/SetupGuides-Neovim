@@ -68,7 +68,29 @@ return {
             },
         },
     },
-    init = function()
+    init = function(plugin)
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
+        -- autocmd to enable <F3> keymap only if it doesn't already exist.
+        vim.api.nvim_create_autocmd({ "BufEnter" }, {
+            callback = function()
+                -- This happens when, for example, there is no LSP attached to the buffer.
+                if require("misc").checkKeymapExists("<F3>", "n") then
+                    return
+                end
+                if not vim.tbl_contains(vim.tbl_keys(plugin.opts.formatters_by_ft), vim.bo.filetype) then
+                    return
+                end
+
+                vim.keymap.set("n", "<F3>", function()
+                    print("[conform.nvim] Formatting file...")
+                    require("conform").format({ async = true, lsp_fallback = true })
+                end, { desc = "Format file", silent = true })
+                vim.keymap.set("x", "<F3>", function()
+                    print("[conform.nvim] Formatting selection...")
+                    require("conform").format({ async = true, lsp_fallback = true })
+                end, { desc = "Format selection", silent = true })
+            end,
+        })
     end,
 }
