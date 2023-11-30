@@ -118,6 +118,7 @@ return {
             "codespell",
             "commitlint",
             "jsonlint",
+            "markdownlint",
             "pylint",
             "selene",
             "shellcheck",

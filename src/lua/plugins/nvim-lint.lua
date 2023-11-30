@@ -14,6 +14,7 @@ return {
             json = { "jsonlint" },
             lua = { "selene" },
             luau = { "selene" },
+            markdown = { "markdownlint" },
             python = { "pylint" },
             sh = { "shellcheck" },
             yaml = { "yamllint" },
