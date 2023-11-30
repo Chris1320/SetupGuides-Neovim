@@ -8,7 +8,6 @@ return {
     --- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
     --- @return boolean has_words_before Whether or not the current buffer has words before the cursor.
     hasWordsBefore = function()
-        unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
     end,
@@ -18,6 +17,7 @@ return {
     --- @param dir_context? string The directory context to start the search from. (Default: current buffer's directory)
     ---
     --- @return string|nil found_dir The root project of the current buffer. nil if nothing is found.
+    -- selene: allow(shadowing)
     detectProjectRoot = function(landmarks, dir_context)
         local dir_context = dir_context or vim.fn.expand("%:p:h") --- @diagnostic disable-line: redefined-local
         local found_landmark = vim.fs.find(landmarks, { upward = true, path = dir_context })

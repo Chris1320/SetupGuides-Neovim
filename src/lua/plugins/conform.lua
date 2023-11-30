@@ -29,6 +29,7 @@ return {
         },
         formatters = {
             black = {
+                -- selene: allow(unused_variable)
                 cwd = function(...) --- @diagnostic disable-line: unused-vararg
                     return require("misc").detectProjectRoot({
                         "pyproject.toml",
@@ -58,6 +59,7 @@ return {
 
                     return result
                 end,
+                -- selene: allow(unused_variable)
                 cwd = function(...) --- @diagnostic disable-line: unused-vararg
                     return require("misc").detectProjectRoot({
                         ".stylua.toml",
