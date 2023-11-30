@@ -126,6 +126,7 @@ return {
             "clang-format",
             "csharpier",
             "isort",
+            "prettierd",
             "shfmt",
             "stylua",
         },
