@@ -3,7 +3,7 @@ return {
 
     name = "nvim-tree",
     enabled = true,
-    lazy = false,
+    lazy = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = { filters = { dotfiles = false } },
     keys = {

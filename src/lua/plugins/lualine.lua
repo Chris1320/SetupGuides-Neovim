@@ -50,7 +50,7 @@ return {
                         "diagnostics",
                         update_in_insert = true,
                         always_visible = false,
-                        sources = { "nvim_lsp", "nvim_diagnostic" },
+                        sources = { "nvim_diagnostic" },
                         on_click = function()
                             vim.cmd("TroubleToggle document_diagnostics")
                         end,
