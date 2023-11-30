@@ -16,8 +16,18 @@ jobs:
             - name: Checkout Code
               uses: actions/checkout@v4
 
-            - name: Lint
+            - name: Lint Lua Files
+              uses: NTBBloodbath/selene-action@v1.0.0
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  args: --display-style=quiet .
+
+            - name: Lint GH Actions, Markdown, Python, and Shell Files
               uses: super-linter/super-linter/slim@v5
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  VALIDATE_GITHUB_ACTIONS: true
+                  VALIDATE_MARKDOWN: true
+                  VALIDATE_PYTHON_PYLINT: true
+                  VALIDATE_SHELL_SHFMT: true
