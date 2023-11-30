@@ -20,14 +20,14 @@ return {
         },
         formatters = {
             black = {
-                cwd = function(...)
-                    return require("conform.util").root_file({
+                cwd = function(...) --- @diagnostic disable-line: unused-vararg
+                    return require("misc").detectProjectRoot({
                         "pyproject.toml",
                         "setup.cfg",
                         "setup.py",
                         ".git",
                         ".gitignore",
-                    })(...)
+                    })
                 end,
             },
             clang_format = { prepend_args = { "--fallback-style=Google" } },
@@ -50,13 +50,13 @@ return {
 
                     return result
                 end,
-                cwd = function(...)
-                    return require("conform.util").root_file({
+                cwd = function(...) --- @diagnostic disable-line: unused-vararg
+                    return require("misc").detectProjectRoot({
                         ".stylua.toml",
                         "stylua.toml",
                         ".git",
                         ".gitignore",
-                    })(...)
+                    })
                 end,
             },
         },
