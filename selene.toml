@@ -1,5 +1,1 @@
-[selene]
-base = "LuaJIT"
-
-[vim]
-any = true
+std = ".selene.neovim"
