@@ -4,9 +4,9 @@
 Move Neovim directories to a temporary location and vice versa.
 """
 
-import sys
-import shutil
 import pathlib
+import shutil
+import sys
 from typing import Final
 
 # This list includes all directories that are used by Neovim.
