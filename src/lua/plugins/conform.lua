@@ -26,8 +26,7 @@ return {
                         "setup.cfg",
                         "setup.py",
                         ".git",
-                        ".gitignore",
-                    })
+                    }) or vim.fn.getcwd()
                 end,
             },
             clang_format = { prepend_args = { "--fallback-style=Google" } },
@@ -55,8 +54,7 @@ return {
                         ".stylua.toml",
                         "stylua.toml",
                         ".git",
-                        ".gitignore",
-                    })
+                    }) or vim.fn.getcwd()
                 end,
             },
         },

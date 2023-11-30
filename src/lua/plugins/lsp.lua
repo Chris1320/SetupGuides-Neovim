@@ -418,7 +418,7 @@ return {
                                 ".clangd",
                                 ".clang-tidy",
                                 ".clang-format",
-                            })
+                            }) or vim.fn.getcwd()
                         end,
                     }
 
