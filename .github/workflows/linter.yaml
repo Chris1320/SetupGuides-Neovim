@@ -20,7 +20,6 @@ jobs:
               uses: super-linter/super-linter/slim@v5
               env:
                   DEFAULT_BRANCH: main
-                  EDITORCONFIG_FILE_NAME: .editorconfig
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   VALIDATE_ALL_CODEBASE: false
                   VALIDATE_GITHUB_ACTIONS: true
