@@ -16,6 +16,7 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/in
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lsp.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lsp_lines.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lualine.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/neodev.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-autopairs.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-lint.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-notify.lua
