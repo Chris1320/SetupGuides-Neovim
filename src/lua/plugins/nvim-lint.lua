@@ -15,6 +15,7 @@ return {
             luau = { "selene" },
             python = { "pylint" },
             sh = { "shellcheck" },
+            yaml = { "yamllint" },
             zsh = { "shellcheck" },
         },
         linters_overrides = {

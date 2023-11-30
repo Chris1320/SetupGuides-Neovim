@@ -120,6 +120,7 @@ return {
             "pylint",
             "selene",
             "shellcheck",
+            "yamllint",
         },
         formatters = {
             "black",
