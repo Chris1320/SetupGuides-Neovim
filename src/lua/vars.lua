@@ -117,6 +117,7 @@ return {
         linters = {
             "codespell",
             "commitlint",
+            "jsonlint",
             "pylint",
             "selene",
             "shellcheck",
