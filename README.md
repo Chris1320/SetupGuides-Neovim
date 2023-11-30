@@ -1,6 +1,12 @@
 # Neovim
 
-This guide will help you install [Neovim](https://neovim.io/) and plugins that I use. I frequently work with terminals and I find [Vim](https://www.vim.org/) really helpful when editing code and text without needing a GUI. However, I didn't have the time and motivation to learn VimScript, but then I heard about Neovim. I have some experience with Lua so I thought that I might give it a try, and this is the result. Note that I am not an experienced Neovim (and Lua) user so expect that there will be occasional bugs.
+This guide will help you install [Neovim](https://neovim.io/) and plugins that I use.
+I frequently work with terminals and I find [Vim](https://www.vim.org/) really
+helpful when editing code and text without needing a GUI. However, I didn't
+have the time and motivation to learn VimScript, but then I heard about Neovim.
+I have some experience with Lua so I thought that I might give it a try, and
+this is the result. Note that I am not an experienced Neovim (and Lua) user
+so expect that there will be occasional bugs.
 
 ## Plugins List
 
