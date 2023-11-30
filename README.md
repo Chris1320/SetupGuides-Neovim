@@ -40,7 +40,7 @@ This guide will help you install [Neovim](https://neovim.io/) and plugins that I
   - [mason.nvim](https://github.com/williamboman/mason.nvim): LSP/DAP servers, linters, and formatters.
     - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim): lspconfig integration for Mason.
     - [mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim): Install and upgrade third party tools automatically.
-- Proprietary Plugins[^5]
+- Proprietary Plugins[^4]
   - [copilot.lua](https://github.com/zbirenbaum/copilot.lua): Fully featured & enhanced replacement for copilot.vim complete with API for interacting with Github Copilot.
 - Quality-of-Life Plugins
   - [gitignore.nvim](https://github.com/wintermute-cell/gitignore.nvim): A neovim plugin for generating .gitignore files.
@@ -131,7 +131,7 @@ This setup has been tested on the following platforms:
    - Otherwise, download it from [their GitHub repository](https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb) and install it. `$ dpkg -i nvim-linux64.deb`[^1]
 3. Copy the contents of [src/](https://github.com/SetupGuides/Neovim/tree/main/src) to your `~/.config/nvim/`. The directory must look like this:
 
-   ```
+   ```text
    $ tree ~/.config/nvim/
 
    /home/<user>/.config/nvim/
@@ -151,10 +151,9 @@ This setup has been tested on the following platforms:
 4. Install dependencies. `$ sudo apt install --upgrade clang curl make nodejs`[^2]
 5. Run `nvim`. lazy.nvim will now update, install, and compile the plugins.
 6. To check if everything is installed correctly, enter `:checkhealth`.
-7. Install LSP/DAP servers, linters, and formatters by running `:Mason` inside Neovim.[^4]
+7. Install LSP/DAP servers, linters, and formatters by running `:Mason` inside Neovim.[^3]
 
 [^1]: To download and install using wget and dpkg: `wget -O ./nvim-linux64.deb https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb && sudo dpkg -i ./nvim-linux64.deb`
 [^2]: You can also install recommended but optional additional packages used by Telescope: `$ sudo apt install --upgrade fd-find ripgrep` (`fd-find` is `fd` on Termux systems.)
-[^3]: You can install a language by running `:TSInstall <language>` or editing the `treesitter.languages` variable in `~/.config/nvim/lua/vars.lua`. Read [the documentation](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages) for more information.
-[^4]: Manual configuration is necessary for each LSP server, but I configured some of them in `src/lua/plugins/lsp.lua`.
-[^5]: Proprietary plugins are optional to install.
+[^3]: Manual configuration is necessary for each LSP server, but I configured some of them in `src/lua/plugins/lsp.lua`.
+[^4]: Proprietary plugins are optional to install.
