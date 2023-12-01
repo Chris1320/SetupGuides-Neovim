@@ -5,6 +5,6 @@ return {
     event = "VeryLazy",
     opts = {
         neovim_image_text = "I use Neovim btw",
-        log_level = "error",
+        -- log_level = "error",
     },
 }
