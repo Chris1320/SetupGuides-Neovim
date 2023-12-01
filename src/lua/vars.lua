@@ -22,7 +22,8 @@ return {
     },
     -- Enable or disable plugins that are proprietary.
     proprietary = {
-        copilot = true,
+        copilot = true, -- GitHub Copilot
+        presence = true, -- Discord Rich Presence
     },
     keymapping = {
         leaderkey = ",",
