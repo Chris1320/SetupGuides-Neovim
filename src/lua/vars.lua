@@ -50,7 +50,7 @@ return {
         colorcolumn = {
             default_columns = { 80 }, -- Which columns should be highlighted
             custom_colorcolumns = {
-                -- NOTE: Line length references
+                -- Line length references
                 -- bash, sh, zsh: N/A
                 -- c, cpp:        Google C++ Style Guide
                 -- cs:            csharpier

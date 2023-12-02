@@ -3,7 +3,7 @@ return {
 
     enabled = true,
     opts = {
-        -- TODO: `TextChanged` fixes the linter diagnostics not being updated after
+        -- OPTIMIZE: `TextChanged` fixes the linter diagnostics not being updated after
         --          <F3> (format) problem, but it probably is not the best solution.
         lint_on_event = { "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" },
         -- linters that should be run on all filetypes.
