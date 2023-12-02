@@ -5,9 +5,152 @@ Recursively search for all plugins in the plugins directory and generate a
 list of plugins and their GitHub/source URLs for documentation.
 --]]
 
+--- Helper function to prettify the display of tables.
+---
+--- @param tbl table The table list to prettify.
+--- @param headers? table A list of headers for the table.
+--- @param opts? table Options to customize the output.
+---
+--- @return string|nil output The prettified table.
+-- selene: allow(shadowing)
+local function generateTable(tbl, headers, opts)
+    -- OPTIMIZE: Refactor this function... This is a nightmare 'cause I haven't slept yet.
+    local result = ""
+    local max_col_lens = {}
+    local headers = headers or {} --- @diagnostic disable-line: redefined-local
+    local opts = opts --- @diagnostic disable-line: redefined-local
+        or {
+            padding = " ",
+            newline = "\n",
+            border = {
+                topleft = "┌",
+                topright = "┐",
+                bottomleft = "└",
+                bottomrright = "┘",
+
+                vertical = "│",
+                vert_sep_left = "├",
+                vert_sep_right = "┤",
+
+                horizontal = "─",
+                horiz_sep_top = "┬",
+                horiz_sep_bottom = "┴",
+
+                center_sep = "┼",
+            },
+        }
+
+    if #headers > 0 and #tbl > 0 then
+        if #headers ~= #tbl[1] then
+            error("Headers must be the same length as the table.")
+            return
+        end
+    end
+
+    --- Get the max length of each column.
+    ---
+    --- @param row table The row to get the max length of each column.
+    ---
+    --- @return table max_length The max length of each column.
+    local function getMaxLength(row)
+        local row_max_length = {}
+        for _, col in ipairs(row) do
+            table.insert(row_max_length, #col)
+        end
+
+        return row_max_length
+    end
+
+    --- Update the value of the max length of each column.
+    ---
+    --- @param row table The row to update the max length of each column.
+    local function updateMaxLength(row)
+        local max_length = getMaxLength(row)
+        for idx, val in ipairs(max_length) do
+            if max_col_lens[idx] == nil then
+                max_col_lens[idx] = val
+            else
+                max_col_lens[idx] = math.max(max_col_lens[idx], val)
+            end
+        end
+    end
+
+    -- get the max length of each column of the headers and the table.
+    for _, row in ipairs(headers) do
+        updateMaxLength(row)
+    end
+    for _, row in ipairs(tbl) do
+        updateMaxLength(row)
+    end
+
+    --- Generate a table row.
+    ---
+    --- @param row table The row to generate.
+    --- @param padding_char string The padding character to use.
+    --- @param center_sep string The center separator to use.
+    --- @param left_sep string The left separator to use.
+    --- @param right_sep string The right separator to use.
+    local function generateTableRow(row, padding_char, center_sep, left_sep, right_sep)
+        local table_row = string.format("%s%s", left_sep, padding_char)
+
+        for i, col in ipairs(row) do
+            local padding = string.rep(padding_char, (max_col_lens[i] - #col) + 1)
+            if i == #row then
+                table_row = table_row .. string.format("%s%s%s", col, padding, right_sep)
+                break
+            end
+            table_row = table_row .. string.format("%s%s%s%s", col, padding, center_sep, padding_char)
+        end
+
+        return table_row .. opts.newline
+    end
+
+    local border_row = {}
+    for _, n in ipairs(max_col_lens) do
+        table.insert(border_row, string.rep(opts.border.horizontal, n + 1))
+    end
+
+    -- header
+    result = result
+        .. generateTableRow(
+            border_row,
+            opts.border.horizontal,
+            opts.border.horiz_sep_top,
+            opts.border.topleft,
+            opts.border.topright
+        )
+    if #headers > 0 then
+        result = result
+            .. generateTableRow(headers, opts.padding, opts.border.vertical, opts.border.vertical, opts.border.vertical)
+        result = result
+            .. generateTableRow(
+                border_row,
+                opts.border.horizontal,
+                opts.border.center_sep,
+                opts.border.vert_sep_left,
+                opts.border.vert_sep_right
+            )
+    end
+
+    -- body
+    for _, row in ipairs(tbl) do
+        result = result
+            .. generateTableRow(row, opts.padding, opts.border.vertical, opts.border.vertical, opts.border.vertical)
+    end
+
+    return result
+        .. generateTableRow(
+            border_row,
+            opts.border.horizontal,
+            opts.border.horiz_sep_bottom,
+            opts.border.bottomleft,
+            opts.border.bottomrright
+        )
+end
+
 --- Helper function to recursively search a directory for files.
 --- This uses an OS-specific command to search for files, so it may not work
---- on Windows OS. (FIXME: Check OS and use appropriate command.)
+--- on Windows OS.
 ---
 --- @param root string The path of the directory to search.
 --- @param pattern string The pattern to match filenames against.
@@ -15,6 +158,7 @@ list of plugins and their GitHub/source URLs for documentation.
 ---
 --- @return table files A table of all files matching the pattern.
 local function dirSearch(root, pattern, recursive)
+    -- FIXME: Check OS and use appropriate command, and sanitize input.
     local files = {}
     local command = [[find '%s' -type f -name '%s']] -- recursive by default
 
@@ -37,6 +181,7 @@ end
 ---
 --- @return number n The exit code.
 function Main(plugins_root)
+    -- FIXME: plugins that use neovim functions in their spec will cause an error.
     plugins_root = plugins_root or "src/lua/plugins"
     io.write("Searching in: " .. plugins_root .. "\n")
 
@@ -56,14 +201,14 @@ function Main(plugins_root)
                 -- multiple LazySpecs are in one module.
                 for _, lazy_plugin in ipairs(plugin) do
                     table.insert(plugin_names, {
-                        path = path,
-                        url = lazy_plugin[1] or lazy_plugin.url,
+                        path,
+                        lazy_plugin[1] or lazy_plugin.url,
                     })
                 end
             else
                 table.insert(plugin_names, {
-                    path = path,
-                    url = plugin[1] or plugin.url,
+                    path,
+                    plugin[1] or plugin.url,
                 })
             end
         else
@@ -71,16 +216,7 @@ function Main(plugins_root)
         end
     end
 
-    -- make the output easier to read.
-    local max_path_len = 0
-    for _, p in ipairs(plugin_names) do
-        max_path_len = math.max(max_path_len, #p.path)
-    end
-
-    for _, p in ipairs(plugin_names) do
-        io.write(string.format("%s%s: %s\n", p.path, string.rep(" ", max_path_len - #p.path), p.url))
-    end
-
+    io.write(generateTable(plugin_names, { "Filepath", "Plugin Source" }))
     io.write(string.format("\nFailed to get information about %d plugins.\n", #plugins_with_errors))
     io.write("Do you want to see more information about these plugins? [y/N] >>> ")
 
