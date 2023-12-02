@@ -175,6 +175,27 @@ local function dirSearch(root, pattern, recursive)
     return files
 end
 
+--- Write the list to a file.
+local function writeToFile(filename, plugins, plugins_with_errors)
+    local file = io.open(filename, "w")
+    if not file then
+        error(string.format("Failed to open file %s.", filename))
+        return
+    end
+
+    file:write("Plugins:\n\n")
+    for _, row in ipairs(plugins) do
+        file:write(string.format("- [%s](%s)\n", row[1], row[2]))
+    end
+
+    file:write("\nPlugins with errors:\n\n")
+    for _, row in ipairs(plugins_with_errors) do
+        file:write(row[1] .. "\n")
+    end
+
+    file:close()
+end
+
 --- The main function.
 ---
 --- @param plugins_root string The path of the plugins directory.
@@ -227,6 +248,9 @@ function Main(plugins_root)
             io.write(string.format(template, pwe[1], pwe[2]))
         end
     end
+
+    writeToFile("plugins_list.md", plugin_names, plugins_with_errors)
+    io.write("Written output to plugins_list.md\n")
 
     return 0
 end
