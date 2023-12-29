@@ -539,12 +539,21 @@ return {
                                         reportUninitializedInstanceVariable = "information",
                                         reportUnnecessaryTypeIgnoreComment = "information",
                                     },
+                                    extraPaths = {},
                                     typeCheckingMode = "strict",
                                     useLibraryCodeForTypes = true,
                                 },
                             },
                         },
                     }
+
+                    -- Add the virtual environment to the extra paths.
+                    if vim.fn.getenv("VIRTUAL_ENV") ~= vim.NIL then
+                        overrides.settings.python.analysis.extraPaths =
+                            vim.list_extend(overrides.settings.python.analysis.extraPaths, {
+                                vim.fn.getenv("VIRTUAL_ENV") .. "/lib/python3.11/site-packages",
+                            })
+                    end
 
                     lspconfig.pyright.setup(vim.tbl_deep_extend("force", default_config, overrides))
                 end,
