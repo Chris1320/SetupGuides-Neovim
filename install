@@ -17,7 +17,7 @@ installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 filelist="files.txt"
 
-min_nvim_version=(0 9 1) # Minimum Neovim version required.
+min_nvim_version=(0 9 2) # Minimum Neovim version required.
 
 echo
 echo "$title"
