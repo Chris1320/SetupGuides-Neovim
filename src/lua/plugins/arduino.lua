@@ -16,7 +16,7 @@ return {
         "ArduinoUploadAndSerial",
         "ArduinoInfo",
     },
-    ft = { "ino", "pde", "tpp", "ipp" },
+    ft = { "arduino", "tpp" },
     init = function()
         vim.g.arduino_serial_cmd = "tio --timestamp --baudrate {baud} {port}"
     end,
