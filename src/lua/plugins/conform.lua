@@ -8,6 +8,7 @@ return {
         format_on_save = { lsp_fallback = true },
         notify_on_error = true,
         formatters_by_ft = {
+            arduino = { "clang_format" },
             bash = { "shfmt" },
             c = { "clang_format" },
             cpp = { "clang_format" },
