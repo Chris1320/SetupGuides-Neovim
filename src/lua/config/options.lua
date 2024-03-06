@@ -14,6 +14,7 @@ o.swapfile = false -- disable swap files.
 -- o.backup = false  -- disable backup files.
 -- o.undodir = os.getenv("HOME") .. "/.vim/undodir"
 o.undofile = true
+o.clipboard = "unnamed"
 
 -- Check if running on WSL.
 -- Source: https://mitchellt.com/2022/05/15/WSL-Neovim-Lua-and-the-Windows-Clipboard.html
@@ -31,8 +32,6 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
         cache_enabled = true,
     }
 end
-
-g.clipboard = "unnamed"
 
 o.hlsearch = true -- highlight search results.
 o.incsearch = true -- enable incremental search.
