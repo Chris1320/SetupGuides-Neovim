@@ -60,6 +60,7 @@ so expect that there will be occasional bugs.
   - [lspkind.nvim](https://github.com/onsails/lspkind.nvim/): VSCode-like pictograms for Neovim LSP completion items.
   - [lsp_lines.nvim](https://git.sr.ht/%7Ewhynothugo/lsp_lines.nvim): Show LSP diagnostics in a separate line.
   - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim): A Neovim statusline plugin.
+  - [numb.nvim](https://github.com/nacro90/numb.nvim): Peek lines just when you intend.
   - [nvim-notify](https://github.com/rcarriga/nvim-notify): Notification Manager.
   - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo): Modern fold in Neovim.
   - [smartcolumn.nvim](https://github.com/m4xshen/smartcolumn.nvim): A Neovim plugin hiding your colorcolumn when unneeded.
