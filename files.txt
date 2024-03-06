@@ -3,6 +3,7 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/info.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/keymaps.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/misc.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/options.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/arduino.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/barbar.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/catppuccin.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/ccc.lua
@@ -18,6 +19,7 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/ls
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lsp_lines.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lualine.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/neodev.lua
+https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/numb.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-autopairs.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-lint.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nvim-notify.lua
