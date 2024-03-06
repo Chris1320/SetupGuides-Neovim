@@ -1,25 +1,4 @@
 return {
-    -- Configuration for lazy.nvim package manager
-    --
-    -- The `config` table is passed directly to lazy.nvim's `setup` function.
-    -- View the documentation here:
-    -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-configuration
-    lazy = {
-        paths = {
-            root = vim.fn.stdpath("data") .. "/lazy",
-            home = vim.fn.stdpath("data") .. "/lazy/lazy.nvim",
-        },
-        config = {
-            install = {
-                missing = true,
-                colorscheme = { "catppuccin-mocha" },
-            },
-            change_detection = {
-                enabled = true,
-                notify = true,
-            },
-        },
-    },
     -- Enable or disable plugins that are proprietary.
     proprietary = {
         copilot = true, -- GitHub Copilot
