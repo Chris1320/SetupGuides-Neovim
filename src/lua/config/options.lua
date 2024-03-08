@@ -10,11 +10,12 @@ o.timeout = true
 o.timeoutlen = 300
 o.updatetime = 50
 
+o.autowrite = false
 o.swapfile = false -- disable swap files.
 -- o.backup = false  -- disable backup files.
 -- o.undodir = os.getenv("HOME") .. "/.vim/undodir"
 o.undofile = true
-o.clipboard = "unnamed"
+o.clipboard = ""
 
 -- Check if running on WSL.
 -- Source: https://mitchellt.com/2022/05/15/WSL-Neovim-Lua-and-the-Windows-Clipboard.html
