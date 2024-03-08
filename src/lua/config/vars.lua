@@ -4,5 +4,6 @@ return {
         colorcolumn = {
             default_columns = { 80 },
         },
+        git_blame_format = "<author>, on <author_time:%Y-%m-%d> • <summary>",
     },
 }
