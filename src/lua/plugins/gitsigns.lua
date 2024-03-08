@@ -11,7 +11,7 @@ return {
             delay = 1000,
             ignore_whitespace = false,
         },
-        current_line_blame_formatter = require("vars").appearance.git_blame_format,
+        current_line_blame_formatter = require("config.vars").appearance.git_blame_format,
         on_attach = function(buffer)
             local gs = package.loaded.gitsigns
 
