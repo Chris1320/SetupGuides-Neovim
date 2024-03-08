@@ -4,7 +4,16 @@ return {
     enabled = true,
     cmd = "Telescope",
     dependencies = {
-        "nvim-telescope/telescope-fzf-native.nvim",
+        {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+            enabled = vim.fn.executable("make") == 1,
+            config = function()
+                require("lazyvim.util").on_load("telescope.nvim", function()
+                    require("telescope").load_extension("fzf")
+                end)
+            end,
+        },
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
         "nvim-treesitter",
