@@ -100,6 +100,32 @@ return {
                         },
                     },
                 },
+                pyright = {
+                    single_file_support = true,
+                    settings = { ---@diagnostic disable-line: missing-fields
+                        python = { ---@diagnostic disable-line: missing-fields
+                            analysis = { ---@diagnostic disable-line: missing-fields
+                                autoImportCompletions = true,
+                                autoSearchPaths = true,
+                                diagnosticMode = "workspace",
+                                diagnosticSeverityOverrides = { ---@diagnostic disable-line: missing-fields
+                                    reportDeprecated = "warning",
+                                    reportImplicitOverride = "information",
+                                    reportShadowedImports = "information",
+                                    reportUninitializedInstanceVariable = "information",
+                                    reportUnnecessaryTypeIgnoreComment = "information",
+                                },
+                                -- Add the virtual environment.
+                                extraPaths = (
+                                    vim.fn.getenv("VIRTUAL_ENV") ~= vim.NIL
+                                    and { vim.fn.getenv("VIRTUAL_ENV") .. "/lib/python3.11/site-packages" }
+                                ) or {},
+                                typeCheckingMode = "strict",
+                                useLibraryCodeForTypes = true,
+                            },
+                        },
+                    },
+                },
             },
             -- you can do any additional lsp server setup here
             -- return true if you don't want this server to be setup with lspconfig
