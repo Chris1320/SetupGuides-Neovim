@@ -14,12 +14,6 @@ return {
             "petertriho/cmp-git",
             dependencies = "nvim-lua/plenary.nvim",
         },
-        {
-            "zbirenbaum/copilot-cmp",
-            config = function()
-                require("copilot_cmp").setup()
-            end,
-        },
         -- Snippets
         "L3MON4D3/LuaSnip",
         {
@@ -65,7 +59,6 @@ return {
                     { name = "luasnip" },
                     { name = "buffer", option = { keyword_length = 2 } },
                     { name = "path" },
-                    { name = "copilot" },
                 }),
                 formatting = {
                     format = function(_, item)
