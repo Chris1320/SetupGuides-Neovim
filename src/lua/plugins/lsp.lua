@@ -81,6 +81,30 @@ return {
                     filetypes = { "sh", "bash" },
                     single_file_support = true,
                 },
+                clangd = { ---@diagnostic disable-line: missing-fields
+                    -- capabilities = {
+                    --     -- Manually set the offsetEncoding capability to utf-16.
+                    --     -- Context:
+                    --     -- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
+                    --     offsetEncoding = { "utf-16" },
+                    -- },
+                    cmd = {
+                        "clangd",
+                        "--clang-tidy",
+                        "--header-insertion=iwyu",
+                    },
+                    root_dir = function()
+                        return require("config.misc").detectProjectRoot({
+                            "compile_commands.json",
+                            "compile_flags.txt",
+                            "configure.ac",
+                            ".git",
+                            ".clangd",
+                            ".clang-tidy",
+                            ".clang-format",
+                        }) or vim.fn.getcwd()
+                    end,
+                },
                 lua_ls = {
                     -- mason = false, -- set to false if you don't want this server to be installed with mason
                     -- Use this to add any additional keymaps
