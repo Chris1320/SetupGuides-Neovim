@@ -77,6 +77,10 @@ return {
             -- LSP Server Settings
             ---@type lspconfig.options
             servers = { ---@diagnostic disable-line: missing-fields
+                bashls = { ---@diagnostic disable-line: missing-fields
+                    filetypes = { "sh", "bash" },
+                    single_file_support = true,
+                },
                 lua_ls = {
                     -- mason = false, -- set to false if you don't want this server to be installed with mason
                     -- Use this to add any additional keymaps
