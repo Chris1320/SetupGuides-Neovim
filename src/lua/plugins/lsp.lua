@@ -19,10 +19,10 @@ return {
 
         -- "hrsh7th/cmp-nvim-lsp",
         -- "hrsh7th/cmp-nvim-lua",
-        --
-        -- -- Additional features for C# development
-        -- "Hoffs/omnisharp-extended-lsp.nvim",
-        --
+
+        -- Additional features for C# development
+        "Hoffs/omnisharp-extended-lsp.nvim",
+
         -- -- Additional features for Java development
         -- "mfussenegger/nvim-jdtls",
     },
@@ -127,6 +127,23 @@ return {
                             telemetry = { enable = false },
                         },
                     },
+                },
+                omnisharp = { ---@diagnostic disable-line: missing-fields
+                    cmd = {
+                        require("config.misc").isWindows() and "OmniSharp.exe" or "omnisharp",
+                        "--languageserver",
+                        "--hostPID",
+                        tostring(vim.fn.getpid()),
+                    },
+                    handlers = {
+                        ["textDocument/definition"] = require("omnisharp_extended").handler,
+                    },
+                    -- configuration options for omnisharp:
+                    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#omnisharp
+                    enable_editorconfig_support = true,
+                    enable_roslyn_analyzers = true,
+                    organize_imports_on_format = true,
+                    enable_import_completion = true,
                 },
                 pyright = {
                     single_file_support = true,

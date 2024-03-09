@@ -12,4 +12,10 @@ return {
             return vim.fs.dirname(found_landmark[1])
         end
     end,
+
+    --- Check if Neovim is running on Windows.
+    --- @return boolean isWindows Whether or not Neovim is running on Windows.
+    isWindows = function()
+        return vim.loop.os_uname().version:match("Windows")
+    end,
 }
