@@ -24,7 +24,7 @@ return {
         "Hoffs/omnisharp-extended-lsp.nvim",
 
         -- -- Additional features for Java development
-        -- "mfussenegger/nvim-jdtls",
+        "mfussenegger/nvim-jdtls",
     },
     ---@class PluginLspOpts
     opts = function()
@@ -105,6 +105,45 @@ return {
                         }) or vim.fn.getcwd()
                     end,
                 },
+                jdtls = {
+                    cmd = {
+                        "jdtls",
+                        "-configuration",
+                        vim.fn.getenv("HOME") .. "/.cache/jdtls/config",
+                        "-data",
+                        vim.fn.getenv("HOME")
+                            .. "/.cache/jdtls/workspaces/"
+                            .. vim.fn.fnamemodify(require("config.misc").detectProjectRoot({
+                                "pom.xml",
+                                "build.xml",
+                                "mvnw",
+                                "gradlew",
+                                ".git",
+                            }) or vim.fn.getcwd(), ":p:h:t"),
+                    },
+                    capabilities = {
+                        workspace = { configuration = true },
+                        textDocument = { completion = { completionItem = { snippetSupport = true } } },
+                    },
+                    settings = {
+                        java = {
+                            completion = { enabled = true },
+                            eclipse = { downloadSources = true },
+                            format = {
+                                enabled = true,
+                                comments = { enabled = false },
+                                --[[ settings = {
+                                        url = "...",
+                                        profile = "...",
+                                    }, ]]
+                            },
+                            implementationsCodeLens = { enabled = true },
+                            rename = { enabled = true },
+                            signatureHelp = { enabled = true, description = { enabled = true } },
+                        },
+                    },
+                    single_file_support = true,
+                },
                 lua_ls = {
                     -- mason = false, -- set to false if you don't want this server to be installed with mason
                     -- Use this to add any additional keymaps
@@ -130,7 +169,7 @@ return {
                 },
                 omnisharp = { ---@diagnostic disable-line: missing-fields
                     cmd = {
-                        require("config.misc").isWindows() and "OmniSharp.exe" or "omnisharp",
+                        vim.fn.has("win32") == 1 and "OmniSharp.exe" or "omnisharp",
                         "--languageserver",
                         "--hostPID",
                         tostring(vim.fn.getpid()),
@@ -183,6 +222,19 @@ return {
                 -- end,
                 -- Specify * to use this function as a fallback for any server
                 -- ["*"] = function(server, opts) end,
+                jdtls = function(_, opts)
+                    local has_jdtls, jdtls = pcall(require, "jdtls")
+                    if has_jdtls then
+                        -- jdtls.start_or_attach() needs to be called for every Java buffer.
+                        vim.api.nvim_create_autocmd("FileType", {
+                            pattern = "java",
+                            callback = function()
+                                jdtls.start_or_attach(opts)
+                            end,
+                        })
+                        return true
+                    end
+                end,
             },
         }
     end,
