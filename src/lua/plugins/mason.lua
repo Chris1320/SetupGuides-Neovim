@@ -33,6 +33,7 @@ return {
             "stylua",
 
             -- DAPs
+            "codelldb",
             "debugpy",
         },
         -- FIXME: We append because I'm not sure how
