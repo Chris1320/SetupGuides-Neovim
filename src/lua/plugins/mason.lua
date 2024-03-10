@@ -35,6 +35,8 @@ return {
             -- DAPs
             "codelldb",
             "debugpy",
+            "java-test",
+            "java-debug-adapter",
         },
         -- FIXME: We append because I'm not sure how
         -- to use Python virtualenvs with mason
