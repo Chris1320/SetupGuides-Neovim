@@ -39,7 +39,7 @@ return {
         -- to use Python virtualenvs with mason
         PATH = "append",
         ui = {
-            check_outdated_packages_on_open = false,
+            check_outdated_packages_on_open = true,
             icons = {
                 -- you can change these icons to whatever you want.
                 package_installed = "✓",
