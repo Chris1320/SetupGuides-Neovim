@@ -11,6 +11,7 @@ return {
             "jdtls",
             "json-lsp",
             "lua-language-server",
+            "marksman",
             "omnisharp",
             "pyright",
 

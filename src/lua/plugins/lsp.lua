@@ -147,6 +147,7 @@ return {
                         },
                     },
                 },
+                marksman = {},
                 omnisharp = { ---@diagnostic disable-line: missing-fields
                     cmd = {
                         vim.fn.has("win32") == 1 and "OmniSharp.exe" or "omnisharp",
