@@ -9,6 +9,7 @@ return {
             "bash-language-server",
             "clangd",
             "jdtls",
+            "json-lsp",
             "lua-language-server",
             "omnisharp",
             "pyright",
