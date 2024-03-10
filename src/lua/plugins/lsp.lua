@@ -22,9 +22,6 @@ return {
 
         -- Additional features for C# development
         "Hoffs/omnisharp-extended-lsp.nvim",
-
-        -- -- Additional features for Java development
-        "mfussenegger/nvim-jdtls",
     },
     ---@class PluginLspOpts
     opts = function()
