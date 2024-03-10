@@ -82,12 +82,12 @@ return {
                     single_file_support = true,
                 },
                 clangd = { ---@diagnostic disable-line: missing-fields
-                    -- capabilities = {
-                    --     -- Manually set the offsetEncoding capability to utf-16.
-                    --     -- Context:
-                    --     -- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
-                    --     offsetEncoding = { "utf-16" },
-                    -- },
+                    capabilities = {
+                        -- Manually set the offsetEncoding capability to utf-16.
+                        -- Context:
+                        -- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997226723
+                        offsetEncoding = { "utf-16" },
+                    },
                     cmd = {
                         "clangd",
                         "--clang-tidy",
