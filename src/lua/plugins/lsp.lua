@@ -19,9 +19,6 @@ return {
 
         -- "hrsh7th/cmp-nvim-lsp",
         -- "hrsh7th/cmp-nvim-lua",
-
-        -- Additional features for C# development
-        "Hoffs/omnisharp-extended-lsp.nvim",
     },
     ---@class PluginLspOpts
     opts = function()
@@ -149,6 +146,15 @@ return {
                 },
                 marksman = {},
                 omnisharp = { ---@diagnostic disable-line: missing-fields
+                    keys = {
+                        {
+                            "gd",
+                            function()
+                                require("omnisharp_extended").telescope_lsp_definitions()
+                            end,
+                            desc = "Goto Definition",
+                        },
+                    },
                     cmd = {
                         vim.fn.has("win32") == 1 and "OmniSharp.exe" or "omnisharp",
                         "--languageserver",
@@ -156,7 +162,10 @@ return {
                         tostring(vim.fn.getpid()),
                     },
                     handlers = {
-                        ["textDocument/definition"] = require("omnisharp_extended").handler,
+                        ---@diagnostic disable-next-line: redundant-parameter
+                        ["textDocument/definition"] = function(...)
+                            return require("omnisharp_extended").handler(...)
+                        end,
                     },
                     -- configuration options for omnisharp:
                     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#omnisharp

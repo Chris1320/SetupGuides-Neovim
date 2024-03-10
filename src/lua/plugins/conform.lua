@@ -57,6 +57,10 @@ return {
                 end,
             },
             clang_format = { prepend_args = { "--fallback-style=Google" } },
+            csharpier = {
+                command = "dotnet-csharpier",
+                args = { "--write-stdout" },
+            },
             isort = { prepend_args = { "--profile", "black" } },
             shfmt = { prepend_args = { "--indent", "4" } },
             stylua = {
