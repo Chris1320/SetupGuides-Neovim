@@ -81,7 +81,16 @@ return {
                     filetypes = { "sh", "bash" },
                     single_file_support = true,
                 },
+                -- NOTE: These are set by the Clangd extra from LazyVim.
+                --
                 clangd = { ---@diagnostic disable-line: missing-fields
+                    keys = {
+                        {
+                            "<leader>cR",
+                            "<cmd>ClangdSwitchSourceHeader<cr>",
+                            desc = "Switch Source/Header (C/C++)",
+                        },
+                    },
                     capabilities = {
                         -- Manually set the offsetEncoding capability to utf-16.
                         -- Context:
@@ -90,20 +99,32 @@ return {
                     },
                     cmd = {
                         "clangd",
+                        "--background-index",
                         "--clang-tidy",
                         "--header-insertion=iwyu",
+                        "--completion-style=detailed",
+                        "--function-arg-placeholders",
+                        "--fallback-style=llvm",
                     },
-                    root_dir = function()
-                        return require("config.misc").detectProjectRoot({
-                            "compile_commands.json",
-                            "compile_flags.txt",
+                    root_dir = function(fname)
+                        return require("lspconfig.util").root_pattern(
+                            "Makefile",
                             "configure.ac",
-                            ".git",
-                            ".clangd",
-                            ".clang-tidy",
-                            ".clang-format",
-                        }) or vim.fn.getcwd()
+                            "configure.in",
+                            "config.h.in",
+                            "meson.build",
+                            "meson_options.txt",
+                            "build.ninja"
+                        )(fname) or require("lspconfig.util").root_pattern(
+                            "compile_commands.json",
+                            "compile_flags.txt"
+                        )(fname) or require("lspconfig.util").find_git_ancestor(fname)
                     end,
+                    init_options = {
+                        usePlaceholders = true,
+                        completeUnimported = true,
+                        clangdFileStatus = true,
+                    },
                 },
                 jdtls = {
                     cmd = {
