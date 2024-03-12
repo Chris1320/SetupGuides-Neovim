@@ -189,14 +189,31 @@ return {
                                     reportUninitializedInstanceVariable = "information",
                                     reportUnnecessaryTypeIgnoreComment = "information",
                                 },
-                                -- Add the virtual environment.
-                                extraPaths = (
-                                    vim.fn.getenv("VIRTUAL_ENV") ~= vim.NIL
-                                    and { vim.fn.getenv("VIRTUAL_ENV") .. "/lib/python3.11/site-packages" }
-                                ) or {},
+                                -- -- Add the virtual environment.
+                                -- extraPaths = (
+                                --     vim.fn.getenv("VIRTUAL_ENV") ~= vim.NIL
+                                --     and { vim.fn.getenv("VIRTUAL_ENV") .. "/lib/python3.11/site-packages" }
+                                -- ) or {},
                                 typeCheckingMode = "strict",
                                 useLibraryCodeForTypes = true,
                             },
+                        },
+                    },
+                },
+                ruff_lsp = {
+                    keys = {
+                        {
+                            "<leader>co",
+                            function()
+                                vim.lsp.buf.code_action({
+                                    apply = true,
+                                    context = {
+                                        only = { "source.organizeImports" },
+                                        diagnostics = {},
+                                    },
+                                })
+                            end,
+                            desc = "Organize Imports",
                         },
                     },
                 },
@@ -214,6 +231,14 @@ return {
                 -- ["*"] = function(server, opts) end,
                 jdtls = function(_, _)
                     return true
+                end,
+                ruff_lsp = function()
+                    require("lazyvim.util").lsp.on_attach(function(client, _)
+                        if client.name == "ruff_lsp" then
+                            -- Disable hover in favor of Pyright
+                            client.server_capabilities.hoverProvider = false
+                        end
+                    end)
                 end,
             },
         }
