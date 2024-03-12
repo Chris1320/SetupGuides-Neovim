@@ -12,7 +12,7 @@ return {
     end,
     keys = {
         {
-            "<leader>D",
+            "<leader>uD",
             function()
                 local new_virtual_lines
 
