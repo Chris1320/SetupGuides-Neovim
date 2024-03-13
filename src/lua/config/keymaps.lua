@@ -182,9 +182,3 @@ vim.keymap.set(
     '"_dP',
     { noremap = true, silent = true, desc = "Paste without replacing clipboard content" }
 )
-vim.keymap.set(
-    "n",
-    "<leader>co",
-    "<cmd>ConformInfo<cr>",
-    { noremap = true, silent = true, desc = "Conform Info" }
-)

@@ -4,6 +4,16 @@ return {
     enabled = true,
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
+    keys = {
+        {
+            "<leader>cO",
+            "<cmd>ConformInfo<cr>",
+            "n",
+            noremap = true,
+            silent = true,
+            desc = "Conform Info",
+        },
+    },
     ---@class ConformOpts
     opts = {
         -- LazyVim will use these options when formatting with the conform.nvim formatter
