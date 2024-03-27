@@ -119,6 +119,7 @@ return {
                         clangdFileStatus = true,
                     },
                 },
+                html = {}, ---@diagnostic disable-line: missing-fields
                 -- NOTE: These are set by the java extra from LazyVim
                 jdtls = {}, ---@diagnostic disable-line: missing-fields
                 lua_ls = {

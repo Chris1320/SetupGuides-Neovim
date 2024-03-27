@@ -8,16 +8,20 @@ return {
             -- LSPs
             "bash-language-server",
             "clangd",
+            "html-lsp",
             "jdtls",
             "json-lsp",
             "lua-language-server",
             "marksman",
             "omnisharp",
             "pyright",
+            "tailwindcss-language-server",
+            "typescript-language-server",
 
             -- linters
             "codespell",
             "commitlint",
+            "djlint",
             "jsonlint",
             "markdownlint",
             "pylint",
@@ -39,6 +43,7 @@ return {
             "debugpy",
             "java-test",
             "java-debug-adapter",
+            "js-debug-adapter",
             "netcoredbg",
         },
         -- FIXME: We append because I'm not sure how

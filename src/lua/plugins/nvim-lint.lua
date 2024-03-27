@@ -11,6 +11,7 @@ return {
         linters_by_ft = {
             bash = { "shellcheck" },
             gitcommit = { "commitlint" },
+            html = { "djlint" },
             json = { "jsonlint" },
             lua = { "selene" },
             luau = { "selene" },
