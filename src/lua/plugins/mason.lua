@@ -13,6 +13,7 @@ return {
             "lua-language-server",
             "marksman",
             "omnisharp",
+            "phpactor",
             "pyright",
 
             -- linters
@@ -20,6 +21,7 @@ return {
             "commitlint",
             "jsonlint",
             "markdownlint",
+            "phpstan",
             "pylint",
             "selene",
             "shellcheck",
@@ -30,6 +32,7 @@ return {
             "clang-format",
             "csharpier",
             "isort",
+            "pint",
             "prettierd",
             "shfmt",
             "stylua",

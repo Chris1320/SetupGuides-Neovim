@@ -42,6 +42,7 @@ return {
             luau = { "stylua" },
             markdown = { "prettierd" },
             ["markdown.mdx"] = { "prettierd" },
+            php = { "pint" },
             python = { "black", "isort" },
             scss = { "prettierd" },
             sh = { "shfmt" },
