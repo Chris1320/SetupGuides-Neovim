@@ -16,6 +16,7 @@ return {
             lua = { "selene" },
             luau = { "selene" },
             markdown = { "markdownlint" },
+            php = { "phpstan" },
             python = { "pylint" },
             sh = { "shellcheck" },
             yaml = { "yamllint" },

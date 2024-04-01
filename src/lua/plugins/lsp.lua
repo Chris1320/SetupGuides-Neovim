@@ -175,6 +175,7 @@ return {
                     organize_imports_on_format = true,
                     enable_import_completion = true,
                 },
+                phpactor = {},
                 pyright = {
                     single_file_support = true,
                     settings = { ---@diagnostic disable-line: missing-fields
