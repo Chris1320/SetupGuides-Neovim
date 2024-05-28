@@ -9,15 +9,16 @@
 # ? Set variables.
 name="Neovim Config Installer"
 # Installer version; different from config version and Neovim version.
-version=(0 13 0)
+version=(0 14 0)
+min_nvim_version=(0 9 2) # Minimum Neovim version required.
 title=$(printf "%s v%s.%s.%s" "${name}" "${version[@]}")
 
 target_branch="main" # The branch to which the configs will be pulled from.
-installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
-filelist="files.txt"
-
-min_nvim_version=(0 9 2) # Minimum Neovim version required.
+installation_files_full="${PWD}/src-full"
+installation_files_lite="${PWD}/src-lite"
+filelist_full="full.txt"
+filelist_lite="lite.txt"
 
 echo
 echo "$title"
@@ -132,8 +133,28 @@ while true; do
 done
 
 echo
+while true; do
+    printf "Do you want to install the lite edition? (y/N) > "
+    read -r use_lite_edition
+    if [[ "${use_lite_edition}" =~ ^[y|Y].* ]]; then
+        printf "Using the lite edition...\n\n"
+        edition_filelist="$filelist_lite"
+        edition_instfiles="$installation_files_lite"
+        break
+    elif [[ "${use_lite_edition}" == "" || "${use_lite_edition}" =~ ^[n|N].* ]]; then
+        printf "Using the full edition...\n\n"
+        edition_filelist="$filelist_full"
+        edition_instfiles="$installation_files_full"
+        break
+    else
+        echo "Unknown answer."
+        echo
+    fi
+done
 
 # Remove the configuration files.
+# TODO: Move the directory to a `.bak` directory and then remove it
+# only when the installation was successful.
 if [[ -e "${nvim_config_path}" ]]; then
     printf "Removing existing files in \`%s\`...\r" "${nvim_config_path}"
     rm -r -- "${nvim_config_path}" # Delete the existing Neovim configuration directory.
@@ -145,10 +166,10 @@ else
 fi
 
 # Check if the installation files exist.
-if [[ -d "$installation_files" ]]; then
+if [[ -d "$edition_instfiles" ]]; then
     printf "Copying customization files to \`%s\`...\r" "${nvim_config_path}"
     # Copy the customization files to the Neovim configuration directory.
-    if cp -r "$installation_files" "$nvim_config_path"; then
+    if cp -r "$edition_instfiles" "$nvim_config_path"; then
         printf "Copying customization files to \`%s\`... Done!\n" "${nvim_config_path}"
         echo "Please run \`nvim\` to finish the installation."
         exit 0
@@ -159,8 +180,7 @@ if [[ -d "$installation_files" ]]; then
     fi
 
 else
-    filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/${filelist}"
-
+    filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/files/${edition_filelist}"
     echo "Downloading file list..."
     files_to_download=$(curl -sSfL "${filelist_url}")
     printf "Downloading customization files to \`%s\`...\r" "${nvim_config_path}"
