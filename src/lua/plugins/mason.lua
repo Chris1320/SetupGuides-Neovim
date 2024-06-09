@@ -15,7 +15,7 @@ return {
             "marksman",
             "omnisharp",
             "phpactor",
-            "pyright",
+            "basedpyright",
             "tailwindcss-language-server",
             "typescript-language-server",
 
