@@ -44,3 +44,7 @@ o.softtabstop = require("config.vars").appearance.tab_width
 
 o.showmatch = true -- show matching brackets.
 o.colorcolumn = require("config.vars").appearance.colorcolumn.default_columns
+
+-- LazyVim-specific options
+vim.g.lazyvim_python_lsp = "basedpyright"
+vim.g.lazyvim_python_ruff = "ruff_lsp"
