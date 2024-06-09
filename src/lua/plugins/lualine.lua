@@ -2,27 +2,25 @@ return {
     "nvim-lualine/lualine.nvim",
 
     enabled = true,
-    dependencies = {
-        "nvim-tree/nvim-web-devicons",
-        "gitsigns.nvim",
-    },
     opts = function()
         local Util = require("lazyvim.util")
-        -- PERF: we don't need this lualine require madness ??
-        local lualine_require = require("lualine_require")
-        lualine_require.require = require
-
         local icons = require("lazyvim.config").icons
+        -- PERF: we don't need this lualine require madness 🤷
+        local lualine_require = require("lualine_require")
+
+        lualine_require.require = require
         vim.o.laststatus = vim.g.lualine_laststatus
 
-        return {
+        local opts = {
             options = {
                 theme = "auto",
-                globalstatus = true,
+                globalstatus = vim.o.laststatus == 3,
                 disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
             },
             sections = {
+                -- Show the current mode.
                 lualine_a = { "mode" },
+                -- Show the current Git branch.
                 lualine_b = {
                     {
                         "branch",
@@ -34,6 +32,7 @@ return {
                         end,
                     },
                 },
+                -- Show the project root directory, diagnostics, filetype, and the current file path.
                 lualine_c = {
                     Util.lualine.root_dir(),
                     {
@@ -55,6 +54,7 @@ return {
                     { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
                     { Util.lualine.pretty_path() },
                 },
+                -- Show the command, mode, debug status, and Git diff.
                 lualine_x = {
                     {
                         function()
@@ -112,11 +112,13 @@ return {
                         end,
                     },
                 },
+                -- Show the file size, progress, and location.
                 lualine_y = {
                     "filesize",
                     { "progress", separator = " ", padding = { left = 1, right = 0 } },
                     { "location", padding = { left = 0, right = 1 } },
                 },
+                -- Show the current time.
                 lualine_z = {
                     function()
                         return "  " .. os.date("%H:%M:%S")
@@ -125,5 +127,25 @@ return {
             },
             extensions = { "neo-tree", "lazy" },
         }
+
+        -- do not add trouble symbols if aerial is enabled
+        if vim.g.trouble_lualine then
+            local trouble = require("trouble")
+            local symbols = trouble.statusline
+                and trouble.statusline({
+                    mode = "symbols",
+                    groups = {},
+                    title = false,
+                    filter = { range = true },
+                    format = "{kind_icon}{symbol.name:Normal}",
+                    hl_group = "lualine_c_normal",
+                })
+            table.insert(opts.sections.lualine_c, {
+                symbols and symbols.get,
+                cond = symbols and symbols.has,
+            })
+        end
+
+        return opts
     end,
 }
