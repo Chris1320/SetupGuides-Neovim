@@ -22,7 +22,6 @@ return {
             async = false, -- not recommended to change
             quiet = false, -- not recommended to change
         },
-        ---@type table<string, conform.FormatterUnit[]>
         formatters_by_ft = {
             arduino = { "clang_format" },
             bash = { "shfmt" },

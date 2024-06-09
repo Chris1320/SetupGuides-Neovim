@@ -48,3 +48,5 @@ o.colorcolumn = require("config.vars").appearance.colorcolumn.default_columns
 -- LazyVim-specific options
 vim.g.lazyvim_python_lsp = "basedpyright"
 vim.g.lazyvim_python_ruff = "ruff_lsp"
+-- If no prettier config file is found, the formatter will not be used
+vim.g.lazyvim_prettier_needs_config = false
