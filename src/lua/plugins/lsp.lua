@@ -40,33 +40,11 @@ return {
                                 reportUninitializedInstanceVariable = "information",
                                 reportUnnecessaryTypeIgnoreComment = "information",
                             },
-                            -- -- Add the virtual environment.
-                            -- extraPaths = (
-                            --     vim.fn.getenv("VIRTUAL_ENV") ~= vim.NIL
-                            --     and { vim.fn.getenv("VIRTUAL_ENV") .. "/lib/python3.11/site-packages" }
-                            -- ) or {},
                             typeCheckingMode = "strict",
                             useLibraryCodeForTypes = true,
                         },
                     },
                 },
-            },
-            ruff_lsp = {
-                -- keys = {
-                --     {
-                --         "<leader>co",
-                --         function()
-                --             vim.lsp.buf.code_action({
-                --                 apply = true,
-                --                 context = {
-                --                     only = { "source.organizeImports" },
-                --                     diagnostics = {},
-                --                 },
-                --             })
-                --         end,
-                --         desc = "Organize Imports",
-                --     },
-                -- },
             },
         },
     },
