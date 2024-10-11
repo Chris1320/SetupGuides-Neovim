@@ -25,7 +25,7 @@ return {
 
         local wk_ok, wk = pcall(require, "which-key")
         if wk_ok then
-            wk.register({ ["<leader>dA"] = { name = "+arduino" } })
+            wk.add({ "<leader>dA", group = "arduino" })
         end
     end,
     keys = {

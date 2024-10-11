@@ -2,7 +2,14 @@ return {
     "folke/zen-mode.nvim",
 
     enabled = true,
-    opts = {},
+    opts = {
+        plugins = {
+            options = { enabled = true },
+            twilight = { enabled = true },
+            gitsigns = { enabled = false },
+            tmux = { enabled = true },
+        },
+    },
     keys = {
         {
             "<leader>uz",
