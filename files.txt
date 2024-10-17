@@ -9,7 +9,6 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/config/opt
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/config/vars.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/catppuccin.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/conform.lua
-https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/flash-nvim.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/gitignore.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/gitsigns.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/lazyvim.lua
@@ -25,10 +24,7 @@ https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/nv
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/presence.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/smartcolumn.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/telescope.lua
-https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/todo-comments.lua
-https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/tokyonight.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/trouble.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/twilight.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/vim-arduino.lua
-https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/vim-illuminate.lua
 https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>/src/lua/plugins/zen-mode.lua
