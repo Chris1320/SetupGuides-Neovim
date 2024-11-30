@@ -24,4 +24,15 @@ return {
         },
         git_blame_format = "<author>, on <author_time:%Y-%m-%d> • <summary>",
     },
+    langs = {
+        python = {
+            pylint = {
+                -- Ignore these pylint warnings
+                ignored = {
+                    "C0114",
+                    "C0115",
+                },
+            },
+        },
+    },
 }

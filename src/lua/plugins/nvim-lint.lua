@@ -1,3 +1,4 @@
+local lang_configs = require("config.vars").langs
 return {
     "mfussenegger/nvim-lint",
 
@@ -31,7 +32,11 @@ return {
                     vim.fn.stdpath("data") .. "/mason/packages/commitlint/node_modules/@commitlint/config-conventional",
                 },
             },
-            pylint = { args = { "--jobs", "0", "--output-format", "json" } },
+            pylint = {
+                args = {
+                    "--disable=" .. table.concat(lang_configs.python.pylint.ignored, ","),
+                },
+            },
         },
     },
 }
