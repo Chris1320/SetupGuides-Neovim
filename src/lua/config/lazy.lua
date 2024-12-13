@@ -26,7 +26,7 @@ require("lazy").setup({
         { import = "lazyvim.plugins.extras.editor.inc-rename" },
         { import = "lazyvim.plugins.extras.editor.refactoring" },
 
-        -- { import = "lazyvim.plugins.extras.ui.treesitter-rewrite" },
+        { import = "lazyvim.plugins.extras.ui.treesitter-context" },
 
         { import = "lazyvim.plugins.extras.util.dot" },
         { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
