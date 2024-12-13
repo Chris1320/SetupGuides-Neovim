@@ -2,10 +2,6 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
         "hrsh7th/cmp-cmdline",
-        {
-            "petertriho/cmp-git",
-            dependencies = "nvim-lua/plenary.nvim",
-        },
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
@@ -105,6 +101,7 @@ return {
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<C-e>"] = cmp.mapping.abort(),
             ["<CR>"] = lazyvim_cmp.confirm({ select = false }),
+            ["<C-y>"] = lazyvim_cmp.confirm({ select = true }),
             ["<S-CR>"] = lazyvim_cmp.confirm({
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = false,
@@ -112,6 +109,9 @@ return {
             ["<C-CR>"] = function(fallback)
                 cmp.abort()
                 fallback()
+            end,
+            ["<tab>"] = function(fallback)
+                return lazyvim_cmp.map({ "snippet_forward", "ai_accept" }, fallback)()
             end,
         })
 
