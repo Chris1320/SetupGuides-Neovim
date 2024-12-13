@@ -1,3 +1,5 @@
+local snacks = require("snacks")
+
 return {
     "nvim-lualine/lualine.nvim",
 
@@ -65,7 +67,7 @@ return {
                             ---@diagnostic disable-next-line: undefined-field
                             return package.loaded["noice"] and require("noice").api.status.command.has()
                         end,
-                        color = Util.ui.fg("Statement"),
+                        color = { fg = snacks.util.color("Statement") },
                     },
                     {
                         function()
@@ -76,7 +78,7 @@ return {
                             ---@diagnostic disable-next-line: undefined-field
                             return package.loaded["noice"] and require("noice").api.status.mode.has()
                         end,
-                        color = Util.ui.fg("Constant"),
+                        color = { fg = snacks.util.color("Constant") },
                     },
                     {
                         function()
@@ -85,7 +87,7 @@ return {
                         cond = function()
                             return package.loaded["dap"] and require("dap").status() ~= ""
                         end,
-                        color = Util.ui.fg("Debug"),
+                        color = { fg = snacks.util.color("Debug") },
                     },
                     {
                         "diff",
