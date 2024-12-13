@@ -50,3 +50,4 @@ g.lazyvim_python_lsp = "basedpyright"
 g.lazyvim_python_ruff = "ruff"
 -- If no prettier config file is found, the formatter will not be used
 g.lazyvim_prettier_needs_config = false
+g.ai_cmp = false
