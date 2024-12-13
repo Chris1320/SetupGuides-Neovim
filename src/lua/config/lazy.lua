@@ -30,6 +30,8 @@ require("lazy").setup({
 
         { import = "lazyvim.plugins.extras.util.dot" },
         { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+        { import = "lazyvim.plugins.extras.util.rest" },
+        { import = "lazyvim.plugins.extras.util.startuptime" },
 
         { import = "lazyvim.plugins.extras.lang.clangd" },
         { import = "lazyvim.plugins.extras.lang.git" },
