@@ -1,4 +1,5 @@
 local lang_configs = require("config.vars").langs
+
 return {
     "mfussenegger/nvim-lint",
 
@@ -35,6 +36,7 @@ return {
             pylint = {
                 args = {
                     "--disable=" .. table.concat(lang_configs.python.pylint.ignored, ","),
+                    "-",
                 },
             },
         },
