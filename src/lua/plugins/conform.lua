@@ -1,7 +1,6 @@
 return {
     "stevearc/conform.nvim",
 
-    enabled = true,
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     keys = {
@@ -57,14 +56,14 @@ return {
         formatters = {
             black = {
                 -- selene: allow(unused_variable)
-                -- cwd = function(...) --- @diagnostic disable-line: unused-vararg
-                --     return require("config.misc").detectProjectRoot({
-                --         "pyproject.toml",
-                --         "setup.cfg",
-                --         "setup.py",
-                --         ".git",
-                --     }) or vim.fn.getcwd()
-                -- end,
+                cwd = function(...) --- @diagnostic disable-line: unused-vararg
+                    return require("config.misc").detectProjectRoot({
+                        "pyproject.toml",
+                        "setup.cfg",
+                        "setup.py",
+                        ".git",
+                    }) or vim.fn.getcwd()
+                end,
             },
             clang_format = { prepend_args = { "--fallback-style=Google" } },
             csharpier = {
@@ -91,13 +90,13 @@ return {
                     return result
                 end,
                 -- selene: allow(unused_variable)
-                -- cwd = function(...) --- @diagnostic disable-line: unused-vararg
-                --     return require("config.misc").detectProjectRoot({
-                --         ".stylua.toml",
-                --         "stylua.toml",
-                --         ".git",
-                --     }) or vim.fn.getcwd()
-                -- end,
+                cwd = function(...) --- @diagnostic disable-line: unused-vararg
+                    return require("config.misc").detectProjectRoot({
+                        ".stylua.toml",
+                        "stylua.toml",
+                        ".git",
+                    }) or vim.fn.getcwd()
+                end,
             },
         },
     },
