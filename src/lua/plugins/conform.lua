@@ -1,6 +1,5 @@
 return {
     "stevearc/conform.nvim",
-
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     keys = {
@@ -13,7 +12,6 @@ return {
             desc = "Conform Info",
         },
     },
-    ---@class ConformOpts
     opts = {
         -- LazyVim will use these options when formatting with the conform.nvim formatter
         default_format_opts = {
@@ -52,7 +50,6 @@ return {
         },
         -- The options you set here will be merged with the builtin formatters.
         -- You can also define any custom formatters here.
-        ---@type table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride>
         formatters = {
             black = {
                 -- selene: allow(unused_variable)
