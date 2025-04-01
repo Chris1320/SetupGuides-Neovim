@@ -2,10 +2,10 @@ return {
     "vyfor/cord.nvim",
     build = ":Cord update",
     opts = {
-        editor = { tooltip = "I use Arch™ btw" },
+        editor = { tooltip = "I use Neovim btw" },
         display = {
             theme = "catppuccin",
-            flavor = "mocha",
+            flavor = "dark",
         },
         timestamp = {
             enabled = true,
