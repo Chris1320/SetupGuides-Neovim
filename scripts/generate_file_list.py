@@ -10,7 +10,9 @@ from typing import Final
 
 FILELIST_PATH: Final[str] = "files.txt"
 # <branch> will be replaced by install script.
-URL: Final[str] = "https://raw.githubusercontent.com/SetupGuides/Neovim/<branch>"
+URL: Final[str] = (
+    "https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>"
+)
 
 
 def main() -> int:
