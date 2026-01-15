@@ -36,5 +36,5 @@ if os.getenv("WSL_DISTRO_NAME") ~= nil then
 end
 
 -- LazyVim-specific options
--- g.lazyvim_python_lsp = "basedpyright" -- Use basedpyright instead of pyright
+g.lazyvim_python_lsp = "basedpyright" -- Use basedpyright instead of pyright
 -- g.lazyvim_prettier_needs_config = true -- If no prettier config file is found, the formatter will not be used
