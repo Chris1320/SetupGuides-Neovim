@@ -9,7 +9,7 @@
 # ? Set variables.
 name="Neovim Config Installer"
 # Installer version; different from config version and Neovim version.
-version=(0 13 0)
+version=(0 13 1)
 title=$(printf "%s v%s.%s.%s" "${name}" "${version[@]}")
 
 target_branch="main" # The branch to which the configs will be pulled from.
@@ -17,7 +17,7 @@ installation_files="${PWD}/src"
 nvim_config_path="${HOME}/.config/nvim"
 filelist="files.txt"
 
-min_nvim_version=(0 9 2) # Minimum Neovim version required.
+min_nvim_version=(0 11 2) # Minimum Neovim version required.
 
 echo
 echo "$title"
