@@ -6,174 +6,305 @@
 # - GNU bash v5.2.15(1)-release on Kali Linux Rolling
 # - GNU bash v5.2.2 on Termux Terminal Emulator 0.118.0
 
-# ? Set variables.
-name="Neovim Config Installer"
-# Installer version; different from config version and Neovim version.
-version=(0 13 1)
-title=$(printf "%s v%s.%s.%s" "${name}" "${version[@]}")
+set -euo pipefail
 
-target_branch="main" # The branch to which the configs will be pulled from.
-installation_files="${PWD}/src"
-nvim_config_path="${HOME}/.config/nvim"
-filelist="files.txt"
+# ============================================================================
+# Configuration
+# ============================================================================
 
-min_nvim_version=(0 11 2) # Minimum Neovim version required.
+readonly NAME="SetupGuides-Neovim"
+readonly VERSION=(0 14 0)
+readonly TITLE=$(printf "%s v%s.%s.%s" "${NAME}" "${VERSION[@]}")
 
-echo
-echo "$title"
-echo
+readonly TARGET_BRANCH="main"
+readonly INSTALLATION_FILES="${PWD}/src"
+readonly NVIM_CONFIG_PATH="${HOME}/.config/nvim"
+readonly FILELIST="files.txt"
+readonly MIN_NVIM_VERSION=(0 11 2)
 
-# ? Check requirements.
-echo "Checking requirements..."
-if ! [[ -x "$(command -v git)" ]]; then # Check if Git is installed.
-    echo "Git       : not found"
-    echo
-    echo "\`git\` is not installed. Please install git and try again."
-    echo
-    echo "- \`sudo apt update && sudo apt install git\`"
-    echo "- https://git-scm.com/downloads"
-    exit 1
+readonly EXIT_CODE_GIT_MISSING=1
+readonly EXIT_CODE_COMPILER_MISSING=2
+readonly EXIT_CODE_DOWNLOAD_FAILED=3
+readonly EXIT_CODE_NPM_MISSING=4
+readonly EXIT_CODE_NVIM_MISSING=5
+readonly EXIT_CODE_NVIM_VERSION=6
+readonly EXIT_CODE_USER_CANCELLED=7
+readonly EXIT_CODE_COPY_FAILED=10
+readonly EXIT_CODE_MAKE_MISSING=11
 
-else
-    echo "Git       : $(command -v git)"
-fi
+# ============================================================================
+# Utility Functions
+# ============================================================================
 
-if ! [[ -x "$(command -v gcc)" ]]; then
-    if ! [[ -x "$(command -v clang)" ]]; then
-        echo "C compiler: not found"
-        echo
-        echo "\`gcc\` or \`clang\` is not installed."
-        echo "Please install either of the two and try again."
-        echo
-        echo "- \`sudo apt update && sudo apt install gcc\`"
-        exit 2
+log_info() {
+    printf "%s\n" "$*"
+}
 
-    else
-        echo "C compiler: $(command -v clang)"
+log_error() {
+    printf "%s\n" "$*" >&2
+}
+
+log_inline() {
+    printf "%s\r" "$*"
+}
+
+log_inline_done() {
+    printf "%s... Done!\n" "$*"
+}
+
+log_inline_failed() {
+    printf "%s... Failed!\n" "$*"
+}
+
+command_exists() {
+    command -v "$1" &>/dev/null
+}
+
+version_to_string() {
+    local -n arr=$1
+    printf "v%s.%s.%s" "${arr[@]}"
+}
+
+version_gte() {
+    local min_version="$1"
+    local current_version="$2"
+    local oldest=$(printf "%s\n%s" "$min_version" "$current_version" | sort -V | head -n1)
+    [[ "$oldest" == "$min_version" ]]
+}
+
+prompt_yes_no() {
+    local prompt="$1"
+    local response
+
+    while true; do
+        printf "%s (Y/n) > " "$prompt"
+        read -r response
+
+        case "$response" in
+        "" | [yY]*)
+            return 0
+            ;;
+        [nN]*)
+            return 1
+            ;;
+        *)
+            log_info "Unknown answer."
+            log_info ""
+            ;;
+        esac
+    done
+}
+
+# ============================================================================
+# Dependency Checking Functions
+# ============================================================================
+
+check_command_with_message() {
+    local cmd="$1"
+    local label="$2"
+    local exit_code="$3"
+    local install_help="$4"
+
+    if ! command_exists "$cmd"; then
+        log_error "$(printf "%-10s: not found" "$label")"
+        log_error ""
+        log_error "$install_help"
+        exit "$exit_code"
     fi
 
-else
-    echo "C compiler: $(command -v gcc)"
-fi
+    log_info "$(printf "%-10s: %s" "$label" "$(command -v "$cmd")")"
+}
 
-if ! [[ -x "$(command -v make)" ]]; then
-    echo "make      : not found"
-    echo
-    echo "\`make\` is not installed."
-    echo "Please install it and try again."
-    echo
-    echo "- \`sudo apt update && sudo apt install make\`"
-    exit 11
+check_git() {
+    check_command_with_message \
+        "git" \
+        "Git" \
+        "$EXIT_CODE_GIT_MISSING" \
+        "\`git\` is not installed. Please install git and try again.
 
-else
-    echo "make      : $(command -v make)"
-fi
+- \`sudo apt update && sudo apt install git\`
+- https://git-scm.com/downloads"
+}
 
-if ! [[ -x "$(command -v npm)" ]]; then
-    echo "npm       : not found"
-    echo
-    echo "\`npm\` is not installed. Please install it and try again."
-    echo
-    echo "- \`sudo apt update && sudo apt install nodejs npm\`"
-    echo "- https://nodejs.org/en/download/"
-    exit 4
-
-else
-    echo "npm       : $(command -v npm)"
-fi
-
-echo
-if ! [[ -x "$(command -v nvim)" ]]; then # Check if Neovim is installed.
-    echo "\`nvim\` is not installed. Please install nvim and try again."
-    echo
-    echo "- \`sudo apt update && sudo apt install neovim\`"
-    echo "- https://github.com/neovim/neovim/releases/latest"
-    exit 5
-
-else
-    echo "Neovim is installed. Checking its version..."
-    # Get the version of Neovim using `nvim -v` in format `vX.X.X`.
-    nvim_version=$(nvim -v | grep -oP 'v\d+\.\d+\.\d+')
-    min_nvim_version_str=$(printf "v%s.%s.%s" "${min_nvim_version[@]}")
-    echo "Detected Neovim version: ${nvim_version}"
-    # Returns min_nvim_version_str if the user's Neovim version is supported.
-    nvim_version_supported=$(echo -e "${min_nvim_version_str}\n${nvim_version}" | sort -V | head -n1)
-
-    if [[ ${nvim_version_supported} != "${min_nvim_version_str}" ]]; then
-        echo "Neovim ${nvim_version} is not supported."
-        echo "Please upgrade to at least ${min_nvim_version_str} or higher and try again."
-        exit 6
-    else
-        echo "User's Neovim version is supported. (Requires: >= ${min_nvim_version_str})"
-    fi
-fi
-
-# ? Ask for user confirmation.
-echo
-echo "This will install ${name} on \`${nvim_config_path}\`."
-echo "This will overwrite existing files in the said directory."
-echo
-while true; do
-    printf "Are you sure? (Y/n) > "
-    read -r installation_confirmation
-
-    if [[ "${installation_confirmation}" == "" || "${installation_confirmation}" =~ ^[y|Y].* ]]; then
-        printf "Installing %s customization files...\n" "${title}"
-        break
-
-    elif [[ "${installation_confirmation}" =~ ^[n|N].* ]]; then
-        echo "Cancelling installation."
-        exit 7
-
-    else
-        echo "Unknown answer."
-        echo
-    fi
-done
-
-echo
-
-# Remove the configuration files.
-if [[ -e "${nvim_config_path}" ]]; then
-    printf "Removing existing files in \`%s\`...\r" "${nvim_config_path}"
-    rm -r -- "${nvim_config_path}" # Delete the existing Neovim configuration directory.
-    printf "Removing existing files in \`%s\`... Done!\n" "${nvim_config_path}"
-
-else
-    echo "No existing files found in \`${nvim_config_path}\`."
-
-fi
-
-# Check if the installation files exist.
-if [[ -d "$installation_files" ]]; then
-    printf "Copying customization files to \`%s\`...\r" "${nvim_config_path}"
-    # Copy the customization files to the Neovim configuration directory.
-    if cp -r "$installation_files" "$nvim_config_path"; then
-        printf "Copying customization files to \`%s\`... Done!\n" "${nvim_config_path}"
-        echo "Please run \`nvim\` to finish the installation."
-        exit 0
-
-    else
-        printf "Copying customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-        exit 10
+check_compiler() {
+    if ! command_exists gcc && ! command_exists clang; then
+        log_error "$(printf "%-10s: not found" "C compiler")"
+        log_error ""
+        log_error "\`gcc\` or \`clang\` is not installed."
+        log_error "Please install either of the two and try again."
+        log_error ""
+        log_error "- \`sudo apt update && sudo apt install gcc\`"
+        exit "$EXIT_CODE_COMPILER_MISSING"
     fi
 
-else
-    filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${target_branch}/${filelist}"
+    if command_exists gcc; then
+        log_info "$(printf "%-10s: %s" "C compiler" "$(command -v gcc)")"
+    else
+        log_info "$(printf "%-10s: %s" "C compiler" "$(command -v clang)")"
+    fi
+}
 
-    echo "Downloading file list..."
+check_make() {
+    check_command_with_message \
+        "make" \
+        "make" \
+        "$EXIT_CODE_MAKE_MISSING" \
+        "\`make\` is not installed. Please install it and try again.
+
+- \`sudo apt update && sudo apt install make\`"
+}
+
+check_npm() {
+    check_command_with_message \
+        "npm" \
+        "npm" \
+        "$EXIT_CODE_NPM_MISSING" \
+        "\`npm\` is not installed. Please install it and try again.
+
+- \`sudo apt update && sudo apt install nodejs npm\`
+- https://nodejs.org/en/download/"
+}
+
+check_neovim() {
+    log_info ""
+
+    if ! command_exists nvim; then
+        log_error "\`nvim\` is not installed. Please install nvim and try again."
+        log_error ""
+        log_error "- \`sudo apt update && sudo apt install neovim\`"
+        log_error "- https://github.com/neovim/neovim/releases/latest"
+        exit "$EXIT_CODE_NVIM_MISSING"
+    fi
+
+    log_info "Neovim is installed. Checking its version..."
+
+    local nvim_version
+    nvim_version=$(nvim -v | grep -oP 'v\d+\.\d+\.\d+' | head -n1)
+
+    local min_version_str
+    min_version_str=$(version_to_string MIN_NVIM_VERSION)
+
+    log_info "Detected Neovim version: ${nvim_version}"
+
+    if ! version_gte "$min_version_str" "$nvim_version"; then
+        log_error "Neovim ${nvim_version} is not supported."
+        log_error "Please upgrade to at least ${min_version_str} or higher and try again."
+        exit "$EXIT_CODE_NVIM_VERSION"
+    fi
+
+    log_info "User's Neovim version is supported. (Requires: >= ${min_version_str})"
+}
+
+check_all_dependencies() {
+    log_info "Checking requirements..."
+    check_git
+    check_compiler
+    check_make
+    check_npm
+    check_neovim
+}
+
+# ============================================================================
+# Installation Functions
+# ============================================================================
+
+confirm_installation() {
+    log_info ""
+    log_info "This will install ${NAME} on \`${NVIM_CONFIG_PATH}\`."
+    log_info "This will overwrite existing files in the said directory."
+    log_info ""
+
+    if ! prompt_yes_no "Are you sure?"; then
+        log_info "Cancelling installation."
+        exit "$EXIT_CODE_USER_CANCELLED"
+    fi
+
+    log_info "Installing ${TITLE} customization files..."
+    log_info ""
+}
+
+remove_existing_config() {
+    if [[ -e "${NVIM_CONFIG_PATH}" ]]; then
+        log_inline "Removing existing files in \`${NVIM_CONFIG_PATH}\`..."
+        rm -rf -- "${NVIM_CONFIG_PATH}"
+        log_inline_done "Removing existing files in \`${NVIM_CONFIG_PATH}\`"
+    else
+        log_info "No existing files found in \`${NVIM_CONFIG_PATH}\`."
+    fi
+}
+
+install_from_local() {
+    log_inline "Copying customization files to \`${NVIM_CONFIG_PATH}\`..."
+
+    if cp -r "$INSTALLATION_FILES" "$NVIM_CONFIG_PATH"; then
+        log_inline_done "Copying customization files to \`${NVIM_CONFIG_PATH}\`"
+        return 0
+    else
+        log_inline_failed "Copying customization files to \`${NVIM_CONFIG_PATH}\`"
+        return 1
+    fi
+}
+
+install_from_remote() {
+    local filelist_url="https://raw.githubusercontent.com/SetupGuides/Neovim/${TARGET_BRANCH}/${FILELIST}"
+
+    log_info "Downloading file list..."
+
+    local files_to_download
     files_to_download=$(curl -sSfL "${filelist_url}")
-    printf "Downloading customization files to \`%s\`...\r" "${nvim_config_path}"
+
+    log_inline "Downloading customization files to \`${NVIM_CONFIG_PATH}\`..."
+
+    local file pull_url output_filepath
     for file in ${files_to_download}; do
-        pull_url="${file//<branch>/${target_branch}}"
-        output_filepath=${file##*/src/}
-        if ! curl -sSfL "${pull_url}" --create-dirs --output "${nvim_config_path}/${output_filepath}"; then
-            printf "Downloading customization files to \`%s\`... Failed!\n" "${nvim_config_path}"
-            exit 3
+        pull_url="${file//<branch>/${TARGET_BRANCH}}"
+        output_filepath="${file##*/src/}"
+
+        if ! curl -sSfL "${pull_url}" --create-dirs --output "${NVIM_CONFIG_PATH}/${output_filepath}"; then
+            log_inline_failed "Downloading customization files to \`${NVIM_CONFIG_PATH}\`"
+            return 1
         fi
     done
 
-    printf "Downloading customization files to \`%s\`... Done!\n" "${nvim_config_path}"
-    echo "Please run \`nvim\` to finish the installation."
-    exit 0
-fi
+    log_inline_done "Downloading customization files to \`${NVIM_CONFIG_PATH}\`"
+    return 0
+}
+
+perform_installation() {
+    remove_existing_config
+
+    if [[ -d "$INSTALLATION_FILES" ]]; then
+        if install_from_local; then
+            return 0
+        else
+            return "$EXIT_CODE_COPY_FAILED"
+        fi
+    else
+        if install_from_remote; then
+            return 0
+        else
+            return "$EXIT_CODE_DOWNLOAD_FAILED"
+        fi
+    fi
+}
+
+show_completion_message() {
+    log_info "Please run \`nvim\` to finish the installation."
+}
+
+# ============================================================================
+# Main Entry Point
+# ============================================================================
+
+main() {
+    log_info ""
+    log_info "$TITLE"
+    log_info ""
+
+    check_all_dependencies
+    confirm_installation
+    perform_installation
+    show_completion_message
+}
+
+main
