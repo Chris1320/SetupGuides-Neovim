@@ -14,7 +14,7 @@ return {
             json = { "jsonlint" },
             lua = { "selene" },
             luau = { "selene" },
-            markdown = { "markdownlint" },
+            markdown = { "markdownlint-cli2" },
             php = { "phpstan" },
             python = { "pylint" },
             sh = { "shellcheck" },
