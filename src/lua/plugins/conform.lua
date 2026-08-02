@@ -54,6 +54,7 @@ return {
       black = {
         -- selene: allow(unused_variable)
         cwd = function(...) --- @diagnostic disable-line: unused-vararg
+          -- selene: allow(undefined_variable) LazyVim is provided by the lazyvim plugin.
           return LazyVim.root()
         end,
       },
@@ -83,6 +84,7 @@ return {
         end,
         -- selene: allow(unused_variable)
         cwd = function(...) --- @diagnostic disable-line: unused-vararg
+          -- selene: allow(undefined_variable) LazyVim is provided by the lazyvim plugin.
           return LazyVim.root()
         end,
       },
