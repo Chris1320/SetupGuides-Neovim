@@ -56,22 +56,21 @@ def main(return_to_original: bool = False, force: bool = False) -> int:
                 continue
 
             if destination.exists():
-                if not force:
-                    if (
-                        input(
-                            f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > "  # pylint: disable=line-too-long
-                        )
-                        != "y"
-                    ):
-                        print(f"[+] Skipping `{source}`.")
-                        continue
+                if not force and (
+                    input(
+                        f"    [!] The directory `{destination}` already exists. Overwrite? (y/n) > "  # pylint: disable=line-too-long
+                    )
+                    != "y"
+                ):
+                    print(f"[+] Skipping `{source}`.")
+                    continue
 
                 shutil.rmtree(destination)
 
             print(f"[+] Renaming `{source}` to `{destination}`.")
-            shutil.move(source, destination)
+            _ = shutil.move(source, destination)
 
-        except Exception as e:  # pylint: disable=broad-exception-caught
+        except Exception as e:  # noqa: BLE001
             print(f"[!] Failed to rename `{source}` to `{destination}`.")
             print(f"[!] Error: {e}")
             return 1
