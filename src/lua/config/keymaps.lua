@@ -31,8 +31,8 @@ vim.keymap.set("v", "<A-Up>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<
 -- other keymaps I have
 vim.keymap.set("n", "zZ", "zzzszH", { noremap = true, silent = true, desc = "Center cursor" })
 vim.keymap.set(
-    "x",
-    "<leader>p",
-    '"_dP',
-    { noremap = true, silent = true, desc = "Paste without replacing clipboard content" }
+  "x",
+  "<leader>p",
+  '"_dP',
+  { noremap = true, silent = true, desc = "Paste without replacing clipboard content" }
 )

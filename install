@@ -13,14 +13,14 @@ set -euo pipefail
 # ============================================================================
 
 readonly NAME="SetupGuides-Neovim"
-readonly VERSION=(0 14 0)
+readonly VERSION=(0 15 0)
 readonly TITLE=$(printf "%s v%s.%s.%s" "${NAME}" "${VERSION[@]}")
 
 readonly TARGET_BRANCH="main"
 readonly INSTALLATION_FILES="${PWD}/src"
 readonly NVIM_CONFIG_PATH="${HOME}/.config/nvim"
 readonly FILELIST="files.txt"
-readonly MIN_NVIM_VERSION=(0 11 2)
+readonly MIN_NVIM_VERSION=(0 12 0)
 
 readonly EXIT_CODE_GIT_MISSING=1
 readonly EXIT_CODE_COMPILER_MISSING=2

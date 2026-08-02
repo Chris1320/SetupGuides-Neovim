@@ -21,20 +21,21 @@ o.clipboard = "" -- Separate system clipboard
 -- Check if running on WSL.
 -- Source: https://mitchellt.com/2022/05/15/WSL-Neovim-Lua-and-the-Windows-Clipboard.html
 if os.getenv("WSL_DISTRO_NAME") ~= nil then
-    local wsl_copy_cmd = { "clip.exe" }
-    local wsl_paste_cmd = {
-        "powershell.exe",
-        "-c",
-        '[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    }
-    g.clipboard = {
-        name = "WSL Clipboard",
-        copy = { ["+"] = wsl_copy_cmd, ["*"] = wsl_copy_cmd },
-        paste = { ["+"] = wsl_paste_cmd, ["*"] = wsl_paste_cmd },
-        cache_enabled = true,
-    }
+  local wsl_copy_cmd = { "clip.exe" }
+  local wsl_paste_cmd = {
+    "powershell.exe",
+    "-c",
+    '[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  }
+  g.clipboard = {
+    name = "WSL Clipboard",
+    copy = { ["+"] = wsl_copy_cmd, ["*"] = wsl_copy_cmd },
+    paste = { ["+"] = wsl_paste_cmd, ["*"] = wsl_paste_cmd },
+    cache_enabled = true,
+  }
 end
 
 -- LazyVim-specific options
 g.lazyvim_python_lsp = "basedpyright" -- Use basedpyright instead of pyright
+g.lazyvim_ts_lsp = "vtsls" -- use vtsls instead of tsgo because vue language server doesn't support tsgo
 -- g.lazyvim_prettier_needs_config = true -- If no prettier config file is found, the formatter will not be used
