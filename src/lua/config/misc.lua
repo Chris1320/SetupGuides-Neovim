@@ -35,5 +35,6 @@ return {
     "vtsls",
     "vue-language-server",
     "yaml-language-server",
+    "yamllint",
   },
 }
