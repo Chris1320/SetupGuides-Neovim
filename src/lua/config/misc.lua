@@ -5,6 +5,7 @@ return {
     "black",
     "clang-format",
     "commitlint",
+    "djlint",
     "docker-compose-language-service",
     "dockerfile-language-server",
     "eslint-lsp",
