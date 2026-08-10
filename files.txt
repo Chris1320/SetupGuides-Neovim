@@ -6,7 +6,6 @@ https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lazy
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/config/autocmds.lua
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/config/keymaps.lua
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/config/lazy.lua
-https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/config/misc.lua
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/config/options.lua
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/plugins/blink.cmp.lua
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/plugins/catppuccin.lua
