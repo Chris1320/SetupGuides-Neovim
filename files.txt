@@ -21,3 +21,4 @@ https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/plugins/mini.surround.lua
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/plugins/numb.lua
 https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/plugins/nvim-lint.lua
+https://raw.githubusercontent.com/Chris1320/SetupGuides-Neovim/<branch>/src/lua/plugins/wakatime.lua
