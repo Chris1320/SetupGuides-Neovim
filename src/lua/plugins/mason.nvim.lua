@@ -13,6 +13,7 @@ return {
       },
     },
     ensure_installed = {
+      "astro-language-server",
       "basedpyright",
       "bash-language-server",
       "black",
