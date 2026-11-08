@@ -23,6 +23,11 @@ def main() -> int:
     for dirpath, _, filenames in os.walk("src"):  # Scan all files in `src/`
         for filename in filenames:
             filepath = f"{dirpath}/{filename}"
+            if sys.platform == "win32":
+                filepath = filepath.replace(
+                    os.sep, "/"  # make path separator into URL-compatible slash
+                )
+
             files.append(f"{URL}/{filepath}")
 
     files.sort()  # So that Git can diff easily.
